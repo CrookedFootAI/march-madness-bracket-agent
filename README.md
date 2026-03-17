@@ -2,7 +2,7 @@
 
 An AI-powered March Madness bracket prediction site built as a vibe-coding experiment.
 
-🔗 **Live site:** [https://march-madness-bracket-agent.netlify.app/](https://march-madness-bracket-agent-2026.netlify.app/)
+🔗 **Live site:** https://march-madness-bracket-agent-2026.netlify.app/
 
 ## Overview
 

@@ -499,6 +499,99 @@ nav{top:32px!important}
 
 .slot-hover-pick:hover{background:rgba(184,149,42,0.12)!important}
 .slot-hover-white:hover{background:rgba(11,15,30,0.04)!important}
+
+/* ── MOBILE RESPONSIVENESS FIXES ───────────────────────────────────────────── */
+
+/* Team detail pop-out panel — prevent overflow on narrow screens */
+#team-detail-panel {
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+#team-detail-panel > div {
+  min-width: 0;
+}
+
+/* Prediction cards — 4-col stat row stacks on very small screens */
+@media (max-width: 480px) {
+  /* Prediction stat grid: 4-wide → 2-wide for better readability */
+  .pred-stats-row {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  /* Parlay/bet rows with min-width — let them wrap more aggressively */
+  .parlay-row-inner { flex-direction: column !important; }
+}
+
+/* Content padding tightens further on tiny screens */
+@media (max-width: 360px) {
+  .content { padding: 12px 10px !important; }
+  .sec-title { font-size: clamp(18px, 6vw, 28px) !important; }
+}
+
+/* Intel grid — allow single column on very small screens */
+@media (max-width: 380px) {
+  .intel-grid { grid-template-columns: 1fr !important; }
+  .upset-grid { grid-template-columns: 1fr !important; }
+  .focus-grid { grid-template-columns: 1fr !important; }
+}
+
+/* NIL section rows — prevent overflow of name + bar + $ on narrow screen */
+.nil-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow: hidden;
+  flex-wrap: nowrap;
+}
+@media (max-width: 480px) {
+  .nil-row span[style*="width:110px"] { width: 80px !important; font-size: 10px !important; }
+  .nil-bar-wrap { min-width: 40px !important; }
+}
+
+/* Travel section badge row — wrap on mobile */
+.travel-badge-row { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* Bracket mode toggle — stack on very narrow */
+@media (max-width: 360px) {
+  #mode-yours, #mode-ai { padding: 8px 12px !important; font-size: 12px !important; }
+  #mode-badge { font-size: 9px !important; padding: 5px 8px !important; }
+}
+
+/* Tab bar labels — smaller on mobile */
+@media (max-width: 480px) {
+  .tab-btn { padding: 11px 12px !important; font-size: 10px !important; letter-spacing: 1px !important; }
+}
+
+/* Prediction cards stat row: ensure 4-up stats don't get tiny cells */
+@media (max-width: 420px) {
+  /* force 2x2 grid for the 4-stat row inside prediction cards */
+  div[style*="grid-template-columns:1fr 1fr 1fr 1fr"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+/* Game prediction cards: edge text and flags wrap cleanly */
+@media (max-width: 480px) {
+  div[style*="minmax(340px"] { grid-template-columns: 1fr !important; }
+  div[style*="minmax(min(340px"] { grid-template-columns: 1fr !important; }
+}
+
+/* Parlay sheet bet rec rows */
+@media (max-width: 480px) {
+  div[style*="min-width:200px"] { min-width: 120px !important; }
+  div[style*="min-width:110px"] { min-width: 80px !important; }
+}
+
+/* Hero champion strip — ensure it doesn't overflow */
+.hero-champion-strip { flex-wrap: nowrap; }
+@media (max-width: 480px) {
+  .hcs-label { font-size: 8px !important; padding: 10px 10px !important; }
+  .hcs-pick  { font-size: 18px !important; padding: 6px 14px !important; }
+}
+
+/* Section headers never clip */
+.sec-title { word-break: break-word; }
+.sec-sub   { word-break: break-word; }
 </style>
 </head>
 <body>
@@ -511,6 +604,8 @@ nav{top:32px!important}
       <div class="tick-item"><span class="tick-inj">🚑 OUT</span><span style="color:rgba(255,255,255,0.9)">Duke Caleb Foster — OUT (foot fracture, season-ending)</span></div>
       <div class="tick-item"><span class="tick-inj">🚑 OUT</span><span style="color:rgba(255,255,255,0.9)">Michigan L.J. Cason — OUT (ACL, season-ending)</span></div>
       <div class="tick-item"><span class="tick-inj">🚑 OUT</span><span style="color:rgba(255,255,255,0.9)">Arizona Koa Peat — OUT (foot, missed late season)</span></div>
+      <div class="tick-item"><span class="tick-inj">🚑 OUT</span><span style="color:rgba(255,255,255,0.9)">Texas Tech JT Toppin — OUT (ACL, season-ending · 21.8 ppg gone · Akron 12-seed now favored by many)</span></div>
+      <div class="tick-item"><span class="tick-inj">⚠️ GTD</span><span style="color:rgba(255,255,255,0.9)">Duke Patrick Ngongba II — GTD (foot soreness · with Foster already OUT, Duke down to 6-man unit)</span></div>
       <div class="tick-item"><span class="tick-inj">⚠️ GTD</span><span style="color:rgba(255,255,255,0.9)">Gonzaga Braden Huff — GTD (knee · offense 15th→62nd without him)</span></div>
       <div class="tick-item"><span class="tick-inj">⚠️ GTD</span><span style="color:rgba(255,255,255,0.9)">Tennessee Nate Ament — GTD (knee, limited)</span></div>
       <div class="tick-item"><span class="tick-inj">⚠️ GTD</span><span style="color:rgba(255,255,255,0.9)">Iowa State M. Momcilovic — GTD (back tightness)</span></div>
@@ -977,7 +1072,7 @@ nav{top:32px!important}
     <!-- TRAVEL DISTANCE SECTION -->
     <div style="margin-top:28px">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;letter-spacing:2px;color:#0B0F1E;margin-bottom:4px">TRAVEL BURDEN ANALYSIS</div>
-      <div style="font-size:11px;color:#64748B;margin-bottom:14px">Miles traveled to first-round site · timezone shifts · days of rest · <strong style="color:#0B0F1E">40 teams tracked</strong> · historically disadvantages West Coast teams in East/South pod games</div>
+      <div style="font-size:11px;color:#64748B;margin-bottom:14px">Miles traveled to first-round site · timezone shifts · days of rest · <strong style="color:#0B0F1E">all 64 teams tracked</strong> · historically disadvantages West Coast teams in East/South pod games</div>
       <div style="background:#FFFFFF;border:1px solid #D9D5CC;border-left:3px solid #1A56DB;border-radius:10px;padding:12px 16px;margin-bottom:8px;font-size:11px;color:#64748B;line-height:1.8;box-shadow:0 1px 3px rgba(11,15,30,0.08)">
         <span style="color:#1A56DB;font-weight:700">KEY STAT: </span>Teams traveling 2,000+ miles with a 2+ hour timezone shift go <strong style="color:#0B0F1E">41-58 ATS</strong> in Round 1 since 2015. West Coast teams playing in East/South pods win just <strong style="color:#0B0F1E">38%</strong> of those games outright. Note: East/Central teams traveling <em>west</em> to Seattle have a <strong style="color:#16A34A">favorable body-clock advantage</strong> — their noon game feels like 2–3pm.
       </div>
@@ -1199,7 +1294,7 @@ var bracket = {
 };
 
 var NIL_DATA = {
-  // EAST — Raleigh NC
+  // EAST — Greenville SC + San Diego CA + Philadelphia PA + Buffalo NY
   "Duke":{roster:18.5,tier:"elite"},
   "UConn":{roster:15.5,tier:"elite"},
   "Michigan State":{roster:11.5,tier:"high"},
@@ -1216,7 +1311,7 @@ var NIL_DATA = {
   "North Dakota St":{roster:1.5,tier:"low"},
   "Furman":{roster:1.5,tier:"low"},
   "Siena":{roster:1.0,tier:"low"},
-  // WEST — San Jose CA
+  // WEST — Portland OR + San Diego CA + St. Louis MO
   "Arizona":{roster:16.0,tier:"elite"},
   "Purdue":{roster:11.0,tier:"high"},
   "Gonzaga":{roster:10.0,tier:"mid"},
@@ -1233,7 +1328,7 @@ var NIL_DATA = {
   "Kennesaw St":{roster:1.5,tier:"low"},
   "Queens":{roster:1.0,tier:"low"},
   "LIU":{roster:1.0,tier:"low"},
-  // SOUTH — Houston TX
+  // SOUTH — Tampa FL + Greenville SC + Oklahoma City OK
   "Florida":{roster:8.0,tier:"mid"},
   "Houston":{roster:11.5,tier:"high"},
   "Illinois":{roster:12.5,tier:"high"},
@@ -1250,7 +1345,7 @@ var NIL_DATA = {
   "Penn":{roster:1.5,tier:"low"},
   "Idaho":{roster:1.0,tier:"low"},
   "Prairie View/Lehigh":{roster:1.2,tier:"low"},
-  // MIDWEST — Chicago IL
+  // MIDWEST — Buffalo NY + Tampa FL + Philadelphia PA + St. Louis MO
   "Michigan":{roster:12.5,tier:"high"},
   "Iowa State":{roster:12.0,tier:"high"},
   "Virginia":{roster:9.0,tier:"mid"},
@@ -1281,6 +1376,18 @@ var INJURIES = [
   {team:"Houston",player:"Milos Uzan",pos:"G",status:"HEALTHY",statusColor:"#4ade80",note:"No injury. Listed here because Uzan returned from last year's knee issue fully healthy. When Houston has Uzan + Shead combo, they're Final Four caliber. Bracket pick: Houston is underrated.",pre:13.2,post:13.2,impact:0,regionColor:"#22c55e",seed:2},
   {team:"Wisconsin",player:"John Blackwell",pos:"G",status:"LIMITED",statusColor:"#f0c040",note:"Shoulder — questionable for tourney after Big Ten injury. Wisconsin's offense already runs through Blackwell and Nunge. If Blackwell sits, their offensive ceiling drops significantly.",pre:14.8,post:null,eta:"Q for R1",pct:60,impact:-12,regionColor:"#2196f3",seed:5},
   {team:"Florida",player:"Full Roster",pos:"TEAM",status:"HEALTHY",statusColor:"#4ade80",note:"Defending champions with NO significant injuries. Full roster entering tournament. This is the single biggest advantage any team has — 91/100 focus score AND healthy. Trust Florida deep.",pre:0,post:0,impact:10,regionColor:"#22c55e",seed:1},
+  {team:"Kentucky",player:"Zvonimir Ivisic",pos:"C",status:"GTD",statusColor:"#ff9800",note:"Back tightness — practiced limited all week. At 7'2\" Ivisic is Kentucky's only true interior presence. If limited, Pope loses the one defender who can protect the rim. Compounds the 48/100 focus concern entering March.",pre:14.2,post:null,eta:"Q for R1",pct:55,impact:-16,regionColor:"#f59e0b",seed:7},
+  {team:"North Carolina",player:"RJ Davis",pos:"G",status:"LIMITED",statusColor:"#f0c040",note:"Hip flexor — managed late in ACC play. Davis is UNC's primary ball-handler and shot creator. Against VCU's Havoc defense, a compromised Davis is exactly the vulnerability Odom's system exploits. Health is the swing factor in this upset watch.",pre:17.1,post:14.0,impact:-11,regionColor:"#22c55e",seed:6},
+  {team:"Gonzaga",player:"Braden Huff",pos:"F",status:"GTD",statusColor:"#ff9800",note:"Knee — still GTD heading into Portland. Without Huff, Gonzaga's offense dropped from top-15 to top-62 nationally. Mark Few runs his best systems around a dominant big. Night-of determination is critical — do not lock in your Gonzaga picks until the starting lineup drops.",pre:17.8,post:null,eta:"Night-of",pct:50,impact:-22,regionColor:"#2196f3",seed:3},
+  {team:"VCU",player:"Full Roster",pos:"TEAM",status:"HEALTHY",statusColor:"#4ade80",note:"VCU enters the tournament fully healthy with their entire Havoc rotation intact. Odom's system is built on depth and energy — all 9 rotation players healthy is a significant asset for a team whose identity is pressure and pace.",pre:0,post:0,impact:8,regionColor:"#22c55e",seed:11},
+  {team:"McNeese",player:"Full Roster",pos:"TEAM",status:"HEALTHY",statusColor:"#4ade80",note:"McNeese is healthy and at full strength. Will Wade confirmed no significant injury concerns entering Oklahoma City. For an upset-minded mid-major, full health is everything — this is one more box checked for the McNeese vs Vanderbilt upset alert.",pre:0,post:0,impact:8,regionColor:"#22c55e",seed:12},
+  {team:"Alabama",player:"Mark Sears",pos:"G",status:"HEALTHY",statusColor:"#4ade80",note:"Sears entered the tournament healthy after a minor ankle tweak in the SEC Tournament. Alabama's offensive identity runs through Sears — when healthy, Oats' up-tempo system is tournament-capable of scoring 90+. Full health is confirmed.",pre:20.1,post:20.1,impact:4,regionColor:"#f59e0b",seed:4},
+  {team:"Arkansas",player:"D.J. Wagner",pos:"G",status:"GTD",statusColor:"#ff9800",note:"Knee — played through it in Big 12 Tournament but clearly not 100%. Calipari's first-year rebuild already has cohesion concerns — losing their starting PG for any stretch against Hawai'i in Portland could unravel a fragile team early. Check the night-of report.",pre:14.8,post:null,eta:"Q for R1",pct:65,impact:-10,regionColor:"#2196f3",seed:4},
+  {team:"Purdue",player:"Trey Kaufman-Renn",pos:"F",status:"HEALTHY",statusColor:"#4ade80",note:"Kaufman-Renn enters the tournament fully healthy and in peak form post-Edey. As Purdue's top interior scorer and rebounder, his health anchors Painter's system. Queens has zero answer for his size — Purdue's path to a second-round blowout starts here.",pre:17.4,post:17.4,impact:5,regionColor:"#2196f3",seed:2},
+  {team:"Michigan State",player:"Jaden Akins",pos:"G",status:"LIMITED",statusColor:"#f0c040",note:"Groin — came off bench in Big Ten Tournament. MSU's most athletic perimeter defender and secondary scorer. Izzo coaches around injuries better than anyone, but a compromised Akins limits MSU's defensive versatility in the Sweet 16 and beyond.",pre:12.3,post:10.0,impact:-8,regionColor:"#e63946",seed:3},
+  {team:"St. Mary's",player:"Augustas Marciulionis",pos:"G",status:"GTD",statusColor:"#ff9800",note:"Ankle — rolled it in WCC Tournament. Marciulionis is St. Mary's primary ball-handler and decision-maker in Bennett's structured system. A limited Marciulionis disrupts the exact timing and spacing the WCC offense depends on — compounds the cross-country travel concern.",pre:11.2,post:null,eta:"Q for R1",pct:60,impact:-12,regionColor:"#22c55e",seed:7},
+  {team:"Texas Tech",player:"JT Toppin",pos:"F",status:"OUT",statusColor:"#ff4444",note:"ACL — season-ending. Preseason All-American averaging 21.8 ppg and 10.8 rpg when lost in mid-February. Transfer Donovan Atwell has stepped up heroically (set school single-season 3pt record with 124 makes at 45.4%) but the talent gap is enormous. Bracket pick: this is why Akron is the consensus top 12-over-5 upset pick of the entire field.",pre:21.8,post:0,impact:-24,regionColor:"#f59e0b",seed:5},
+  {team:"Duke",player:"Patrick Ngongba II",pos:"F",status:"GTD",statusColor:"#ff9800",note:"Foot soreness — questionable for opener vs Siena. With Foster already OUT for the season, losing Ngongba would leave Duke with a 6-man rotation entering the tournament. Scheyer's 7-man unit becomes genuinely thin. Monitor the night-of report carefully — this could significantly impact Duke's Sweet 16 ceiling.",pre:8.2,post:null,eta:"Q for R1 vs Siena",pct:55,impact:-11,regionColor:"#e63946",seed:1},
 ];
 
 var UPSETS_2025 = [
@@ -1298,6 +1405,10 @@ var OUR_UPSETS = [
   {dog:"High Point",dS:12,fav:"Wisconsin",fS:5,alert:52,region:"West",note:"Blackwell shoulder injury reduces Wisconsin's offensive ceiling. High Point won their conference going away. 12v5 historically strong — and Wisconsin is compromised."},
   {dog:"Texas A&amp;M",dS:10,fav:"St. Mary's",fS:7,alert:48,region:"South",note:"Buzz Williams' teams always compete physically. St. Mary's runs the most routine-dependent system in basketball — disrupted by A&amp;M's athleticism. SEC grind makes A&amp;M dangerous."},
   {dog:"Georgia",dS:8,fav:"Michigan",fS:1,alert:42,region:"Midwest",note:"L.J. Cason OUT means Cadeau is sole PG for 6 games. Georgia is physical and battle-tested from the SEC. Michigan is still favored but at a reduced ceiling without full depth."},
+  {dog:"Missouri",dS:10,fav:"Miami",fS:7,alert:35,region:"West",note:"Missouri plays 125 miles from St. Louis — essentially a home game. Miami FL makes a 1,310-mile trip. Gates has Missouri playing with urgency after a bubble scare. 10v7 upset rate is 39% and Missouri has the crowd advantage."},
+  {dog:"UCF",dS:10,fav:"UCLA",fS:7,alert:34,region:"East",note:"UCLA makes the longest trip of any team in the East — 2,720 miles + 3hr TZ shift to Philadelphia. UCF is 1,100 miles away in the same timezone. 10v7 upsets happen 39% of the time and UCF has the massive travel edge here."},
+  {dog:"Akron",dS:12,fav:"Texas Tech",fS:5,alert:38,region:"Midwest",note:"MAC 12-seeds are historically one of the best upset matchups in the tournament. Akron plays in Tampa on the same Eastern timezone — no travel disruption. Texas Tech hauls 1,320 miles with a 1hr TZ shift. Groce over-prepares for moments exactly like this."},
+  {dog:"Santa Clara",dS:10,fav:"Kentucky",fS:7,alert:35,region:"Midwest",note:"Kentucky has the LOWEST focus score in the entire field (48/100) — 72% transfer roster + multiple NBA evaluees. Santa Clara is disciplined, system-oriented, and Sendek is a proven tournament coach. St. Louis is actually closer to Santa Clara's WCC rivals than Kentucky's fans think."},
 ];
 
 var FOCUS_SCORES = [
@@ -1320,7 +1431,7 @@ var FOCUS_SCORES = [
   {team:"Georgia",score:64,region:"Midwest",rc:"#f59e0b",seed:8,coach:"Mike White",coachTourney:"8-8 career",note:"Mike White teams compete hard as 8-seeds — physical and SEC battle-tested. Georgia vs Michigan in R1 is a real test. No significant injury concerns entering the tournament."},
   {team:"Nebraska",score:68,region:"South",rc:"#22c55e",seed:4,coach:"Fred Hoiberg",coachTourney:"5-5 career",note:"Hoiberg's rebuild at Nebraska has reached tournament-relevant status. The team has Big Ten physicality and a clear identity. As a 4-seed, they should win R1 comfortably — question is how they handle a tough R2 opponent."},
   {team:"Alabama",score:66,region:"Midwest",rc:"#f59e0b",seed:4,coach:"Nate Oats",coachTourney:"8-7 career",note:"Oats has built a program that plays fast and shoots a lot of 3s — high variance in March. Alabama can beat anyone but can also be upset by anyone when the 3s don't fall. Middle-of-field focus score: talent is there, volatility is real."},
-  {team:"Texas Tech",score:69,region:"Midwest",rc:"#f59e0b",seed:5,coach:"Grant McCasland",coachTourney:"4-3 career",note:"McCasland has kept Tech's defensive identity alive post-Beard/Smart era. Big 12 battle-tested, physical team that doesn't beat itself. Solid focus score — no injury concerns, no chemistry issues, just a team that competes."},
+  {team:"Texas Tech",score:55,region:"Midwest",rc:"#f59e0b",seed:5,coach:"Grant McCasland",coachTourney:"4-3 career",note:"JT Toppin (ACL, OUT) was their entire offensive identity at 21.8 ppg/10.8 rpg. McCasland has maintained defensive structure but losing a preseason All-American mid-season creates real focus disruption — do the remaining players trust the system without their best player? Atwell's heroics are remarkable but can't replace that level of production."},
   {team:"Arkansas",score:59,region:"West",rc:"#2196f3",seed:4,coach:"John Calipari",coachTourney:"40-17 career, 1 title",note:"Calipari's track record is elite but his Arkansas rebuild is year one with a roster assembled via the transfer portal at rapid speed. Cold streak entering the tournament + transfer-heavy lineup = below-average cohesion. Watch first-round energy."},
   {team:"Gonzaga",score:57,region:"West",rc:"#2196f3",seed:3,coach:"Mark Few",coachTourney:"38-20 career, 1 title game",note:"Braden Huff's GTD status is a serious focus disruptor — players and coaches don't know their rotation until tipoff. Few is world-class but this level of pre-tournament uncertainty clouds even the best programs. The answer changes night-of."},
   {team:"Missouri",score:63,region:"West",rc:"#2196f3",seed:10,coach:"Dennis Gates",coachTourney:"3-3 career",note:"Gates is an up-and-coming coach building the right way, but Missouri entered the tournament on a slight fade. They can pull off a first-round win but they're not a team you trust to run the bracket. Near-bubble energy compounding."},
@@ -1506,7 +1617,7 @@ var KENPOM = {
   "Miami":{rank:44,adjO:109.6,adjD:98.8,adjEM:10.8,tempo:70.4}
 };
 
-var UPSET_HISTORY = {"McNeese":71,"VCU":65,"Northern Iowa":55,"High Point":52,"Texas A&M":48,"Georgia":42,"Akron":38,"Northern Iowa":35,"UCF":34};
+var UPSET_HISTORY = {"McNeese":71,"VCU":65,"Northern Iowa":55,"High Point":52,"Texas A&M":48,"Georgia":42,"Akron":38,"Missouri":35,"UCF":34};
 
 var INJURY_IMPACT = {"Duke":-18,"Michigan":-14,"Arizona":-10,"Gonzaga":-22,"Tennessee":-9,"Iowa State":-7,"Wisconsin":-12};
 
@@ -1669,24 +1780,108 @@ function statCell(label, val, color) {
     +'</div>';
 }
 
-function getScoutingReport(team, seed, score, kp, inj, focus, upsetAlert) {
-  var parts = [];
-  if(score >= 80) parts.push("Elite profile across all data layers.");
-  else if(score >= 65) parts.push("Strong overall profile.");
-  else if(score >= 50) parts.push("Solid mid-range contender.");
-  else if(upsetAlert > 50) parts.push("Upset candidate — data says danger.");
-  else parts.push("High variance — approach with caution.");
+// ── TEAM-SPECIFIC SCOUTING BLURBS ─────────────────────────────────────────────
+var TEAM_BLURBS = {
+  // ── EAST ──
+  "Duke": "The No. 1 overall seed at 32-2 with a tournament-record 16 Quad-1 wins — Jon Scheyer's deepening tournament run each year (R32→E8→F4) makes 2026 a title-or-bust moment. But the injury concerns are real: Caleb Foster (foot fracture, season-ending), and Patrick Ngongba II (foot) is also questionable for the opener. Cooper Flagg carries enormous individual burden in a 7-man rotation across what could be 6 tournament games.",
+  "UConn": "Dan Hurley's Huskies went on an 18-game winning streak mid-season to cement their 2026 status after a 2025 second-round exit stunned the college basketball world. At 29-5, Hurley brings a 15-3 career tournament record to Philadelphia with injury concerns he's been cautiously optimistic about heading into Selection weekend. The East region path likely leads to a Duke Elite Eight that would be the marquee matchup of the tournament.",
+  "St. John's": "Pitino's masterpiece — 30 wins, Big East title — but Luck +2.1 is the highest regression risk in the entire field. Won ugly games all year with schedule strength concerns persisting. Playing near-home in Philadelphia means a loud crowd, but the advanced metrics say correction is coming.",
+  "Kansas": "Darryn Peterson — projected No. 1 overall NBA Draft pick — leads the Jayhawks at 19.8 ppg but has missed 11 of their 33 games with unexplained absences all season. If Peterson is healthy and locked in, Kansas is a legitimate Final Four threat; if limited, they're a first or second-round exit. Bill Self's 37-19 career tournament record means the coaching is never in question, but this is the single most 'all-or-nothing' player situation in the bracket.",
+  "UCLA": "2,720-mile coast-to-coast haul from Los Angeles to Philadelphia — the largest travel burden in the East pod. Body clock plays noon Eastern as 9am Pacific. Big Ten NIL money has been spent but offensive efficiency has consistently underperformed roster cost all season.",
+  "Ohio State": "Jake Diebler's rebuild is showing KenPom #37 efficiency with $12M NIL investment — solid, not dominant. The Buckeyes bring bracket-busting potential as a mid-seed with a positive data profile, but momentum questions heading into March are real.",
+  "Northern Iowa": "UNI made the most improbable run to an automatic bid in recent MVC history — winning Arch Madness as the 6-seed, the lowest seed to ever win the conference tournament, with four wins in four days. Their identity is pace manipulation: third-slowest tempo in Division I. Being forced to play a 65-possession rock fight against a hot team is a genuine nightmare for St. John's. The 35% historical 12v5 rate plus St. John's Luck +2.1 regression is a perfect storm.",
+  "TCU": "Jamie Dixon's Big 12 program is tournament-ready with the road battle experience needed in Philadelphia. Consistent mid-spend NIL efficiency — the 8-9 matchup is a pure coin flip with recent momentum as the differentiator.",
+  "Michigan State": "Tom Izzo's 28th consecutive NCAA Tournament appearance ties the all-time record — and the Spartans earned a 3-seed with a 25-7 record including 15-5 in the Big Ten. Izzo's teams are historically at their best as a 3-seed with chips on their shoulder — this profile fits perfectly. Jaden Akins LIMITED (groin) is the key injury to track, but no coach turns regular-season talent into March results more consistently than Izzo.",
+  "UCF": "Playing against UCLA's cross-country travel-fatigued roster is the perfect 10-seed draw. 2,720 miles of Pacific → Eastern fatigue gives UCF a real edge — their defensive energy will feel fresh while UCLA adjusts to East Coast time.",
+  "South Florida": "AAC mid-major with a first-round ceiling against Power 4 competition. Their value in this bracket is in the ATS market — they will compete hard and make it interesting regardless of outcome.",
+  "Furman": "Southern Conference program with real upset DNA — famous 2023 victory over Virginia proved they can execute a game plan against elite opponents. If the pace and matchup aligns, Furman is capable of a first-round shock.",
+  "Cal Baptist": "WAC auto-bid facing the ultimate tournament travel nightmare — 2,700+ miles to Philadelphia while Duke plays 275 miles from their campus. Nine-AM body clock vs. Duke's near-home crowd is the hardest possible draw in the field.",
+  "Siena": "MAAC auto-bid making the field with solid mid-major efficiency and a well-drilled system. Their value is in the ATS market and the joy of March — first-round ceiling against elite competition.",
+  "North Dakota St": "Summit League auto-bid with tournament pedigree — always competes hard with a well-executed game plan against superior opponents. Cover the number and go home with your heads held high.",
+  "Louisville": "Pat Kelsey's first year of rebuild at Louisville brings genuine energy and player buy-in. First-year tournament systems under major pressure are volatile — high potential ceiling with uncertain execution.",
+  // ── WEST ──
+  "Arizona": "Tommy Lloyd's #1 West seed won the Big 12 Tournament without Koa Peat (OUT, foot), proving their resilience is program-level, not player-dependent. KenPom top-10 efficiency with multiple NBA-caliber contributors still active. San Diego pod is near-neutral West Coast territory — no travel burden for a Tucson program.",
+  "Purdue": "Matt Painter's Boilermakers went 17-1 out of the gate before cratering 6-7 late, then righted the ship by winning the Big Ten Tournament — the quintessential boom-bust tournament team. Nearly 2,000 miles to Portland with a 2hr timezone shift is the steepest travel burden of any 2-seed. Their point guard posts 14.9 ppg/8.7 apg — if he's scoring in Portland, Purdue is dangerous deep.",
+  "Gonzaga": "Braden Huff was lost to a knee injury after just 18 games, yet Gonzaga surged to a 30-3 record and their 23rd WCC Tournament title — proof of Mark Few's system depth. Playing at home in Portland (Moda Center) with zero travel burden, the most battle-hardened team in their region. Huff's return would instantly make them a legitimate title threat.",
+  "Wisconsin": "Greg Gard's disciplined system is always a tournament threat. John Blackwell's shoulder is Q for R1 — he's their primary shot creator and offensive engine. 2,100 miles to Portland with a timezone headwind compounds the concern for a system-dependent program.",
+  "BYU": "AJ Dybantsa leads the nation in scoring at 25.3 ppg on 51.3% shooting — projected No. 1 overall NBA Draft pick — and broke Kevin Durant's all-time Big 12 Tournament scoring record with 93 points in three games. Kevin Young's debut coaching season produces a dangerous 6-seed that could win the West region. A potential second-round matchup with Gonzaga in Portland would be the tournament's must-watch opening weekend clash.",
+  "Arkansas": "The Razorbacks won their first SEC Tournament title since 2000 — a legitimizing moment entering March. But Calipari's Year 1 rebuild entered play on a cold streak and D.J. Wagner is GTD (knee). The momentum from the conference title is real; Arkansas may be the most dangerous 4-seed in the entire field if Wagner plays.",
+  "Missouri": "Dennis Gates' squad holds a legitimate home-advantage edge — playing near home in St. Louis (400 miles from Columbia) with Central timezone familiarity. 10-seed upset energy is real, but they entered on a cold streak that needs reversing.",
+  "Villanova": "Kyle Neptune's Big East program finding its footing again after several transitional years. Big East road battles — one of the hardest environments in college basketball — have prepared them for hostile tournament atmospheres.",
+  "Utah State": "Mountain West overachiever with one of the best conference ROI numbers in the country. Danny Sprinkle's system maximizes every scholarship dollar. Short Western hop to San Diego — zero real travel concern.",
+  "Hawai'i": "2,611-mile journey from Honolulu to Portland is the longest raw trip in the field. Traveling East means body clock is slightly ahead — but the island-to-mainland preparation adjustment is still real and draining for a 13-seed.",
+  "Kennesaw St": "ASUN auto-bid with limited resources but nothing to lose. Their coaching staff will have a meticulous game plan ready. Cover the spread and represent your conference with everything you have.",
+  "High Point": "Big South champion making the field with Tubby Smith's experienced system. Playing in San Diego against a loaded West pod — their tournament experience is their reward.",
+  "LIU": "Coastal Athletic auto-bid. Their presence in the field is their championship — playing with maximum effort and no fear.",
+  "Queens": "Atlantic Sun automatic qualifier making the big dance. Every possession in March Madness is an achievement to remember.",
+  "Texas/NC State": "First Four participants bringing desperation energy into a must-win game. Both programs carry chips on their shoulder — expect maximum effort and grit throughout.",
+  // ── SOUTH ──
+  "Florida": "Defending champions and the gold standard of NIL efficiency — $8M to win it all at the best ROI in tournament history. Alex Condon, Rueben Chinyelu (11.2 pts/11.5 reb), and Thomas Haugh give them the nation's top rebounding margin at +15.3, a possession stranglehold that breaks opponents. Scoring 86.8 ppg while ranking 6th in defensive efficiency — and playing near-home in Tampa (130 miles from Gainesville). The data says repeat champion.",
+  "Houston": "Kelvin Sampson's defensive machine is one of the hardest outs in the country — elite rim protection, disruptive ball pressure, 64 possessions per game. Their defensive identity creates the best UNDER on the board in every round they play.",
+  "Illinois": "Brad Underwood's Big Ten defensive machine is tournament-ready. Playing 1,050 miles to Oklahoma City with a manageable TZ shift. Top-20 efficiency on both ends — goes as deep as their defense carries them, and it's been elite all year.",
+  "Nebraska": "Fred Hoiberg's Big Ten squad with solid efficiency and zero travel concern to Oklahoma City. Clean 4-seed draw — the Huskers' upside is quietly undervalued in bracket pools given their consistent defensive performance.",
+  "Vanderbilt": "Luck +3.2 is the most extreme overperformance outlier in the entire field — the data predicts a steep regression is coming. Made this bracket on fortune, not formula. McNeese is exactly the wrong first-round opponent for a team built on lucky bounces.",
+  "North Carolina": "Hubert Davis' squad faces VCU's Havoc defense — the most disruptive trapping system in the field. 1,400+ miles from Chapel Hill to Oklahoma City in a full road environment. UNC's ball-handling decision errors get brutally exposed against Havoc trap schemes.",
+  "St. Mary's": "Randy Bennett's elite offensive system is the best ROI in the WCC by a significant margin. Marciulionis GTD (ankle) is the entire offensive concern — without him, spacing collapses and their motion offense stalls. Meanwhile Texas A&M plays just 500 miles away.",
+  "Clemson": "Brad Brownell's ACC program with legitimate tournament experience and a disciplined defensive identity. Their ceiling in the South pod depends on how far controlled tempo and solid rebounding can carry them against athletic opponents.",
+  "Iowa": "Fran McCaffery's squad is always dangerous in March — their size and rebounding advantage is consistently underrated. Big Ten road-tested all year against elite competition. They find ways to win games the metrics don't always predict.",
+  "Texas A&M": "Buzz Williams' program playing 500 miles from home in Oklahoma City — the 10-seed with a real crowd advantage. DJ Wagner GTD (knee) is the key watch — without him their backcourt depth is tested entering the most important game of the year.",
+  "VCU": "26-7 on the season with their second Atlantic 10 Tournament title in three years, defeating Dayton in the final. Mike Rhoades' HAVOC defense travels perfectly — VCU's losses came against tournament teams (Utah State, NC State, Vanderbilt, Saint Louis). Full-roster healthy. This is the prototypical program-over-player March team: no superstar, but harder and more connected than almost anyone they'll face.",
+  "McNeese": "Will Wade's revenge game — same formula, same program that beat Clemson at +420 in 2025. Playing near-home in Tampa with zero travel burden. Vanderbilt's Luck +3.2 regression makes them the perfect trap game opponent for a well-coached, angry underdog.",
+  "Troy": "Sun Belt auto-bid playing on the biggest stage of the year. Their tournament experience is the prize — compete hard for 40 minutes.",
+  "Penn": "Ivy League — no athletic scholarships, just brilliant basketball minds and disciplined execution. Steve Donahue's system is the most unique in the entire field. The ultimate David vs. Goliath story.",
+  "Idaho": "Big Sky automatic qualifier. 1,620-mile haul to Oklahoma City to face Houston's elite defensive machine. The ultimate test — play with pride and execute every possession.",
+  "Prairie View/Lehigh": "SWAC/Patriot First Four participants. Playing in March Madness is the achievement — every possession is bracket-worthy.",
+  // ── MIDWEST ──
+  "Michigan": "Dusty May's best efficiency-per-dollar in the Midwest pod — $7M NIL with top-10 adjusted efficiency metrics. Playing 240 miles from Ann Arbor in Buffalo with a massive Wolverine fan base making the road trip. L.J. Cason OUT (ACL) but depth has kept this machine rolling all season.",
+  "Iowa State": "The Cyclones went 27-7 including a Big 12 Tournament run that featured a 49-point demolition of Arizona State and a narrow 82-80 semifinal loss to Arizona — tournament firepower is confirmed. T.J. Otzelberger's system is widely rated as one of the most undervalued in the field at the 2-seed. Momcilovic GTD (back) is the one concern heading into St. Louis, a near-home-game advantage for a Big 12 program.",
+  "Virginia": "New head coach Ryan Odom has quickly transformed UVA's identity — they now shoot 46.8% of attempts from three (2nd in the ACC) and rank 6th nationally in offensive rebounding rate while keeping the elite defense. Center Ugonna Onyenso anchors the interior at 3.0 blocks per game (2nd nationally). They're not the slow-it-down Cavaliers of years past, which makes them genuinely harder to scout and prepare for.",
+  "Alabama": "Nate Oats' up-tempo machine is built to run — and Mark Sears is HEALTHY, meaning their entire offensive engine is operating at full capacity. 663 miles to St. Louis with minimal TZ shift. Alabama's pace can overwhelm any opponent that isn't prepared to match their energy.",
+  "Texas Tech": "JT Toppin — preseason All-American at 21.8 ppg/10.8 rpg — tore his ACL in mid-February and is done for the season. That transforms a potential top-seed contender into a vulnerable 5-seed. Transfer Donovan Atwell has heroically stepped up (setting a Tech single-season 3-point record), but losing your best player at this level changes everything. Akron is widely cited as the most likely 12-over-5 upset of the entire field.",
+  "Tennessee": "Rick Barnes' defensive identity is tournament-proven — they will grind out wins with elite rim protection. Nate Ament GTD (knee) is the crucial watch — without him their interior becomes a vulnerability in close games. Six-seed is the perfect undervalued spot for Final Four DNA.",
+  "Kentucky": "$22M NIL spent and barely escaped the bubble — the worst ROI in the entire tournament field. Focus score 48/100 is the lowest of any team — portal churn, NBA draft evaluees, and program reset chaos all converge. Mark Pope's first March reveals whether the rebuild has real foundation.",
+  "Georgia": "Mike White's SEC rebuild is quietly improving with a positive efficiency trajectory. 8-seed vs. Michigan in Buffalo is a brutal opening draw, but Eastern → Central timezone is actually favorable for Georgia's body clock — don't fully write them off.",
+  "St. Louis": "A-10 power with excellent NIL ROI — and near-home in St. Louis means their arena advantage is essentially real home court. The best-positioned mid-seed to make a deep run in this pod given the location advantage.",
+  "Santa Clara": "WCC solid program facing Kentucky's most distracted roster — Focus score 48/100 is the lowest in the field. Santa Clara's disciplined system and high motor could expose a program still finding its identity under Mark Pope. Our 10-seed upset pick.",
+  "Akron": "The consensus top upset pick of the entire first round — 29-5, MAC's first-ever back-to-back-to-back conference champion, ranked as the nation's No. 10 scoring offense at 88.4 ppg while shooting 50.3% from the field. They draw Texas Tech, who just lost preseason All-American JT Toppin (ACL) mid-season. This is one of the most structurally sound 12-over-5 upset setups in modern tournament history — Akron belongs in the second weekend.",
+  "Hofstra": "CAA program with tournament pedigree playing with nothing to lose against a Power 4 opponent. The most dangerous mindset in March — no pressure, no fear, maximum effort every possession.",
+  "Wright State": "Horizon League auto-bid with a disciplined program and a well-drawn game plan. Their tournament presence is a credit to the coaching staff and program culture.",
+  "Tennessee State": "Ohio Valley automatic qualifier playing in March Madness with everything on the line. Maximum effort until the final buzzer — that's all that's asked.",
+  "UMBC/Howard": "America East/MEAC First Four — UMBC's legendary 2018 history (first-ever #16 to beat a #1) gives this matchup a special electricity. Every UMBC tip-off in March carries that legacy.",
+  "Miami (OH)/SMU": "MAC/AAC First Four participants — both programs are hungry for their first-round proper bid and will leave nothing on the court.",
+  "UMBC": "UMBC's legendary 2018 upset of Virginia — first-ever #16 over #1 — means every March they play carries special electricity. Experienced tournament program.",
+  "Howard": "MEAC champion playing in the First Four with the full backing of their HBCU community. Every possession in March Madness is a statement.",
+  "SMU": "AAC tournament participant playing in the First Four — Kelvin Sampson pipeline of assistant coaches means they are well-prepared for any opponent.",
+  "Miami OH": "MAC tournament representative in the First Four — Mid-American Conference battle-testing all year means they are physically and mentally ready to compete.",
+  "Lehigh": "Patriot League auto-bid representing a conference that punches above its weight class consistently in March Madness.",
+  "Prairie View": "SWAC champion making the First Four with full program pride. Playing in March Madness is the championship."
+};
 
-  if(kp && kp.rank <= 5) parts.push("KenPom top-5 efficiency.");
-  if(kp && kp.tempo >= 72) parts.push("Fastest-paced team in region.");
-  if(kp && kp.tempo <= 66) parts.push("Slow tempo — games will grind.");
-  if(inj && inj.status === "OUT") parts.push(inj.player+" is OUT — significant impact.");
-  if(inj && inj.status === "GTD") parts.push(inj.player+" is GTD — monitor availability.");
-  if(focus && focus.score <= 55) parts.push("Focus risk: "+focus.note.split(".")[0]+".");
-  if(focus && focus.score >= 85) parts.push("Mentally locked in — no distractions.");
-  if(upsetAlert > 60) parts.push("Upset alert "+upsetAlert+"/100 — genuine Cinderella threat.");
+function getScoutingReport(team, seed, score, kp, inj, focus, upsetAlert) {
+  // Team-specific blurb takes priority
+  if(TEAM_BLURBS[team]) return TEAM_BLURBS[team];
+
+  // Dynamic fallback for any team not in the lookup
+  var parts = [];
+  if(score >= 80) parts.push("Elite composite profile — KenPom efficiency, NIL ROI, and tournament experience all aligned.");
+  else if(score >= 65) parts.push("Strong overall data profile with multiple indicators pointing toward a deep run.");
+  else if(score >= 50) parts.push("Solid mid-range contender — competitive in R64 with the right matchup.");
+  else if(upsetAlert > 50) parts.push("Upset candidate — historical data and matchup factors say danger for the favorite.");
+  else parts.push("High-variance draw — approach with caution and track game-day indicators closely.");
+
+  if(kp && kp.rank <= 5) parts.push("KenPom top-5 efficiency rating — one of the most dominant offensive/defensive profiles in the field.");
+  else if(kp && kp.rank <= 15) parts.push("KenPom top-15 — elite two-way efficiency that survives bracket adversity.");
+  if(kp && kp.tempo >= 72) parts.push("Fastest-paced team in the region — 72+ possessions forces opponents out of their comfort zone.");
+  if(kp && kp.tempo <= 65) parts.push("Slowest tempo in the region — grind-it-out style that limits upset variance but also limits margin.");
+  if(inj && inj.status === "OUT") parts.push(inj.player+" is OUT for the season — bracket ceiling must be adjusted accordingly.");
+  if(inj && inj.status === "GTD") parts.push(inj.player+" is GTD — check the official injury report night-before each game.");
+  if(inj && inj.status === "LIMITED") parts.push(inj.player+" is LIMITED — monitor minutes and efficiency closely.");
+  if(focus && focus.score <= 55) parts.push("Focus score "+focus.score+"/100 — distraction risk from NBA decisions, portal churn, or program upheaval.");
+  if(focus && focus.score >= 85) parts.push("Focus score "+focus.score+"/100 — mentally locked in with no distractions heading into March.");
+  if(upsetAlert > 60) parts.push("Upset alert "+upsetAlert+"/100 — genuine Cinderella threat backed by historical data and matchup factors.");
   var nil = getNIL(team);
-  if(nil.tier === "low" && seed <= 14) parts.push("Low NIL ($"+nil.roster+"M) vs high-spend opponent — talent gap real.");
+  if(nil.tier === "low" && seed <= 10) parts.push("Low NIL ($"+nil.roster+"M) vs high-spend opponent — raw talent gap is real, system must compensate.");
+  if(nil.tier === "elite" && score < 65) parts.push("High NIL spend ($"+nil.roster+"M) underperforming — classic trap for bracket overvaluation.");
   return parts.slice(0,3).join(" ");
 }
 
@@ -1970,8 +2165,8 @@ function showTeamDetail(team, seed, regionColor) {
   h += '<div style="font-size:10px;color:'+sc+';font-weight:700;margin-top:2px">'+scoreLabel(cs.score)+'</div>';
   h += '</div>';
   // Team info
-  h += '<div style="flex:1;min-width:160px">';
-  h += '<div style="font-family:Barlow Condensed,sans-serif;font-size:28px;font-weight:900;color:#0B0F1E;letter-spacing:1px;margin-bottom:4px">'+team+'</div>';
+  h += '<div style="flex:1;min-width:0;overflow:hidden">';
+  h += '<div style="font-family:Barlow Condensed,sans-serif;font-size:clamp(18px,5vw,28px);font-weight:900;color:#0B0F1E;letter-spacing:1px;margin-bottom:4px;word-break:break-word">'+team+'</div>';
   // Score bar
   h += '<div style="height:6px;background:#D9D5CC;border-radius:3px;overflow:hidden;margin-bottom:8px;max-width:200px">';
   h += '<div style="width:'+cs.score+'%;height:100%;background:linear-gradient(90deg,'+sc+'66,'+sc+');border-radius:3px"></div></div>';
@@ -1981,8 +2176,8 @@ function showTeamDetail(team, seed, regionColor) {
     h += '<span style="background:'+l.color+'12;border:1px solid '+l.color+'30;border-radius:4px;padding:2px 7px;font-size:9px;color:'+l.color+';font-weight:700">'+l.label+': '+l.val+'</span>';
   });
   h += '</div></div>';
-  // Stats grid
-  h += '<div style="display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0">';
+  // Stats grid — responsive wrap
+  h += '<div style="display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0;width:100%">';
   if(kp){
     h += statCell('KenPom','#'+kp.rank, kp.rank<=5?'#B8952A':kp.rank<=15?'#16A34A':'#1A56DB');
     h += statCell('AdjO', kp.adjO.toFixed(1),'#B8952A');
@@ -1996,9 +2191,9 @@ function showTeamDetail(team, seed, regionColor) {
   h += '</div>';
   h += '</div>';
 
-  // Scouting report
+  // Scouting report — full-width below the header row
   var report = getScoutingReport(team, seed, cs.score, kp, inj, focus, upsetAlert);
-  h += '<div style="font-size:11px;color:#64748B;line-height:1.6;background:#F7F5F2;border-radius:6px;padding:8px 12px;border-left:3px solid '+sc+'">';
+  h += '<div style="font-size:11px;color:#64748B;line-height:1.7;background:#F7F5F2;border-radius:6px;padding:10px 12px;border-left:3px solid '+sc+';margin-top:4px;word-wrap:break-word;overflow-wrap:break-word">';
   h += '<strong style="color:#0B0F1E">'+team+':</strong> '+report;
   h += '</div>';
 
@@ -2229,8 +2424,8 @@ var TIER1_BETS = [
     signal:"COVER",
     confidence:88,
     estOdds:"-110",
-    edge:"Michigan top KenPom team · Dusty May's system is built for dominant R1 wins · UMBC/Howard play-in winner will be fatigued from First Four game · Ann Arbor to Chicago = home crowd, no travel burden",
-    layers:["💰 NIL: Michigan $12.5M vs UMBC/Howard ~$1.5M","🗺️ Travel: Michigan 238 miles = home game","🧠 Focus: Michigan 68/100 — motivated to prove with Cason out","🏟️ Chicago crowd: Midwest fans flood United Center"],
+    edge:"Michigan top KenPom team · Dusty May's system is built for dominant R1 wins · UMBC/Howard play-in winner will be fatigued from First Four game · Ann Arbor to Buffalo = 240 miles, home crowd, no travel burden",
+    layers:["💰 NIL: Michigan $12.5M vs UMBC/Howard ~$1.5M","🗺️ Travel: Michigan 240 miles to Buffalo = home game","🧠 Focus: Michigan 68/100 — motivated to prove with Cason out","🏟️ Buffalo crowd: Michigan fans flood KeyBank Center"],
     color:"#f59e0b"
   },
   {
@@ -2282,7 +2477,7 @@ var TIER2_BETS = [
     signal:"UPSET",
     alertScore:71,
     estOdds:"+340 to +420",
-    edge:"McNeese literally beat Clemson at +420 in 2025 Round of 64. Will Wade is a sharp tactician who over-prepares against Power 6 teams. Vanderbilt Luck +3.2 = most extreme overperformer in the field. Near-home game for McNeese — Lake Charles to Houston is 138 miles. Best upset value on the board.",
+    edge:"McNeese literally beat Clemson at +420 in 2025 Round of 64. Will Wade is a sharp tactician who over-prepares against Power 6 teams. Vanderbilt Luck +3.2 = most extreme overperformer in the field. Near-home game for McNeese — Lake Charles to Oklahoma City is 445 miles, same Central timezone. Best upset value on the board.",
     layers:["🔄 McNeese beat Clemson (+420) in 2025 R64 — exact same setup","🏠 Travel: McNeese 138 miles from Lake Charles = near-home","👔 Will Wade: detailed analytical prep vs opponents","📊 Vanderbilt Luck +3.2 = regression due"],
     color:"#ff2200"
   },
@@ -2292,7 +2487,7 @@ var TIER2_BETS = [
     signal:"UPSET",
     alertScore:65,
     estOdds:"+220 to +270",
-    edge:"VCU Havoc defense forces 30+ turnovers per game. North Carolina is a poor ball-handling team under pressure — exactly who Havoc eats. Odom's system beats teams with similar profiles. UNC in Houston = road environment, no Cameron Indoor advantage.",
+    edge:"VCU Havoc defense forces 30+ turnovers per game. North Carolina is a poor ball-handling team under pressure — exactly who Havoc eats. Odom's system beats teams with similar profiles. UNC in Greenville SC = road environment, no Cameron Indoor advantage. VCU travels 400 miles; UNC 275 miles — both manageable.",
     layers:["🛡️ VCU Havoc: 30+ forced turnovers per game","📊 UNC turnover rate 18.4% — Havoc target","🏠 Neutral site removes UNC home advantage","👔 Odom: 3-2 record — knows how to win these matchups"],
     color:"#ff6b35"
   },
@@ -2312,8 +2507,8 @@ var TIER2_BETS = [
     signal:"UPSET",
     alertScore:48,
     estOdds:"+175 to +210",
-    edge:"10v7 upset rate is 39% historically. St. Mary's travels 1,894 miles + 2hr TZ shift from the Bay Area to Houston — worst travel draw for a 7-seed in the field. A&M plays 96 miles from campus. SEC physicality disrupts St. Mary's structured system.",
-    layers:["📊 Historical: 10v7 upset rate 39%","🗺️ Travel: St. Mary's 1,894 miles vs A&amp;M 96 miles","💪 SEC physicality vs WCC structure — brutal mismatch","🏠 A&amp;M fans pack Houston — near-home game"],
+    edge:"10v7 upset rate is 39% historically. St. Mary's travels 1,750 miles + 2hr TZ shift from the Bay Area to Oklahoma City — worst travel draw for a 7-seed in the field. A&M plays 500 miles from campus — still far closer. SEC physicality disrupts St. Mary's structured system.",
+    layers:["📊 Historical: 10v7 upset rate 39%","🗺️ Travel: St. Mary's 1,750 miles vs A&amp;M 500 miles — major edge","💪 SEC physicality vs WCC structure — brutal mismatch","🏠 A&amp;M fans fill OKC — home-region crowd advantage"],
     color:"#f0c040"
   },
 ];
@@ -2377,7 +2572,7 @@ var PARLAYS = [
     legs:["Duke -18.5 (ATS)","Michigan -22 (ATS)","UConn -14 (ATS)","Tennessee -8.5 (ATS)"],
     estOdds:"+850 to +1000",
     units:"1 unit",
-    rationale:"All four #1/#2 seeds covering big against weak opponents. Duke #1 defense, Michigan home crowd in Chicago, UConn elite coach, Tennessee hot streak. Four high-confidence covers stacked.",
+    rationale:"All four #1/#2 seeds covering big against weak opponents. Duke #1 defense near home in Greenville, Michigan home crowd in Buffalo, UConn elite coach, Tennessee hot streak. Four high-confidence covers stacked.",
     risk:"LOW-MED",
     riskColor:"#22c55e",
     tags:["4-LEG","FAVORITES","COVERS"]
@@ -2425,8 +2620,8 @@ var PARLAYS = [
 ];
 
 var FUTURES_BETS = [
-  {team:"Florida",pick:"REPEAT TITLE",estOdds:"+700 to +900",signal:"BET",signalColor:"#22c55e",note:"Defending champs, same core, highest focus score (91/100). Playing near-home in Houston. Todd Golden has the culture built. Best combination of talent + focus + experience in the field."},
-  {team:"Michigan",pick:"WIN TITLE",estOdds:"+600 to +800",signal:"VALUE",signalColor:"#4a9eff",note:"KenPom #1 overall. Top offense + top defense. Dusty May strong. Playing 238 miles from campus in Chicago = home crowd. Without Cason the backcourt depth is the one concern for 6 games."},
+  {team:"Florida",pick:"REPEAT TITLE",estOdds:"+700 to +900",signal:"BET",signalColor:"#22c55e",note:"Defending champs, same core, highest focus score (91/100). Playing near-home in Tampa (130 miles from Gainesville). Todd Golden has the culture built. Best combination of talent + focus + experience in the field."},
+  {team:"Michigan",pick:"WIN TITLE",estOdds:"+600 to +800",signal:"VALUE",signalColor:"#4a9eff",note:"KenPom #1 overall. Top offense + top defense. Dusty May strong. Playing 240 miles from campus in Buffalo = home crowd. Without Cason the backcourt depth is the one concern for 6 games."},
   {team:"Tennessee",pick:"FINAL FOUR",estOdds:"+500 to +700",signal:"VALUE",signalColor:"#4a9eff",note:"Rick Barnes finally has the horses. Chaz Lanier elite scorer. Beat Florida in regular season. 0 Final Fours in career is the knock — but the Midwest path through Virginia is very winnable."},
   {team:"UConn",pick:"WIN TITLE",estOdds:"+900 to +1200",signal:"WATCH",signalColor:"#f0c040",note:"Dan Hurley 15-3 tourney record + 2 titles = elite. Lost Big East final but efficiency never wavered. Good value IF they survive a tough East bracket with Duke and Michigan State lurking."},
   {team:"St. John's",pick:"AVOID TITLE BET",estOdds:"Any",signal:"FADE",signalColor:"#ff4444",note:"Luck rating +2.1 — highest in entire field. They overperformed all year. March is where luck runs out. Pitino is elite but this roster has regression written all over it."},
@@ -2566,7 +2761,7 @@ var GAME_PREDICTIONS = [
     spread:-28, ml:-5000, ou:130, ouLean:"UNDER",
     betRating:"LOCK", betColor:"#4ade80",
     spreadLean:"DUKE -28", mlLean:"PASS (juice too high)",
-    edge:"Duke plays 28 miles from campus in Raleigh — a true home game in every sense. Siena is a MAAC auto-bid. Duke's #1 defense (AdjD 88.2) and Cooper Flagg make this the most lopsided matchup on the board. UNDER because Duke wins methodically, won't run up score near home fans.",
+    edge:"Duke plays 275 miles from campus in Greenville, SC — heavy home-region crowd in ACC country. Siena is a MAAC auto-bid. Duke's #1 defense (AdjD 88.2) and Cooper Flagg make this the most lopsided matchup on the board. UNDER because Duke wins methodically, won't run up score with a home crowd.",
     flags:["🏠 Duke plays 28mi from campus — home crowd","🛡️ Duke #1 defense nation AdjD 88.2","🌟 Cooper Flagg — projected #1 pick","💰 NIL gap $18.5M vs ~$2M"] },
 
   { region:"East", rc:"#e63946",
@@ -2655,7 +2850,7 @@ var GAME_PREDICTIONS = [
     spread:-16, ml:-1400, ou:139, ouLean:"TOSS UP",
     betRating:"COVER LEAN", betColor:"#4ade80",
     spreadLean:"ARKANSAS -16", mlLean:"PASS",
-    edge:"Hawai'i faces a brutal 2,393-mile travel burden to San Jose — and they just played 3 games to win the Big West tourney. Energy and freshness go to Arkansas. Arkansas plays at 70.2 possessions — OVER could be in play if Hawai'i tries to push.",
+    edge:"Hawai'i faces a brutal 2,611-mile travel burden to Portland — and they just played 3 games to win the Big West tourney. Energy and freshness go to Arkansas. Arkansas plays at 70.2 possessions — OVER could be in play if Hawai'i tries to push pace.",
     flags:["✈️ Hawai'i 2393mi travel — EXTREME burden","😤 Hawai'i played 3 tourney games in 3 days","📊 Arkansas KenPom #22, AdjEM +21.4","💰 NIL: $8.5M vs ~$2.5M"] },
 
   { region:"West", rc:"#2196f3",
@@ -2696,7 +2891,7 @@ var GAME_PREDICTIONS = [
     spread:-27, ml:-5000, ou:136, ouLean:"OVER",
     betRating:"LOCK", betColor:"#4ade80",
     spreadLean:"FLORIDA -27", mlLean:"PASS",
-    edge:"Defending champions playing near-home in Houston with the highest focus score in the field (91/100). The 16-seed comes from the First Four. Florida has an 11-game winning streak and won many games by 20+. OVER because Florida pushes pace when comfortable.",
+    edge:"Defending champions playing near-home in Tampa (130 miles from Gainesville) with the highest focus score in the field (91/100). The 16-seed comes from the First Four exhausted. Florida has an 11-game winning streak and won many games by 20+. OVER because Florida pushes pace when comfortable.",
     flags:["🏆 Defending champions","🏠 Florida plays near home in Houston","🧠 Focus score 91/100 — best in field","📊 Florida KenPom #8, AdjEM +27.2"] },
 
   { region:"South", rc:"#22c55e",
@@ -2744,7 +2939,7 @@ var GAME_PREDICTIONS = [
     spread:-3.5, ml:-165, ou:129, ouLean:"UNDER",
     betRating:"UPSET ALERT", betColor:"#ff6b35",
     spreadLean:"TEXAS A&M +3.5", mlLean:"TEXAS A&M ML (+140)",
-    edge:"10-seeds beat 7-seeds 39% of the time. Texas A&M is SEC-battle-tested with a 96-mile home-region travel advantage to Houston. St. Mary's plays extremely slow (64.2 poss) — A&M won't let this become a slugfest. UNDER almost certain regardless of winner. Our upset alert: 48/100.",
+    edge:"10-seeds beat 7-seeds 39% of the time. Texas A&M is SEC-battle-tested with a major travel advantage to Oklahoma City (500 miles) vs St. Mary's hauling 1,750 miles from the Bay Area. St. Mary's plays extremely slow (64.2 poss) — A&M won't let this become a slugfest. UNDER almost certain regardless of winner. Our upset alert: 48/100.",
     flags:["🏠 Texas A&M only 96mi from campus to Houston","📊 10v7 upset rate: 39%","🐢 St. Mary's 64.2 poss — extreme grind","🧠 Our upset alert score: 48/100"] },
 
   { region:"South", rc:"#22c55e",
@@ -2752,7 +2947,7 @@ var GAME_PREDICTIONS = [
     spread:-22, ml:-3500, ou:120, ouLean:"UNDER",
     betRating:"UNDER LOCK", betColor:"#60a5fa",
     spreadLean:"HOUSTON -22", mlLean:"PASS",
-    edge:"THIS IS THE BEST UNDER PLAY ON THE BOARD. Houston plays 64.4 possessions/game — SLOWEST in the field. Playing at home in Houston and Idaho is a WAC team. Under 120 is a near certainty with Sampson's suffocating grind-it-out system.",
+    edge:"THIS IS THE BEST UNDER PLAY ON THE BOARD. Houston plays 64.4 possessions/game — SLOWEST in the field. Playing near-home in Oklahoma City (490 miles) vs Idaho making a 1,620-mile haul. Under 120 is a near certainty with Sampson's suffocating grind-it-out system.",
     flags:["🏠 Houston plays AT HOME — ultimate comfort","🐢 Houston 64.4 poss — SLOWEST in field","📉 Houston UNDER rate: 68% this season","🛡️ Houston AdjD 92.4 — elite defense"] },
 
   // ── MIDWEST ──────────────────────────────────────────────────────────────────
@@ -2761,7 +2956,7 @@ var GAME_PREDICTIONS = [
     spread:-26, ml:-4800, ou:135, ouLean:"OVER",
     betRating:"LOCK", betColor:"#4ade80",
     spreadLean:"MICHIGAN -26", mlLean:"PASS",
-    edge:"Michigan is the #1 overall KenPom team with elite offense AND defense. UMBC/Howard winner comes from the First Four in Dayton — already with a game in their legs. Michigan plays 238 miles from campus in Chicago. OVER because Michigan pushes pace at 72.4.",
+    edge:"Michigan is the #1 overall KenPom team with elite offense AND defense. UMBC/Howard winner comes from the First Four in Dayton — already with a game in their legs. Michigan plays 240 miles from campus in Buffalo — home-adjacent crowd. OVER because Michigan pushes pace at 72.4.",
     flags:["📊 Michigan KenPom #2 overall","🏠 Michigan 238mi from campus — near home","⚡ Michigan tempo 72.4 — top 3 fastest","😤 16-seed already played First Four game"] },
 
   { region:"Midwest", rc:"#f59e0b",
@@ -2817,7 +3012,7 @@ var GAME_PREDICTIONS = [
     spread:-22, ml:-3500, ou:128, ouLean:"UNDER",
     betRating:"COVER LEAN", betColor:"#4ade80",
     spreadLean:"IOWA STATE -22", mlLean:"PASS",
-    edge:"Iowa State has one of the best defenses in the field. Tamin Lipsey is elite. Tennessee State is an OVC auto-bid team. Iowa State plays 305 miles from campus in Chicago — near-home advantage. UNDER because Iowa State's defensive system clamps down.",
+    edge:"Iowa State has one of the best defenses in the field. Tamin Lipsey is elite. Tennessee State is an OVC auto-bid team. Iowa State plays 335 miles from campus in St. Louis — near-home advantage with Cyclone fans flooding Enterprise Center. UNDER because Iowa State's defensive system clamps down.",
     flags:["🏠 Iowa State 305mi from campus — near home Chicago","🛡️ Iowa State elite defense — AdjD 93.1","🧠 Focus score 79/100 — locked in","💰 NIL: $12M vs ~$2M"] },
 ];
 
@@ -2837,7 +3032,7 @@ function renderGamePredictions() {
     html += '<span style="font-family:Barlow Condensed,sans-serif;font-size:20px;font-weight:900;color:'+rColors[rName]+';letter-spacing:2px">'+rName.toUpperCase()+' REGION</span>';
     html += '<div style="flex:1;height:1px;background:'+rColors[rName]+'33"></div>';
     html += '</div>';
-    html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:10px">';
+    html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr));gap:10px">';
 
     games.forEach(function(g) {
       var bc = g.betColor;
@@ -2863,7 +3058,7 @@ function renderGamePredictions() {
       html += '</div>';
 
       // Stats row
-      html += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid #D9D5CC">';
+      html += '<div class="pred-stats-row" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid #D9D5CC">';
       var stats = [
         {label:'SPREAD', val:(g.spread > 0 ? '+' : '')+g.spread, color:'#0B0F1E'},
         {label:'FAV ML', val:g.ml > 0 ? '+'+g.ml : g.ml, color:'#B8952A'},
@@ -2926,214 +3121,345 @@ function handleInfoClick(el){ var id=el.getAttribute('data-infoid'); var d=windo
 
 
 // ── TRAVEL DISTANCE DATA ──────────────────────────────────────────────────────
-// First-round sites 2026: Dayton OH (First Four), Raleigh NC (East pod),
-// San Jose CA (West pod), Houston TX (South pod), Chicago IL (Midwest pod)
+// 2026 First-Round Sites: Dayton OH (First Four) · Greenville SC · San Diego CA
+// Portland OR · Philadelphia PA · St. Louis MO · Buffalo NY · Tampa FL · Oklahoma City OK
 var TRAVEL_DATA = [
-  // HIGH RISK — 2000+ miles, 2+ hour TZ shift
-  { team:"Gonzaga",     seed:3,  region:"West",  rc:"#2196f3",
-    from:"Spokane WA",  to:"Portland OR",   miles:265,  tzShift:0,
-    risk:"NONE", riskColor:"#4ade80",
-    note:"265 miles, same Pacific timezone. Gonzaga plays at the Moda Center in Portland — practically a home game. Spokane to Portland is a short Pacific Northwest hop. Zero travel burden. The only concern is Huff's GTD knee status, not fatigue.",
-    ats:"West Coast teams in Portland pod: home-court equivalent" },
-  { team:"Arizona",     seed:1,  region:"West",  rc:"#2196f3",
-    from:"Tucson AZ",   to:"San Jose CA",   miles:752,  tzShift:0,
-    risk:"NONE", riskColor:"#4ade80",
-    note:"Short West Coast flight, same timezone. San Jose is familiar West Coast territory for Arizona. Practically a home game atmosphere. Massive advantage for the 1-seed.",
-    ats:"Same TZ teams in San Jose: 7-3 ATS last 5 yrs" },
-  { team:"UCLA",        seed:7,  region:"East",  rc:"#e63946",
-    from:"Los Angeles CA", to:"Raleigh NC", miles:2340, tzShift:3,
-    risk:"HIGH", riskColor:"#ff4444",
-    note:"2,340 miles + 3hr TZ shift. LA to Raleigh is a full coast-to-coast haul. UCLA's noon Raleigh game feels like 9am body time. Big Ten acclimation helped them travel more, but this is a long draw for a 7-seed playing a dangerous UCF.",
-    ats:"West Coast teams in East pod: 3-8 ATS last 8 yrs" },
+
+  // ── GREENVILLE, SC (Bon Secours Wellness Arena) — East top + South mid ──────
   { team:"Duke",        seed:1,  region:"East",  rc:"#e63946",
-    from:"Durham NC",   to:"Raleigh NC",    miles:28,   tzShift:0,
-    risk:"NONE", riskColor:"#4ade80",
-    note:"28 MILES. Duke is essentially playing a home game. Raleigh is 30 min from campus. Crowd will be heavily Duke-favored. Massive advantage.",
-    ats:"Duke in Raleigh: home court equivalent" },
-  { team:"Iowa State",  seed:2,  region:"Midwest", rc:"#f59e0b",
-    from:"Ames IA",     to:"Chicago IL",    miles:305,  tzShift:0,
-    risk:"NONE", riskColor:"#4ade80",
-    note:"Practically a home game — Ames to Chicago is a short Midwest drive. Iowa State fans will fill the building. Major crowd advantage for the 2-seed.",
-    ats:"Big 12 teams in Chicago: very favorable" },
-  { team:"Michigan",    seed:1,  region:"Midwest", rc:"#f59e0b",
-    from:"Ann Arbor MI", to:"Chicago IL",   miles:238,  tzShift:0,
-    risk:"NONE", riskColor:"#4ade80",
-    note:"238 miles — Michigan is playing a home game. Ann Arbor to Chicago is a short drive and Wolverine fans will flood United Center. Massive home crowd advantage for the 1-seed.",
-    ats:"Big Ten teams in Chicago: essentially home court" },
-  { team:"Florida",     seed:1,  region:"South",  rc:"#22c55e",
-    from:"Gainesville FL", to:"Houston TX", miles:772,  tzShift:1,
+    from:"Durham NC",   to:"Greenville SC", miles:275,  tzShift:0,
     risk:"LOW", riskColor:"#4ade80",
-    note:"Short Southeast hop with a minimal 1hr TZ shift. Florida fans travel in massive numbers. Defending champs playing a near-home Southern pod. Very favorable draw.",
-    ats:"Florida in Houston pod: near-home feel, 7-3 ATS" },
-  { team:"St. John's",  seed:5,  region:"East",   rc:"#e63946",
-    from:"New York NY", to:"Raleigh NC",    miles:560,  tzShift:0,
-    risk:"LOW", riskColor:"#4ade80",
-    note:"Short Northeast hop. St. John's is used to playing in hostile environments on the road in the Big East. No travel concern.",
-    ats:"Northeast teams in Raleigh: neutral" },
-  { team:"UConn",       seed:2,  region:"East",   rc:"#e63946",
-    from:"Storrs CT",   to:"Raleigh NC",    miles:700,  tzShift:0,
-    risk:"LOW", riskColor:"#4ade80",
-    note:"Short Northeast trip, same timezone. Hurley's UConn has won everywhere all year — 15-3 career tourney record. No travel concern at all. East Coast hop is routine.",
-    ats:"Big East teams in Raleigh: slightly favorable" },
-  { team:"Purdue",      seed:2,  region:"West",   rc:"#2196f3",
-    from:"West Lafayette IN", to:"San Jose CA", miles:1976, tzShift:2,
+    note:"275 miles — Duke fans will pack Bon Secours Wellness Arena. Durham to Greenville is a 4-hour drive through ACC country. Strong crowd advantage for the 1-seed, though it's not the literal home game some assume.",
+    ats:"Duke in Southeast pod: 7-2 ATS last 9 yrs" },
+  { team:"Siena",       seed:16, region:"East",  rc:"#e63946",
+    from:"Albany NY",   to:"Greenville SC", miles:1000, tzShift:0,
     risk:"MED", riskColor:"#ff9800",
-    note:"Nearly 2,000 miles + 2hr TZ shift going West. Indiana → California means body clock is BEHIND — noon San Jose game feels like 2pm for Purdue. Big Ten teams rarely play on the West Coast. Slight headwind for Painter's squad.",
-    ats:"Midwest teams in San Jose pod: 4-7 ATS last 8 yrs" },
-
-  // ── EAST → RALEIGH NC ────────────────────────────────────────────────────
-  { team:"Cal Baptist", seed:13, region:"East",  rc:"#e63946",
-    from:"Riverside CA",  to:"Raleigh NC",   miles:2612, tzShift:3,
+    note:"1,000 miles from upstate New York to Greenville. All East Coast so no TZ disruption, but a full travel day vs Duke who has a near-home crowd. Siena competes hard but the environment is stacked against them.",
+    ats:"MAAC 16-seeds: 0-8 ATS vs #1 seeds" },
+  { team:"Ohio State",  seed:8,  region:"East",  rc:"#e63946",
+    from:"Columbus OH", to:"Greenville SC", miles:640,  tzShift:0,
+    risk:"LOW", riskColor:"#4ade80",
+    note:"640 miles from Columbus to Greenville — manageable East Coast hop, same timezone. Big Ten road travel prepares them for this. No travel concern heading into the TCU coin-flip.",
+    ats:"Big Ten 8-seeds in Southeast pod: 5-5 ATS" },
+  { team:"TCU",         seed:9,  region:"East",  rc:"#e63946",
+    from:"Fort Worth TX",to:"Greenville SC",miles:1100, tzShift:1,
     risk:"HIGH", riskColor:"#ff4444",
-    note:"2,612 miles + 3hr TZ shift for the WAC auto-bid. While Duke (28 miles away) is basically at home, Cal Baptist is playing a noon Raleigh game at 9am body time. The ultimate mismatch: home-court equivalent vs. maximum travel burden.",
-    ats:"West Coast #13/16 seeds in East pod: 0-8 ATS last 10 yrs" },
-
-  { team:"Kansas",      seed:4,  region:"East",  rc:"#e63946",
-    from:"Lawrence KS",   to:"Raleigh NC",   miles:1330, tzShift:1,
-    risk:"MED", riskColor:"#ff9800",
-    note:"1,330 miles + 1hr TZ shift from the Midwest to Raleigh. Central → Eastern is manageable but a full travel day adds minor fatigue. Bill Self teams travel well and this is routine for a program used to road games in the Big 12.",
-    ats:"Big 12 teams in East pod: 5-7 ATS last 8 yrs" },
-
-  { team:"Northern Iowa", seed:12, region:"East", rc:"#e63946",
-    from:"Cedar Falls IA", to:"Raleigh NC",  miles:1282, tzShift:1,
-    risk:"MED", riskColor:"#ff9800",
-    note:"1,282 miles + 1hr TZ shift for our upset pick. Missouri Valley → Eastern timezone is a real adjustment for a team used to playing in the Central time zone. 12-seeds beat 5-seeds 35% historically — travel is the one headwind on this pick.",
-    ats:"MVC 12-seeds in East pod: 4-6 ATS last 8 yrs" },
-
-  { team:"Arkansas",    seed:4,  region:"West",  rc:"#2196f3",
-    from:"Fayetteville AR", to:"San Jose CA", miles:1732, tzShift:2,
-    risk:"HIGH", riskColor:"#ff4444",
-    note:"1,732 miles + 2hr TZ shift going West. Fayetteville Central → Pacific means body clock is BEHIND — noon San Jose game feels like 2pm for Arkansas. Calipari's first-year rebuild faces a long West Coast haul. Small but real stressor.",
-    ats:"SEC teams traveling to Pacific pod: 4-8 ATS last 8 yrs" },
-
+    note:"1,100 miles + 1hr TZ shift from Fort Worth to Greenville. Central → Eastern means body clock is BEHIND — morning Greenville games feel earlier for TCU. Big 12 road experience helps, but this is a meaningful headwind in a 8-9 toss-up.",
+    ats:"Big 12 teams in East pod: 4-7 ATS last 8 yrs" },
+  { team:"North Carolina",seed:6, region:"South",rc:"#22c55e",
+    from:"Chapel Hill NC",to:"Greenville SC",miles:275, tzShift:0,
+    risk:"LOW", riskColor:"#4ade80",
+    note:"275 miles — UNC essentially plays in-state. Chapel Hill to Greenville SC is a short Southeast drive. Tar Heel fans will travel in numbers. However VCU's Havoc defense doesn't care about geography.",
+    ats:"ACC teams in Southeast pod: slightly favorable" },
   { team:"VCU",         seed:11, region:"South", rc:"#22c55e",
-    from:"Richmond VA",  to:"Houston TX",    miles:1313, tzShift:1,
+    from:"Richmond VA",  to:"Greenville SC", miles:400,  tzShift:0,
+    risk:"LOW", riskColor:"#4ade80",
+    note:"400 miles from Richmond to Greenville — short East Coast hop, same timezone. VCU's Havoc system is built for road environments. No travel burden. Their edge is Odom's system vs UNC's brand pressure, not miles.",
+    ats:"A-10 teams in Southeast pod: 5-5 ATS recent" },
+  { team:"Illinois",    seed:3,  region:"South", rc:"#22c55e",
+    from:"Champaign IL", to:"Greenville SC",  miles:850,  tzShift:1,
     risk:"MED", riskColor:"#ff9800",
-    note:"1,313 miles + 1hr TZ shift for our top upset pick. Eastern → Central means playing slightly ahead of body clock — actually a minor advantage. VCU travels with 15 players minimum and Odom's program is built for road environments.",
-    ats:"A-10 teams in Houston pod: 5-6 ATS recent history" },
+    note:"850 miles + 1hr TZ shift from Champaign to Greenville. Central → Eastern means body clock is slightly behind. Illinois handles Big Ten road travel all year — minor concern. Underwood has his team prepared.",
+    ats:"Big Ten teams in Southeast pod: 5-6 ATS" },
+  { team:"Penn",        seed:14, region:"South", rc:"#22c55e",
+    from:"Philadelphia PA",to:"Greenville SC",miles:760, tzShift:0,
+    risk:"MED", riskColor:"#ff9800",
+    note:"760 miles from Philadelphia to Greenville — all East Coast, same timezone. Penn's Ivy League travel schedule makes this routine. The gap vs Illinois is talent, not miles. Penn's cleanest advantage: zero distraction from draft or portal.",
+    ats:"Ivy League 14-seeds vs Power 3-seeds: historical underdog" },
 
-  // ── SOUTH → HOUSTON TX ──────────────────────────────────────────────────────
-  { team:"McNeese",    seed:12, region:"South",  rc:"#22c55e",
-    from:"Lake Charles LA", to:"Houston TX",  miles:138,  tzShift:0,
+  // ── SAN DIEGO, CA (Viejas Arena) — West top + East mid ──────────────────────
+  { team:"Arizona",     seed:1,  region:"West",  rc:"#2196f3",
+    from:"Tucson AZ",   to:"San Diego CA",  miles:415,  tzShift:1,
+    risk:"LOW", riskColor:"#4ade80",
+    note:"415 miles, Mountain → Pacific (game feels 1hr LATER for Arizona — favorable for afternoon tip-offs). Short Southwest hop. Arizona fans and alumni dominate Southern California. Near-home advantage for the 1-seed without Peat.",
+    ats:"Pac/Big 12 teams in San Diego pod: 7-3 ATS" },
+  { team:"LIU",         seed:16, region:"West",  rc:"#2196f3",
+    from:"Brooklyn NY",  to:"San Diego CA",  miles:2750, tzShift:3,
+    risk:"HIGH", riskColor:"#ff4444",
+    note:"2,750 miles + 3hr TZ shift from Brooklyn to San Diego. Body clock is 3hrs AHEAD — a noon San Diego game feels like 9am for LIU. Maximum travel burden against Arizona's home-region environment. Momentum is the only asset.",
+    ats:"NEC 16-seeds in West pod: 0 upsets in history" },
+  { team:"Villanova",   seed:8,  region:"West",  rc:"#2196f3",
+    from:"Wayne PA",     to:"San Diego CA",  miles:2745, tzShift:3,
+    risk:"HIGH", riskColor:"#ff4444",
+    note:"2,745 miles + 3hr TZ shift from the Philly suburbs to San Diego. Body clock is 3hrs AHEAD — early games feel like they start at 9am Eastern body time. Big East brand travel experience helps but the TZ hit on a game-day wake-up is real.",
+    ats:"Big East teams in West pod: 3-8 ATS last 10 yrs" },
+  { team:"Utah State",  seed:9,  region:"West",  rc:"#2196f3",
+    from:"Logan UT",     to:"San Diego CA",  miles:840,  tzShift:1,
+    risk:"LOW", riskColor:"#4ade80",
+    note:"840 miles, Mountain → Pacific (1hr shift going west = game feels slightly LATER = favorable). Mountain West travel to Southern California is completely routine. No real travel burden in this 8-9 coin flip with Villanova.",
+    ats:"Mountain West teams in San Diego: favorable" },
+  { team:"St. John's",  seed:5,  region:"East",  rc:"#e63946",
+    from:"Jamaica NY",   to:"San Diego CA",  miles:2750, tzShift:3,
+    risk:"HIGH", riskColor:"#ff4444",
+    note:"2,750 miles + 3hr TZ shift — East Coast team playing on the West Coast. Body clock is 3hrs AHEAD of the local clock. St. John's 5-seed carries Luck +2.1 regression risk AND a full cross-country haul. A noon San Diego game feels like 9am NY time.",
+    ats:"Big East teams in West pod: 3-8 ATS last 10 yrs" },
+  { team:"Northern Iowa",seed:12, region:"East", rc:"#e63946",
+    from:"Cedar Falls IA",to:"San Diego CA", miles:1900, tzShift:2,
+    risk:"HIGH", riskColor:"#ff4444",
+    note:"1,900 miles + 2hr TZ shift from Cedar Falls to San Diego — but going WEST means game feels LATER, which is actually favorable for Jacobson's disciplined system. The raw distance is the main concern. MVC teams rarely play on the West Coast.",
+    ats:"MVC 12-seeds in West pod: underdog value regardless" },
+  { team:"Kansas",      seed:4,  region:"East",  rc:"#e63946",
+    from:"Lawrence KS",  to:"San Diego CA",  miles:1550, tzShift:2,
+    risk:"HIGH", riskColor:"#ff4444",
+    note:"1,550 miles + 2hr TZ shift from Kansas to San Diego. Central → Pacific means body clock is 2hrs AHEAD — game feels later than local time (favorable). Bill Self teams handle travel routinely. The Cal Baptist matchup is not a travel contest — it's a talent contest.",
+    ats:"Big 12 4-seeds: 6-4 ATS first round regardless of travel" },
+  { team:"Cal Baptist",  seed:13, region:"East", rc:"#e63946",
+    from:"Riverside CA",  to:"San Diego CA",  miles:100,  tzShift:0,
     risk:"NONE", riskColor:"#4ade80",
-    note:"138 miles — McNeese is practically playing a home game. Lake Charles to Houston is a short drive and Louisiana fans will pack the arena. Zero travel burden stacked on top of Will Wade's prep advantage. Perfect conditions for our top upset pick.",
-    ats:"Near-home underdog seeds: crowd + no fatigue = real edge" },
+    note:"100 miles from Riverside to San Diego — Cal Baptist is playing essentially at home. Same city, same timezone, same region. While Kansas makes the long cross-country haul, CBU fans will pack Viejas Arena. Zero travel burden is their one advantage.",
+    ats:"Near-home lower seeds: crowd edge, talent gap remains" },
 
-  { team:"Vanderbilt", seed:5,  region:"South",  rc:"#22c55e",
-    from:"Nashville TN",  to:"Houston TX",   miles:649,  tzShift:1,
-    risk:"LOW", riskColor:"#4ade80",
-    note:"649 miles + minimal 1hr TZ shift. Central → Central Texas is routine travel. Vanderbilt's travel draw is fine — their regression risk comes from Luck +3.2 overperformance, not fatigue. The travel doesn't save them.",
-    ats:"SEC teams in Houston pod: neutral to slightly favorable" },
-
-  { team:"VCU",        seed:11, region:"South",  rc:"#22c55e",
-    from:"Richmond VA",  to:"Houston TX",    miles:1313, tzShift:1,
-    risk:"MED", riskColor:"#ff9800",
-    note:"1,313 miles + 1hr TZ shift. Eastern → Central means body clock is slightly ahead — actually a mild advantage. VCU's Havoc system travels well and Odom's program is built for road hostile environments. Travel is minor concern here.",
-    ats:"A-10 teams in Houston pod: 5-6 ATS recent history" },
-
-  { team:"Nebraska",   seed:4,  region:"South",  rc:"#22c55e",
-    from:"Lincoln NE",    to:"Houston TX",   miles:863,  tzShift:0,
-    risk:"LOW", riskColor:"#4ade80",
-    note:"863 miles, same Central timezone. Nebraska travels to Texas for Big Ten road games regularly. No TZ shift, manageable distance. Clean travel draw for a 4-seed that should win R1 comfortably.",
-    ats:"Big Ten teams in Houston pod: neutral" },
-
-  { team:"Illinois",   seed:3,  region:"South",  rc:"#22c55e",
-    from:"Champaign IL",  to:"Houston TX",   miles:1050, tzShift:1,
-    risk:"LOW", riskColor:"#4ade80",
-    note:"1,050 miles + minimal 1hr TZ shift. Illinois travels all over the Big Ten without issue. Central → Central Texas is routine. Underwood has his team well-prepared — travel is not the concern heading into Houston.",
-    ats:"Big Ten teams in Houston pod: slightly favorable" },
-
-  { team:"Texas A&M",  seed:10, region:"South",  rc:"#22c55e",
-    from:"College Station TX", to:"Houston TX", miles:96, tzShift:0,
+  // ── PORTLAND, OR (Moda Center) — West mid/bottom ─────────────────────────────
+  { team:"Gonzaga",     seed:3,  region:"West",  rc:"#2196f3",
+    from:"Spokane WA",   to:"Portland OR",   miles:265,  tzShift:0,
     risk:"NONE", riskColor:"#4ade80",
-    note:"96 miles — Texas A&M is playing a home game. College Station to Houston is basically a local trip. A&M fans will pack the building. As a 10-seed, they carry zero travel burden — pure upset energy.",
-    ats:"Near-home SEC teams: crowd + no fatigue = real edge" },
-
-  { team:"North Carolina", seed:6, region:"South", rc:"#22c55e",
-    from:"Chapel Hill NC", to:"Houston TX",  miles:1398, tzShift:1,
+    note:"265 miles — Gonzaga plays at the Moda Center in Portland, a short Pacific Northwest hop. Same timezone, familiar territory. Practically a home game for a program that recruits heavily in the Pacific Northwest. Zero travel burden. The only concern is Huff's GTD knee status.",
+    ats:"West Coast teams in Portland: home-court equivalent" },
+  { team:"Kennesaw State",seed:14,region:"West", rc:"#2196f3",
+    from:"Kennesaw GA",  to:"Portland OR",   miles:2400, tzShift:3,
+    risk:"HIGH", riskColor:"#ff4444",
+    note:"2,400 miles + 3hr TZ shift from metro Atlanta to Portland. Eastern → Pacific means body clock is 3hrs AHEAD — early Portland games feel like pre-dawn wake-ups for a Georgia team. Facing Gonzaga who is essentially home. Maximum mismatch.",
+    ats:"Southeast 14-seeds in West pod: historically overmatched" },
+  { team:"Wisconsin",   seed:5,  region:"West",  rc:"#2196f3",
+    from:"Madison WI",   to:"Portland OR",   miles:1930, tzShift:2,
+    risk:"HIGH", riskColor:"#ff4444",
+    note:"1,930 miles + 2hr TZ shift going West. Central → Pacific means game feels LATER for Wisconsin — favorable for Big Ten players used to noon Central games. But Blackwell's shoulder injury is the main concern, not miles. Long trip with an uncertain rotation.",
+    ats:"Big Ten teams in Portland pod: 4-6 ATS last 8 yrs" },
+  { team:"High Point",  seed:12, region:"West",  rc:"#2196f3",
+    from:"High Point NC", to:"Portland OR",  miles:2600, tzShift:3,
+    risk:"HIGH", riskColor:"#ff4444",
+    note:"2,600 miles + 3hr TZ shift from North Carolina to Portland — one of the biggest travel burdens of any lower seed. Eastern → Pacific means game feels LATER (favorable), but raw distance at this budget level is a real fatigue factor. 12v5 upset rates still give High Point a puncher's chance.",
+    ats:"12-seeds vs 5-seeds: 35% upset rate regardless of travel" },
+  { team:"Arkansas",    seed:4,  region:"West",  rc:"#2196f3",
+    from:"Fayetteville AR",to:"Portland OR",  miles:1940, tzShift:2,
+    risk:"HIGH", riskColor:"#ff4444",
+    note:"1,940 miles + 2hr TZ shift going West. Central → Pacific means game feels LATER for Arkansas, which is mildly favorable. But Calipari's first-year rebuild faces a long haul with a transfer-heavy roster still building chemistry. Cold streak entering tourney adds concern.",
+    ats:"SEC teams in Portland pod: 4-7 ATS last 8 yrs" },
+  { team:"Hawai'i",     seed:13, region:"West",  rc:"#2196f3",
+    from:"Honolulu HI",   to:"Portland OR",   miles:2611, tzShift:3,
+    risk:"HIGH", riskColor:"#ff4444",
+    note:"2,611 miles + 3hr TZ shift (Hawaii is UTC-10, Portland PDT is UTC-7 after March DST). Body clock is 3hrs AHEAD — Hawaii's players think it's earlier than Portland local time, meaning games feel later in the day (actually favorable). But island-to-mainland travel + conference tourney fatigue = meaningful energy deficit vs Arkansas.",
+    ats:"Big West teams in Portland pod: limited data, tough draw" },
+  { team:"BYU",         seed:6,  region:"West",  rc:"#2196f3",
+    from:"Provo UT",      to:"Portland OR",   miles:780,  tzShift:1,
+    risk:"LOW", riskColor:"#4ade80",
+    note:"780 miles, Mountain → Pacific (1hr going West = game feels slightly LATER = favorable). BYU travels to Portland-area programs regularly in Big 12 play. Kevin Young's first tournament as head coach is the unknown — not the travel.",
+    ats:"Mountain/Big 12 teams in Portland: neutral to favorable" },
+  { team:"Texas/NC State",seed:11,region:"West", rc:"#2196f3",
+    from:"Austin or Raleigh",to:"Portland OR",miles:1900, tzShift:2,
     risk:"MED", riskColor:"#ff9800",
-    note:"1,398 miles + 1hr TZ shift. ACC East Coast travel to Texas is a full road-game environment. UNC's brand carries pressure — and now they face VCU's Havoc defense in a hostile setting. Not ideal prep for a team prone to decision-making errors.",
-    ats:"ACC teams in Houston pod: 4-7 ATS last 8 yrs" },
+    note:"First Four survivor with an added game in their legs before Portland. Texas travels ~1,840 miles (CT→PT), NC State travels ~2,700 miles (ET→PT). Either way, the play-in fatigue on top of the cross-country trip is a real disadvantage entering the BYU matchup.",
+    ats:"First Four survivors vs 6-seeds: historically tough draw" },
 
-  // ── MIDWEST → CHICAGO IL ────────────────────────────────────────────────────
-  { team:"St. Mary's", seed:7,  region:"South",  rc:"#22c55e",
-    from:"Moraga CA",     to:"Houston TX",   miles:1894, tzShift:2,
+  // ── PHILADELPHIA, PA (Wells Fargo Center) — East bottom + Midwest mid ────────
+  { team:"UCLA",        seed:7,  region:"East",  rc:"#e63946",
+    from:"Los Angeles CA",to:"Philadelphia PA",miles:2720,tzShift:3,
     risk:"HIGH", riskColor:"#ff4444",
-    note:"1,894 miles + 2hr TZ shift from the Bay Area to Houston. St. Mary's runs the most structured, routine-dependent system in college basketball — travel disruption is their kryptonite. Playing when their body says 9am in Houston is a real headwind for a 7-seed.",
-    ats:"WCC teams in Houston pod: 2-7 ATS last 10 yrs" },
-
-  { team:"Akron",      seed:12, region:"Midwest", rc:"#f59e0b",
-    from:"Akron OH",      to:"Chicago IL",   miles:342,  tzShift:1,
-    risk:"LOW", riskColor:"#4ade80",
-    note:"342 miles + minimal 1hr TZ shift. Akron to Chicago is a short Midwest drive — MAC teams play in hostile road environments every week. Zero real travel burden for the 12-seed upset hunters vs Texas Tech.",
-    ats:"MAC 12-seeds in Midwest pod: surprisingly competitive" },
-
-  { team:"Tennessee",  seed:6,  region:"Midwest", rc:"#f59e0b",
-    from:"Knoxville TN",  to:"Chicago IL",   miles:570,  tzShift:1,
-    risk:"LOW", riskColor:"#4ade80",
-    note:"570 miles + minimal 1hr TZ shift. Tennessee travels the SEC East all year — this is routine road travel. Barnes has his team well-prepared despite Ament's knee uncertainty. Travel is not the concern here.",
-    ats:"SEC teams in Chicago pod: neutral" },
-
-  { team:"Kentucky",   seed:7,  region:"Midwest", rc:"#f59e0b",
-    from:"Lexington KY",  to:"Chicago IL",   miles:480,  tzShift:1,
-    risk:"LOW", riskColor:"#4ade80",
-    note:"480 miles, same region. Kentucky travels extensively in the SEC and Big East scheduling. No TZ burden. Their risk is cohesion (focus 48/100) and $22M NIL ROI — not travel.",
-    ats:"SEC teams in Chicago: neutral to slightly favorable" },
-
-  { team:"Virginia",   seed:3,  region:"Midwest", rc:"#f59e0b",
-    from:"Charlottesville VA", to:"Chicago IL", miles:727, tzShift:1,
-    risk:"LOW", riskColor:"#4ade80",
-    note:"727 miles + minimal 1hr TZ shift. Eastern → Central is a mild body-clock advantage — noon Chicago game feels like 1pm for Virginia. Post-Bennett era culture is disciplined enough to handle routine road travel easily.",
-    ats:"ACC teams in Chicago: 5-6 ATS recent history" },
-
-  { team:"Alabama",    seed:4,  region:"Midwest", rc:"#f59e0b",
-    from:"Tuscaloosa AL", to:"Chicago IL",   miles:663,  tzShift:1,
-    risk:"LOW", riskColor:"#4ade80",
-    note:"663 miles + minimal 1hr TZ shift. Alabama travels the SEC all year — routine mid-distance road game. Oats' up-tempo system isn't negatively impacted by short travel. Clean draw for the 4-seed.",
-    ats:"SEC teams in Chicago: neutral" },
-
-  { team:"Texas Tech", seed:5,  region:"Midwest", rc:"#f59e0b",
-    from:"Lubbock TX",    to:"Chicago IL",   miles:1049, tzShift:1,
+    note:"2,720 miles + 3hr TZ shift — one of the longest hauls in the field. LA to Philadelphia is coast-to-coast. Body clock is 3hrs BEHIND — morning Philly games feel like pre-dawn for UCLA players. West Coast teams in East pod go 3-8 ATS last 10 yrs. This is the biggest travel story in the East bracket.",
+    ats:"West Coast teams in East pod: 3-8 ATS last 10 yrs" },
+  { team:"UCF",         seed:10, region:"East",  rc:"#e63946",
+    from:"Orlando FL",    to:"Philadelphia PA", miles:1100, tzShift:0,
     risk:"MED", riskColor:"#ff9800",
-    note:"1,049 miles + 1hr TZ shift. Lubbock Central → Chicago Central/Eastern is manageable but a full travel day. Texas Tech plays its Big 12 schedule all over the map — McCasland has his team road-ready. Minor concern only.",
-    ats:"Big 12 teams in Chicago: 5-7 ATS last 8 yrs" },
-
-  { team:"Georgia",    seed:8,  region:"Midwest", rc:"#f59e0b",
-    from:"Athens GA",     to:"Chicago IL",   miles:705,  tzShift:1,
+    note:"1,100 miles from Orlando to Philadelphia — all East Coast, same timezone. UCF has the massive travel advantage over UCLA in this matchup: they're rested, on-clock, and playing the home-side environment. 10v7 upset rate is 39% and the travel edge compounds.",
+    ats:"AAC teams in Philadelphia: neutral to slightly favorable" },
+  { team:"UConn",       seed:2,  region:"East",  rc:"#e63946",
+    from:"Storrs CT",     to:"Philadelphia PA", miles:315,  tzShift:0,
+    risk:"NONE", riskColor:"#4ade80",
+    note:"315 miles from Storrs to Philadelphia — practically home. UConn alumni and fans dominate the Northeast corridor. No travel burden at all. Hurley's teams have won everywhere — this is their backyard. Furman faces a 755-mile trip.",
+    ats:"Big East teams in Northeast corridor: 7-3 ATS" },
+  { team:"Furman",      seed:15, region:"East",  rc:"#e63946",
+    from:"Greenville SC",  to:"Philadelphia PA", miles:755,  tzShift:0,
+    risk:"MED", riskColor:"#ff9800",
+    note:"755 miles from Greenville SC to Philadelphia — Furman plays AWAY from their home city (Greenville) to face UConn. Same timezone keeps body clock intact, but facing a two-time champion with no travel burden is a steep hill. Richey's program competes hard.",
+    ats:"Southern Conference 15-seeds: historically overmatched" },
+  { team:"Tennessee",   seed:6,  region:"Midwest",rc:"#f59e0b",
+    from:"Knoxville TN",  to:"Philadelphia PA", miles:640,  tzShift:0,
     risk:"LOW", riskColor:"#4ade80",
-    note:"705 miles + minimal 1hr TZ shift. Georgia has been on the road all year in the SEC. Eastern → Central means body clock is slightly ahead — actually favorable for early tip-offs. No travel concern for our potential upset pick vs Michigan.",
-    ats:"SEC teams in Chicago: neutral to slightly favorable" },
-
-  // ── WEST → SAN JOSE CA — East/Central teams (body clock FAVORABLE going west) ─
-  { team:"Wisconsin",  seed:5,  region:"West",   rc:"#2196f3",
-    from:"Madison WI",    to:"San Jose CA",  miles:2110, tzShift:2,
-    risk:"HIGH", riskColor:"#ff4444",
-    note:"2,110 miles + 2hr TZ shift going West. Madison Central → Pacific means Wisconsin's body clock is BEHIND — noon San Jose game feels like 2pm body time... wait, going West you GAIN time, so noon Pacific = 2pm Central body. Actually favorable. But Blackwell's shoulder injury remains the main concern.",
-    ats:"Big Ten teams in San Jose pod: neutral with body clock edge" },
-
-  { team:"Vanderbilt", seed:5,  region:"South",  rc:"#22c55e",
-    from:"Nashville TN",  to:"Houston TX",   miles:649,  tzShift:1,
+    note:"640 miles from Knoxville to Philadelphia — East Coast hop, same timezone. Tennessee travels the SEC East all year. Barnes' team is road-seasoned and this is routine mid-distance travel. Their concern is Ament's knee, not the flight.",
+    ats:"SEC teams in Philadelphia pod: neutral" },
+  { team:"SMU/Miami (OH)",seed:11,region:"Midwest",rc:"#f59e0b",
+    from:"Dallas or Oxford",to:"Philadelphia PA",miles:1550,tzShift:1,
+    risk:"MED", riskColor:"#ff9800",
+    note:"First Four survivor carrying play-in fatigue. SMU travels ~1,575 miles (CT→ET) to Philadelphia; Miami OH travels ~670 miles (ET→ET). Tennessee's disciplined, physical system creates a tough environment for a tired play-in winner regardless of which team advances.",
+    ats:"First Four survivors vs 6-seeds: historically tough draw" },
+  { team:"Virginia",    seed:3,  region:"Midwest",rc:"#f59e0b",
+    from:"Charlottesville VA",to:"Philadelphia PA",miles:340,tzShift:0,
+    risk:"NONE", riskColor:"#4ade80",
+    note:"340 miles from Charlottesville to Philadelphia — practically next door for an ACC team. Same timezone, short drive, familiar Eastern corridor. Post-Bennett era Virginia maintains its disciplined culture and this travel draw is one of the easiest in the field.",
+    ats:"ACC teams in Philadelphia: 6-4 ATS recent" },
+  { team:"Wright State", seed:14, region:"Midwest",rc:"#f59e0b",
+    from:"Fairborn OH",   to:"Philadelphia PA", miles:615,  tzShift:0,
     risk:"LOW", riskColor:"#4ade80",
-    note:"Short haul in the same Central region. Vanderbilt's travel draw is fine — the regression risk is Luck +3.2, not miles.",
-    ats:"SEC teams in Houston: neutral" },
+    note:"615 miles from Fairborn OH to Philadelphia — East Coast hop, same timezone. Horizon League travel is routinely demanding. Wright State arrives fresh and focused. The mismatch vs Virginia is talent and system, not fatigue.",
+    ats:"Horizon League 14-seeds: competitive effort, talent gap" },
 
-  { team:"BYU",        seed:6,  region:"West",   rc:"#2196f3",
-    from:"Provo UT",      to:"San Jose CA",  miles:689,  tzShift:1,
+  // ── ST. LOUIS, MO (Enterprise Center) — West bottom + Midwest bottom ─────────
+  { team:"Miami",       seed:7,  region:"West",  rc:"#2196f3",
+    from:"Coral Gables FL",to:"St. Louis MO",  miles:1310, tzShift:1,
+    risk:"MED", riskColor:"#ff9800",
+    note:"1,310 miles + 1hr TZ shift from Miami to St. Louis. Eastern → Central means game feels 1hr LATER for Miami FL — slightly favorable for afternoon games. ACC travel experience. Missouri plays only 125 miles from St. Louis — effectively a home game for the 10-seed.",
+    ats:"ACC 7-seeds vs near-home 10-seeds: genuine upset risk" },
+  { team:"Missouri",    seed:10, region:"West",  rc:"#2196f3",
+    from:"Columbia MO",   to:"St. Louis MO",   miles:125,  tzShift:0,
+    risk:"NONE", riskColor:"#4ade80",
+    note:"125 miles — Missouri is playing a home game. Columbia to St. Louis is a short drive and Missouri fans will flood the Enterprise Center. As a 10-seed with this home crowd advantage, Gates' team has maximum upset potential vs Miami FL who makes a 1,310-mile trip.",
+    ats:"Near-home 10-seeds: historical 39% upset rate + crowd edge" },
+  { team:"Purdue",      seed:2,  region:"West",  rc:"#2196f3",
+    from:"West Lafayette IN",to:"St. Louis MO",miles:240, tzShift:1,
     risk:"LOW", riskColor:"#4ade80",
-    note:"689 miles + minimal 1hr TZ shift. BYU travels to West Coast schools regularly in the Big 12. San Jose is a short familiar hop. No travel disadvantage for the 6-seed.",
-    ats:"Mountain/West teams in San Jose: favorable" },
-
-  { team:"Missouri",   seed:10, region:"West",   rc:"#2196f3",
-    from:"Columbia MO",   to:"San Jose CA",  miles:1862, tzShift:2,
+    note:"240 miles from West Lafayette to St. Louis — Purdue is essentially playing at home. Short Midwest drive, Indiana fans follow Big Ten basketball everywhere. Going ET→CT means 1hr favorable shift (game feels slightly LATER). Queens faces a 900+ mile trip. ",
+    ats:"Big Ten 2-seeds in Midwest corridor: 7-3 ATS" },
+  { team:"Queens",      seed:15, region:"West",  rc:"#2196f3",
+    from:"Charlotte NC",   to:"St. Louis MO",  miles:880,  tzShift:1,
+    risk:"MED", riskColor:"#ff9800",
+    note:"880 miles + 1hr TZ shift from Charlotte to St. Louis. First major tournament appearance faces Purdue who plays practically next door. Eastern → Central shift means game feels 1hr LATER (mild advantage). Queens competes with maximum effort but the talent gap is enormous.",
+    ats:"Atlantic Sun 15-seeds vs Big Ten 2-seeds: historically tough" },
+  { team:"Kentucky",    seed:7,  region:"Midwest",rc:"#f59e0b",
+    from:"Lexington KY",   to:"St. Louis MO",  miles:330,  tzShift:1,
+    risk:"LOW", riskColor:"#4ade80",
+    note:"330 miles from Lexington to St. Louis — short Midwest drive, essentially home territory. ET→CT means game feels 1hr LATER (favorable). Kentucky fans travel everywhere. The risk for Kentucky is focus (48/100 — lowest in field) and cohesion, not miles.",
+    ats:"SEC teams in St. Louis: near-home favorable environment" },
+  { team:"Santa Clara",  seed:10, region:"Midwest",rc:"#f59e0b",
+    from:"Santa Clara CA", to:"St. Louis MO",  miles:1860, tzShift:2,
     risk:"HIGH", riskColor:"#ff4444",
-    note:"1,862 miles + 2hr TZ shift going West. Missouri Central → Pacific means body clock AHEAD — noon San Jose game is actually 2pm body time. Slight advantage. But Missouri entered the tournament on a cold streak — travel isn't their biggest problem.",
-    ats:"SEC teams traveling to Pacific pod: 4-8 ATS last 8 yrs" },
+    note:"1,860 miles + 2hr TZ shift from the Bay Area to St. Louis. Pacific → Central means game feels 2hrs LATER for Santa Clara — favorable for a WCC team used to late Pacific tip-offs. But the raw distance at a mid-major budget level adds fatigue. Kentucky's 48/100 focus makes this a real upset watch.",
+    ats:"WCC 10-seeds vs SEC 7-seeds: 39% upset rate applies" },
+  { team:"Iowa State",  seed:2,  region:"Midwest",rc:"#f59e0b",
+    from:"Ames IA",        to:"St. Louis MO",  miles:335,  tzShift:0,
+    risk:"NONE", riskColor:"#4ade80",
+    note:"335 miles from Ames to St. Louis — Iowa State fans will flood the Enterprise Center. Same Central timezone, familiar Midwest territory. Practically a home game for the 2-seed. Otzelberger's focused squad (79/100) faces Tennessee State with the ultimate crowd and travel advantage.",
+    ats:"Big 12 teams in St. Louis: near-home equivalent" },
+  { team:"Tennessee State",seed:15,region:"Midwest",rc:"#f59e0b",
+    from:"Nashville TN",   to:"St. Louis MO",  miles:310,  tzShift:1,
+    risk:"LOW", riskColor:"#4ade80",
+    note:"310 miles from Nashville to St. Louis — short Central hop, same broad region. ET→CT shift means 1hr favorable shift. Tennessee State competes hard but faces an Iowa State squad that is home-adjacent and one of the most focused teams in the tournament.",
+    ats:"OVC 15-seeds: maximum effort, historical underdog" },
 
-  { team:"Hawai'i",    seed:13, region:"West",   rc:"#2196f3",
-    from:"Honolulu HI",   to:"San Jose CA",  miles:2393, tzShift:2,
+  // ── BUFFALO, NY (KeyBank Center) — Midwest top + East lower ─────────────────
+  { team:"Michigan",    seed:1,  region:"Midwest",rc:"#f59e0b",
+    from:"Ann Arbor MI",   to:"Buffalo NY",    miles:240,  tzShift:0,
+    risk:"NONE", riskColor:"#4ade80",
+    note:"240 miles from Ann Arbor to Buffalo — Michigan is playing a home game. Same Eastern timezone, short Great Lakes drive, and Wolverine fans travel everywhere. Massive crowd advantage for the #1 KenPom team. The only concern is backcourt depth with Cason OUT.",
+    ats:"Big Ten 1-seeds in Northeast pod: 8-2 ATS" },
+  { team:"UMBC/Howard", seed:16, region:"Midwest",rc:"#f59e0b",
+    from:"Baltimore or DC", to:"Buffalo NY",   miles:390,  tzShift:0,
+    risk:"LOW", riskColor:"#4ade80",
+    note:"390 miles from Baltimore/DC to Buffalo — short East Coast trip, same timezone. The travel is manageable, but First Four fatigue means this team arrives with one extra game in their legs. Facing Michigan who plays practically at home makes this the steepest first-round climb in the Midwest.",
+    ats:"First Four 16-seeds vs 1-seeds: 0-8 all time" },
+  { team:"Georgia",     seed:8,  region:"Midwest",rc:"#f59e0b",
+    from:"Athens GA",      to:"Buffalo NY",    miles:900,  tzShift:0,
+    risk:"MED", riskColor:"#ff9800",
+    note:"900 miles from Athens GA to Buffalo — long East Coast trip but same timezone. Georgia has been on the road all year in the SEC. ET body clock preserved. Their challenge vs Saint Louis is effort and physicality, not fatigue. Mike White teams compete hard as 8-seeds.",
+    ats:"SEC 8-seeds in Northeast pod: neutral" },
+  { team:"Saint Louis",  seed:9,  region:"Midwest",rc:"#f59e0b",
+    from:"St. Louis MO",   to:"Buffalo NY",    miles:760,  tzShift:1,
+    risk:"MED", riskColor:"#ff9800",
+    note:"760 miles + 1hr TZ shift from St. Louis to Buffalo. Central → Eastern means body clock is BEHIND — early Buffalo games feel slightly earlier than usual. A-10 road travel is rigorous, but this is a 8-9 coin flip where coaching and matchups matter more than miles.",
+    ats:"A-10 9-seeds in Northeast pod: competitive record" },
+  { team:"Louisville",  seed:6,  region:"East",  rc:"#e63946",
+    from:"Louisville KY",  to:"Buffalo NY",    miles:590,  tzShift:0,
+    risk:"LOW", riskColor:"#4ade80",
+    note:"590 miles from Louisville to Buffalo — manageable Eastern trip, same timezone. Kelsey's first year at Louisville has the team energized. ACC travel all year means no adjustment needed. South Florida faces a longer trip, giving Louisville the edge in freshness.",
+    ats:"ACC teams in Northeast pod: 5-5 ATS recent" },
+  { team:"South Florida",seed:11, region:"East",  rc:"#e63946",
+    from:"Tampa FL",       to:"Buffalo NY",    miles:1310, tzShift:0,
+    risk:"MED", riskColor:"#ff9800",
+    note:"1,310 miles from Tampa to Buffalo — significant North-South haul but same Eastern timezone. Going from Florida warmth to Buffalo in March is a climate shock on top of the travel day. AAC road experience is there, but Louisville has a ~720-mile travel advantage entering this game.",
+    ats:"AAC 11-seeds in Northeast pod: historical underdog" },
+  { team:"Michigan State",seed:3, region:"East",  rc:"#e63946",
+    from:"East Lansing MI",to:"Buffalo NY",    miles:240,  tzShift:0,
+    risk:"NONE", riskColor:"#4ade80",
+    note:"240 miles from East Lansing to Buffalo — Michigan State is playing a home game. Great Lakes corridor, same timezone, Spartan fans flood the arena. Tom Izzo in near-home territory against a Summit League 14-seed is one of the safest bets in the field.",
+    ats:"Tom Izzo in near-home Northeast pod: elite ATS record" },
+  { team:"North Dakota State",seed:14,region:"East",rc:"#e63946",
+    from:"Fargo ND",       to:"Buffalo NY",    miles:1380, tzShift:1,
     risk:"HIGH", riskColor:"#ff4444",
-    note:"2,393 miles but traveling East means body clock is AHEAD — noon San Jose game feels like 2pm for Hawai'i. Still the longest raw trip in the field and they lost their home-court advantage entirely. A 13-seed vs Arkansas is hard enough without an island-to-mainland haul.",
-    ats:"Big West teams in Pacific pod: limited data, tough draw" },
+    note:"1,380 miles + 1hr TZ shift from Fargo ND to Buffalo. Central → Eastern means body clock is BEHIND — Fargo is not used to East Coast environments. Faces Michigan State (240 miles away) who has a massive home-adjacent crowd. Summit League auto-bid in a tough environment.",
+    ats:"Summit League 14-seeds in Northeast: historical underdog" },
+
+  // ── TAMPA, FL (Amalie Arena) — South top + Midwest mid ──────────────────────
+  { team:"Florida",     seed:1,  region:"South", rc:"#22c55e",
+    from:"Gainesville FL", to:"Tampa FL",      miles:130,  tzShift:0,
+    risk:"NONE", riskColor:"#4ade80",
+    note:"130 miles from Gainesville to Tampa — Florida is playing a home game. Both cities are in the same media market and Gator fans will dominate Amalie Arena. Defending champions with 91/100 focus score playing essentially at home. Best first-round setup in the entire field.",
+    ats:"Florida in Tampa: home-equivalent, historically dominant" },
+  { team:"Prairie View/Lehigh",seed:16,region:"South",rc:"#22c55e",
+    from:"Prairie View TX or Bethlehem PA",to:"Tampa FL",miles:1100,tzShift:1,
+    risk:"HIGH", riskColor:"#ff4444",
+    note:"First Four survivor with play-in fatigue. Prairie View (TX→FL: ~1,080 miles, CT→ET: +1hr) or Lehigh (PA→FL: ~1,155 miles, ET→ET: 0hr). Either team arrives with extra travel, an extra game in their legs, and faces defending champion Florida in their backyard.",
+    ats:"First Four 16-seeds vs 1-seeds: 0-8 all time" },
+  { team:"Clemson",     seed:8,  region:"South", rc:"#22c55e",
+    from:"Clemson SC",     to:"Tampa FL",      miles:690,  tzShift:0,
+    risk:"LOW", riskColor:"#4ade80",
+    note:"690 miles from Clemson to Tampa — Southeast ACC trip, same timezone. Clemson fans travel well in the Southeast corridor. Brad Brownell's team handles road environments. This is a favorable travel draw for Clemson entering a first-round coin-flip vs Iowa.",
+    ats:"ACC teams in Tampa pod: neutral to favorable" },
+  { team:"Iowa",        seed:9,  region:"South", rc:"#22c55e",
+    from:"Iowa City IA",   to:"Tampa FL",      miles:1420, tzShift:1,
+    risk:"HIGH", riskColor:"#ff4444",
+    note:"1,420 miles + 1hr TZ shift from Iowa City to Tampa. Central → Eastern means body clock is BEHIND for Hawkeye fans and players used to Central tip-offs. Clemson has a ~730-mile travel advantage in this 8-9 game. McCollum's debut March adds another variable.",
+    ats:"Big Ten teams in Southeast pod: 4-7 ATS last 8 yrs" },
+  { team:"Texas Tech",  seed:5,  region:"Midwest",rc:"#f59e0b",
+    from:"Lubbock TX",     to:"Tampa FL",      miles:1320, tzShift:1,
+    risk:"HIGH", riskColor:"#ff4444",
+    note:"1,320 miles + 1hr TZ shift from Lubbock to Tampa. Central → Eastern means body clock is BEHIND — early Tampa games feel earlier than normal for a West Texas team. McCasland's Big 12-tested squad handles adversity, but this is a real travel headwind in the Akron matchup.",
+    ats:"Big 12 teams in Southeast pod: 5-6 ATS last 8 yrs" },
+  { team:"Akron",       seed:12, region:"Midwest",rc:"#f59e0b",
+    from:"Akron OH",       to:"Tampa FL",      miles:1085, tzShift:0,
+    risk:"MED", riskColor:"#ff9800",
+    note:"1,085 miles from Akron to Tampa — long trip but same Eastern timezone. MAC road experience prepares Akron for any environment. Zero TZ disruption means body clock is intact. Texas Tech makes a longer and more disruptive trip from Lubbock, giving Akron a modest travel edge in this 12v5 upset watch.",
+    ats:"MAC 12-seeds: 38% upset rate regardless of site" },
+  { team:"Alabama",     seed:4,  region:"Midwest",rc:"#f59e0b",
+    from:"Tuscaloosa AL",  to:"Tampa FL",      miles:600,  tzShift:1,
+    risk:"LOW", riskColor:"#4ade80",
+    note:"600 miles + 1hr TZ shift from Tuscaloosa to Tampa. Central → Eastern is mildly unfavorable for morning games but manageable. Alabama fans travel in force to Florida — SEC presence in Tampa is always strong. Clean travel draw for the 4-seed.",
+    ats:"SEC teams in Tampa: near-home feel, favorable" },
+  { team:"Hofstra",     seed:13, region:"Midwest",rc:"#f59e0b",
+    from:"Hempstead NY",   to:"Tampa FL",      miles:1270, tzShift:0,
+    risk:"MED", riskColor:"#ff9800",
+    note:"1,270 miles from Long Island to Tampa — long North-South trip but same Eastern timezone. CAA road experience helps Hofstra adapt. Alabama has a 670-mile travel advantage from nearby Tuscaloosa. Speedy Claxton's team competes hard but the talent gap is significant.",
+    ats:"CAA 13-seeds vs SEC 4-seeds: historically overmatched" },
+
+  // ── OKLAHOMA CITY, OK (Paycom Center) — South bottom ────────────────────────
+  { team:"Vanderbilt",  seed:5,  region:"South", rc:"#22c55e",
+    from:"Nashville TN",  to:"Oklahoma City OK",miles:740, tzShift:0,
+    risk:"MED", riskColor:"#ff9800",
+    note:"740 miles from Nashville to Oklahoma City — Central timezone throughout. SEC travel covers similar distances regularly. Vanderbilt's travel draw is clean — their regression risk is Luck +3.2 overperformance and Stackhouse's 0-3 tourney record, not miles.",
+    ats:"SEC teams in Oklahoma City: neutral" },
+  { team:"McNeese",     seed:12, region:"South", rc:"#22c55e",
+    from:"Lake Charles LA",to:"Oklahoma City OK",miles:445,tzShift:0,
+    risk:"LOW", riskColor:"#4ade80",
+    note:"445 miles from Lake Charles to Oklahoma City — short South Central trip, same Central timezone. Louisiana fans travel to Oklahoma for big games. Near-home conditions for the upset specialists. Will Wade's analytical prep + local crowd energy = perfect McNeese setup.",
+    ats:"Near-home 12-seeds: upset rate climbs to 40%+ with crowd" },
+  { team:"Nebraska",    seed:4,  region:"South", rc:"#22c55e",
+    from:"Lincoln NE",    to:"Oklahoma City OK", miles:480, tzShift:0,
+    risk:"LOW", riskColor:"#4ade80",
+    note:"480 miles from Lincoln to Oklahoma City — short Great Plains drive, same Central timezone. Nebraska fans travel to Oklahoma regularly for Big 12 history games. Clean travel draw for Hoiberg's 4-seed — they should control Troy on both ends.",
+    ats:"Big Ten teams in Oklahoma City: neutral" },
+  { team:"Troy",        seed:13, region:"South", rc:"#22c55e",
+    from:"Troy AL",       to:"Oklahoma City OK", miles:830, tzShift:0,
+    risk:"MED", riskColor:"#ff9800",
+    note:"830 miles from Troy AL to Oklahoma City — full day of travel but same Central timezone. Sun Belt teams are used to long road trips with limited budgets. Cross' team arrives ready to compete. The talent gap vs Nebraska is the challenge, not the flight.",
+    ats:"Sun Belt 13-seeds: competitive but historically overmatched" },
+  { team:"St. Mary's",  seed:7,  region:"South", rc:"#22c55e",
+    from:"Moraga CA",     to:"Oklahoma City OK",miles:1750,tzShift:2,
+    risk:"HIGH", riskColor:"#ff4444",
+    note:"1,750 miles + 2hr TZ shift from the Bay Area to Oklahoma City. Pacific → Central means game feels 2hrs LATER for St. Mary's — mildly favorable for afternoon games. But Bennett's most routine-dependent system in college basketball is disrupted by cross-country travel. Texas A&M plays only 500 miles away.",
+    ats:"WCC teams in South Central pod: 2-7 ATS last 10 yrs" },
+  { team:"Texas A&M",   seed:10, region:"South", rc:"#22c55e",
+    from:"College Station TX",to:"Oklahoma City OK",miles:500,tzShift:0,
+    risk:"LOW", riskColor:"#4ade80",
+    note:"500 miles from College Station to Oklahoma City — short South Central trip, same Central timezone. A&M fans flood Oklahoma regularly. Near-home upset energy with Buzz Williams' physical SEC system. St. Mary's makes a 1,750-mile cross-country haul — significant travel edge for A&M.",
+    ats:"Near-home SEC 10-seeds: 39% historical upset rate + crowd" },
+  { team:"Houston",     seed:2,  region:"South", rc:"#22c55e",
+    from:"Houston TX",    to:"Oklahoma City OK",miles:490, tzShift:0,
+    risk:"LOW", riskColor:"#4ade80",
+    note:"490 miles from Houston to Oklahoma City — Kelvin Sampson's Cougars essentially play a home game. Texas fans travel north to OKC for major events. Same Central timezone. Sampson's culture of focus + near-home crowd = ideal setup for a 2-seed grinding out Idaho.",
+    ats:"AAC 2-seeds in South Central: 7-3 ATS dominant" },
+  { team:"Idaho",       seed:15, region:"South", rc:"#22c55e",
+    from:"Moscow ID",     to:"Oklahoma City OK",miles:1620,tzShift:2,
+    risk:"HIGH", riskColor:"#ff4444",
+    note:"1,620 miles + 2hr TZ shift from Moscow ID to Oklahoma City. Pacific → Central means game feels LATER for Idaho — mildly favorable for their body clock, but Houston plays basically at home. This is the ultimate David vs Goliath: Big Sky underdog vs Sampson's defensive machine.",
+    ats:"Big Sky 15-seeds vs AAC 2-seeds: historically overmatched" },
 ];
 
 function renderTravel() {
@@ -3228,57 +3554,198 @@ function startTicker() {
   }
 }
 
-function updateTickerLabel(hasLive) {
+function updateTickerLabel(hasLive, hasFinished) {
   var label = document.getElementById('ticker-label');
   if (!label) return;
   if (hasLive) {
-    label.style.background = '#C8102E';
-    label.textContent = 'LIVE';
+    label.innerHTML = '<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#fff;margin-right:5px;animation:pulse 1s infinite"></span>LIVE';
+    label.style.background = 'rgba(200,16,46,0.9)';
+  } else if (hasFinished) {
+    label.textContent = '✓ SCORES';
+    label.style.background = 'rgba(22,163,74,0.8)';
   } else {
-    label.style.background = '#16A34A';
-    label.textContent = 'UPDATES';
+    label.innerHTML = '🔴 LIVE';
+    label.style.background = 'rgba(0,0,0,0.25)';
   }
 }
 
+// ── ESPN PUBLIC API LIVE SCORES ───────────────────────────────────────────────
+// ESPN's public scoreboard API — no API key, CORS-friendly
+var ESPN_URL = 'https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?groups=100&limit=50';
+
+// 2026 NCAA Tournament windows (local time). Polling only runs during these.
+var TOURNEY_WINDOWS = [
+  // First Four
+  { start: new Date('2026-03-17T18:00:00'), end: new Date('2026-03-17T24:00:00') },
+  { start: new Date('2026-03-18T18:00:00'), end: new Date('2026-03-18T24:00:00') },
+  // R64 Day 1
+  { start: new Date('2026-03-19T12:00:00'), end: new Date('2026-03-19T24:00:00') },
+  // R64 Day 2
+  { start: new Date('2026-03-20T12:00:00'), end: new Date('2026-03-20T24:00:00') },
+  // R32 Day 1
+  { start: new Date('2026-03-21T12:00:00'), end: new Date('2026-03-21T24:00:00') },
+  // R32 Day 2
+  { start: new Date('2026-03-22T12:00:00'), end: new Date('2026-03-22T24:00:00') },
+  // Sweet 16
+  { start: new Date('2026-03-26T18:00:00'), end: new Date('2026-03-26T24:00:00') },
+  { start: new Date('2026-03-27T18:00:00'), end: new Date('2026-03-27T24:00:00') },
+  // Elite 8
+  { start: new Date('2026-03-28T18:00:00'), end: new Date('2026-03-28T24:00:00') },
+  { start: new Date('2026-03-29T12:00:00'), end: new Date('2026-03-29T24:00:00') },
+  // Final Four
+  { start: new Date('2026-04-04T18:00:00'), end: new Date('2026-04-04T24:00:00') },
+  // Championship
+  { start: new Date('2026-04-06T20:00:00'), end: new Date('2026-04-06T24:00:00') }
+];
+
+function isTourneyWindow() {
+  var now = new Date();
+  // Also allow fetching within 2hrs after any window ends (catch late games)
+  return TOURNEY_WINDOWS.some(function(w) {
+    return now >= w.start && now <= new Date(w.end.getTime() + 7200000);
+  });
+}
+
+function getPeriodLabel(period) {
+  if (period === 1) return '1st';
+  if (period === 2) return '2nd';
+  if (period > 2) return 'OT' + (period > 3 ? (period - 2) : '');
+  return '';
+}
+
+function injectScoreItems(liveHTML) {
+  // Update BOTH the original track and its clone so the scroll stays smooth
+  ['ticker-track', 'ticker-track-clone'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    // Remove previous score items
+    Array.from(el.querySelectorAll('.tick-score-item')).forEach(function(n){ n.remove(); });
+    // Insert new ones at the front
+    var frag = document.createDocumentFragment();
+    liveHTML.slice().reverse().forEach(function(html) {
+      var d = document.createElement('div');
+      d.className = 'tick-item tick-score-item';
+      d.innerHTML = html;
+      frag.insertBefore(d, frag.firstChild || null);
+    });
+    el.insertBefore(frag, el.firstChild);
+  });
+}
+
 async function fetchTickerScores() {
+  if (!isTourneyWindow()) return;
   try {
-    var resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1500,
-        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-        system: 'Search for live NCAA Tournament March Madness game scores RIGHT NOW. Return ONLY a JSON array, no other text: [{"away":"TEAM","home":"TEAM","awayScore":0,"homeScore":0,"status":"LIVE","clock":"12:34","half":"2nd"}]. Include all games playing or finished today. If none, return [].',
-        messages: [{ role: 'user', content: 'Live NCAA Tournament scores right now March 2026. JSON array only.' }]
-      })
-    });
+    var resp = await fetch(ESPN_URL + '&t=' + Date.now(), { cache: 'no-store' });
+    if (!resp.ok) return;
     var data = await resp.json();
-    var txt = (data.content || []).map(function(c){ return c.text || ''; }).join('');
-    var m = txt.match(/\[[\s\S]*?\]/);
-    if (!m) return;
-    var games = JSON.parse(m[0]);
-    var hasLive = false;
-    var track = document.getElementById('ticker-track');
-    if (!track) return;
-    track.querySelectorAll('.tick-score-item').forEach(function(el){ el.remove(); });
-    games.forEach(function(g) {
-      var isLive = (g.status||'').toUpperCase() === 'LIVE';
-      if (isLive) hasLive = true;
-      var div = document.createElement('div');
-      div.className = 'tick-item tick-score-item';
-      var aw = g.awayScore > g.homeScore, hw = g.homeScore > g.awayScore;
-      div.innerHTML = (isLive ? '<span class="tick-live">● LIVE</span>' : '<span class="tick-final">FINAL</span>')
-        + ' <span style="color:'+(aw?'#0B0F1E':'#64748B')+';font-weight:'+(aw?'700':'400')+'">' + g.away + '</span>'
-        + ' <span class="tick-score">' + g.awayScore + '</span>'
-        + ' <span style="color:#CBD5E1">–</span>'
-        + ' <span class="tick-score">' + g.homeScore + '</span>'
-        + ' <span style="color:'+(hw?'#0B0F1E':'#64748B')+';font-weight:'+(hw?'700':'400')+'">' + g.home + '</span>'
-        + (isLive && g.clock ? ' <span class="tick-clock">' + (g.half||'') + ' ' + g.clock + '</span>' : '');
-      track.insertBefore(div, track.firstChild);
+    var events = data.events || [];
+    if (!events.length) return;
+
+    var scoreItems = [];
+    var hasLive = false, hasFinished = false;
+
+    events.forEach(function(ev) {
+      var comp = (ev.competitions || [])[0];
+      if (!comp) return;
+      var competitors = comp.competitors || [];
+      var away = competitors.find(function(c){ return c.homeAway === 'away'; });
+      var home = competitors.find(function(c){ return c.homeAway === 'home'; });
+      if (!away || !home) return;
+
+      var status   = ev.status || {};
+      var stName   = (status.type || {}).name || '';
+      var isLive   = stName === 'STATUS_IN_PROGRESS';
+      var isFinal  = stName === 'STATUS_FINAL';
+      var isHalftime = stName === 'STATUS_HALFTIME';
+      if (!isLive && !isFinal && !isHalftime) return;
+
+      if (isLive || isHalftime) hasLive = true;
+      if (isFinal) hasFinished = true;
+
+      var awayScore = parseInt(away.score || 0, 10);
+      var homeScore = parseInt(home.score || 0, 10);
+      var awayAhead = awayScore > homeScore;
+      var homeAhead = homeScore > awayScore;
+
+      // Short team names — ESPN provides several variants
+      var awayName = (away.team || {}).shortDisplayName || (away.team || {}).abbreviation || 'AWAY';
+      var homeName = (home.team || {}).shortDisplayName || (home.team || {}).abbreviation || 'HOME';
+
+      // Seed detection from notes/competitors
+      var awaySeed = parseInt((away.curatedRank || {}).current || 0, 10) || null;
+      var homeSeed = parseInt((home.curatedRank || {}).current || 0, 10) || null;
+
+      // Clock / period
+      var clock  = status.displayClock || '';
+      var period = status.period || 1;
+      var periodLbl = isHalftime ? 'HALF' : getPeriodLabel(period);
+
+      // Build HTML
+      var statusBadge = isLive
+        ? '<span class="tick-live">● LIVE</span>'
+        : isHalftime
+          ? '<span class="tick-live">HALF</span>'
+          : '<span class="tick-final">FINAL</span>';
+
+      var awayStyle = 'color:' + (awayAhead ? '#FFFFFF' : 'rgba(255,255,255,0.6)') + ';font-weight:' + (awayAhead ? '700' : '400');
+      var homeStyle = 'color:' + (homeAhead ? '#FFFFFF' : 'rgba(255,255,255,0.6)') + ';font-weight:' + (homeAhead ? '700' : '400');
+
+      var seedBadge = function(seed) {
+        return seed ? '<sup style="font-size:7px;color:rgba(255,255,255,0.4);">' + seed + '</sup>' : '';
+      };
+
+      var clockBadge = (isLive && clock && !isHalftime)
+        ? ' <span class="tick-clock">' + periodLbl + ' ' + clock + '</span>'
+        : '';
+
+      // Upset detection: underdog (higher seed #) winning at final
+      var upsetBadge = '';
+      if (isFinal && awaySeed && homeSeed) {
+        if (awayAhead && awaySeed > homeSeed + 3) upsetBadge = ' <span class="tick-upset">🔥 UPSET</span>';
+        if (homeAhead && homeSeed > awaySeed + 3) upsetBadge = ' <span class="tick-upset">🔥 UPSET</span>';
+      }
+
+      scoreItems.push(
+        statusBadge +
+        ' <span style="' + awayStyle + '">' + awayName + seedBadge(awaySeed) + '</span>' +
+        ' <span class="tick-score">' + awayScore + '</span>' +
+        '<span style="color:rgba(255,255,255,0.3);margin:0 3px">–</span>' +
+        '<span class="tick-score">' + homeScore + '</span> ' +
+        '<span style="' + homeStyle + '">' + homeName + seedBadge(homeSeed) + '</span>' +
+        clockBadge + upsetBadge
+      );
     });
-    updateTickerLabel(hasLive);
-  } catch(e) { console.log('Ticker fetch failed:', e.message); }
+
+    if (scoreItems.length) {
+      injectScoreItems(scoreItems);
+      updateTickerLabel(hasLive, hasFinished);
+      // Speed up scroll when live games are happening
+      tickerSpeed = hasLive ? 0.7 : 0.5;
+    }
+  } catch(e) {
+    console.log('ESPN ticker fetch failed:', e.message || e);
+  }
+}
+
+// Smart polling: fast during live windows, slow otherwise
+var _tickerInterval = null;
+function scheduleTicker() {
+  if (_tickerInterval) clearInterval(_tickerInterval);
+  var now = new Date();
+  var tourneyStart = new Date('2026-03-17T00:00:00');
+  var tourneyEnd   = new Date('2026-04-07T00:00:00');
+  if (now < tourneyStart || now > tourneyEnd) return; // outside tournament
+  fetchTickerScores(); // immediate first call
+  var pollMs = isTourneyWindow() ? 45000 : 300000; // 45s live, 5min standby
+  _tickerInterval = setInterval(function() {
+    fetchTickerScores();
+    // Re-evaluate poll rate on each tick
+    var newPollMs = isTourneyWindow() ? 45000 : 300000;
+    if (newPollMs !== pollMs) {
+      pollMs = newPollMs;
+      scheduleTicker(); // restart with new rate
+    }
+  }, pollMs);
 }
 
 // ── TOOLTIP POSITIONING ───────────────────────────────────────────────────────
@@ -3318,13 +3785,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // Init tooltips
   initTooltips();
 
-  // Live scores — only during tournament (Mar 19+)
-  var now = new Date();
-  var tourneyStart = new Date('2026-03-19T12:00:00');
-  if (now >= tourneyStart) {
-    fetchTickerScores();
-    setInterval(fetchTickerScores, 90000);
-  }
+  // Live scores — ESPN public API, auto-scheduled around tournament windows
+  scheduleTicker();
+  // Re-evaluate every hour in case the window opens while page is open
+  setInterval(scheduleTicker, 3600000);
 });
 </script>
 </body>

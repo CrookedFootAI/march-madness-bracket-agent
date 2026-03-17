@@ -1407,7 +1407,7 @@ var OUR_UPSETS = [
   {dog:"Georgia",dS:8,fav:"Michigan",fS:1,alert:42,region:"Midwest",note:"L.J. Cason OUT means Cadeau is sole PG for 6 games. Georgia is physical and battle-tested from the SEC. Michigan is still favored but at a reduced ceiling without full depth."},
   {dog:"Missouri",dS:10,fav:"Miami",fS:7,alert:35,region:"West",note:"Missouri plays 125 miles from St. Louis — essentially a home game. Miami FL makes a 1,310-mile trip. Gates has Missouri playing with urgency after a bubble scare. 10v7 upset rate is 39% and Missouri has the crowd advantage."},
   {dog:"UCF",dS:10,fav:"UCLA",fS:7,alert:34,region:"East",note:"UCLA makes the longest trip of any team in the East — 2,720 miles + 3hr TZ shift to Philadelphia. UCF is 1,100 miles away in the same timezone. 10v7 upsets happen 39% of the time and UCF has the massive travel edge here."},
-  {dog:"Akron",dS:12,fav:"Texas Tech",fS:5,alert:38,region:"Midwest",note:"MAC 12-seeds are historically one of the best upset matchups in the tournament. Akron plays in Tampa on the same Eastern timezone — no travel disruption. Texas Tech hauls 1,320 miles with a 1hr TZ shift. Groce over-prepares for moments exactly like this."},
+  {dog:"Akron",dS:12,fav:"Texas Tech",fS:5,alert:68,region:"Midwest",note:"JT Toppin (ACL, OUT) was Texas Tech's entire offensive identity at 21.8 ppg/10.8 rpg. Akron is 29-5, MAC's first-ever back-to-back-to-back champion, ranking #10 nationally in scoring. MAC 12-seeds are historically one of the best upset matchups — and this one has the structural setup of the entire first round. Groce over-prepares for moments exactly like this."},
   {dog:"Santa Clara",dS:10,fav:"Kentucky",fS:7,alert:35,region:"Midwest",note:"Kentucky has the LOWEST focus score in the entire field (48/100) — 72% transfer roster + multiple NBA evaluees. Santa Clara is disciplined, system-oriented, and Sendek is a proven tournament coach. St. Louis is actually closer to Santa Clara's WCC rivals than Kentucky's fans think."},
 ];
 
@@ -1452,7 +1452,7 @@ var FOCUS_SCORES = [
   {team:"North Dakota State",score:59,region:"East",rc:"#e63946",seed:14,coach:"David Richman",coachTourney:"2-4 career",note:"Summit League auto-bid in a game against Tom Izzo and Michigan State. NDSU competes hard and Richman has tourney experience, but this is a massive talent gap. They'll disrupt early and fade in the second half — classic 14-seed arc."},
   {team:"UCF",score:62,region:"East",rc:"#e63946",seed:10,coach:"Johnny Dawkins",coachTourney:"5-4 career",note:"Dawkins is a legitimate tournament coach. UCF is a dangerous 10-seed with the size and physicality to upset UCLA — who arrives on the East Coast carrying a 2,700-mile travel burden and a 3hr TZ shift. Home-region advantage firmly with UCF."},
   {team:"Furman",score:57,region:"East",rc:"#e63946",seed:15,coach:"Bob Richey",coachTourney:"1-1 career",note:"Southern Conference champion facing UConn's two-title machine. Richey runs a fundamentally sound system and his players compete with maximum effort — but the talent and resource gap against Hurley's squad is enormous. Focused, outmatched."},
-  {team:"Siena",score:52,region:"East",rc:"#e63946",seed:16,coach:"Carmen Maciariello",coachTourney:"0-1 career",note:"MAAC auto-bid playing Duke in Raleigh — effectively a home game for the 1-overall seed. Cooper Flagg and a 7-man rotation of Blue Chip talent is a maximum mismatch. Players are excited to compete on the biggest stage — nothing to lose."},
+  {team:"Siena",score:52,region:"East",rc:"#e63946",seed:16,coach:"Carmen Maciariello",coachTourney:"0-1 career",note:"MAAC auto-bid playing Duke in Greenville — effectively a home game for the 1-overall seed. Cameron Boozer (22.8 ppg/10.2 rpg, projected top-3 pick) leads a 7-man rotation of Blue Chip talent. Maximum mismatch. Players are excited to compete on the biggest stage — nothing to lose."},
 
   // ── WEST — remaining seeds ──
   {team:"LIU",score:50,region:"West",rc:"#2196f3",seed:16,coach:"Tom Garrick",coachTourney:"0-1 career",note:"NEC auto-bid against Arizona's 1-seed in Portland. Enormous talent gap — but every 16-seed in the field knows they have nothing to lose. Motivated to compete with pride. Lloyd's Arizona is focused and won't give them an inch."},
@@ -1783,7 +1783,7 @@ function statCell(label, val, color) {
 // ── TEAM-SPECIFIC SCOUTING BLURBS ─────────────────────────────────────────────
 var TEAM_BLURBS = {
   // ── EAST ──
-  "Duke": "The No. 1 overall seed at 32-2 with a tournament-record 16 Quad-1 wins — Jon Scheyer's deepening tournament run each year (R32→E8→F4) makes 2026 a title-or-bust moment. But the injury concerns are real: Caleb Foster (foot fracture, season-ending), and Patrick Ngongba II (foot) is also questionable for the opener. Cooper Flagg carries enormous individual burden in a 7-man rotation across what could be 6 tournament games.",
+  "Duke": "The No. 1 overall seed at 32-2 — Jon Scheyer's deepening tournament run each year (R32→E8→F4) makes 2026 a title-or-bust moment. Cameron Boozer (22.8 ppg/10.2 rpg, Sporting News National Player of the Year, projected top-3 NBA pick) is the engine, flanked by Cayden Boozer and Isaiah Evans. The injury concerns are real: Caleb Foster (foot fracture, season-ending), and Patrick Ngongba II (foot) is questionable for the opener. Boozer carries enormous individual burden in a 7-man rotation across what could be 6 tournament games.",
   "UConn": "Dan Hurley's Huskies went on an 18-game winning streak mid-season to cement their 2026 status after a 2025 second-round exit stunned the college basketball world. At 29-5, Hurley brings a 15-3 career tournament record to Philadelphia with injury concerns he's been cautiously optimistic about heading into Selection weekend. The East region path likely leads to a Duke Elite Eight that would be the marquee matchup of the tournament.",
   "St. John's": "Pitino's masterpiece — 30 wins, Big East title — but Luck +2.1 is the highest regression risk in the entire field. Won ugly games all year with schedule strength concerns persisting. Playing near-home in Philadelphia means a loud crowd, but the advanced metrics say correction is coming.",
   "Kansas": "Darryn Peterson — projected No. 1 overall NBA Draft pick — leads the Jayhawks at 19.8 ppg but has missed 11 of their 33 games with unexplained absences all season. If Peterson is healthy and locked in, Kansas is a legitimate Final Four threat; if limited, they're a first or second-round exit. Bill Self's 37-19 career tournament record means the coaching is never in question, but this is the single most 'all-or-nothing' player situation in the bracket.",
@@ -2434,7 +2434,7 @@ var TIER1_BETS = [
     signal:"WIN",
     confidence:74,
     estOdds:"-145",
-    edge:"Michigan #2 KenPom, #4 offense + #2 defense nationally · Purdue offense-only team (AdjD #39 nationally) · Michigan won Big Ten tourney title · Dusty May 4-2 vs Matt Painter 22-16 (good record but always falls short)",
+    edge:"Michigan #2 KenPom, #4 offense + #2 defense nationally · Purdue offense-only team (AdjD #39 nationally) · Michigan won Big Ten regular season title (Purdue won tournament) · Dusty May 4-2 vs Matt Painter 22-16 (good record but always falls short)",
     layers:["📊 KenPom: Michigan #2 vs Purdue #4","🛡️ Defense edge: Michigan #2 def vs Purdue #39 def","👔 Coach: May 4-2 vs Painter 1 Final Four in 16 tries","🎯 Painter has NEVER won title — 22-16 career"],
     color:"#e63946"
   },
@@ -2761,8 +2761,8 @@ var GAME_PREDICTIONS = [
     spread:-28, ml:-5000, ou:130, ouLean:"UNDER",
     betRating:"LOCK", betColor:"#4ade80",
     spreadLean:"DUKE -28", mlLean:"PASS (juice too high)",
-    edge:"Duke plays 275 miles from campus in Greenville, SC — heavy home-region crowd in ACC country. Siena is a MAAC auto-bid. Duke's #1 defense (AdjD 88.2) and Cooper Flagg make this the most lopsided matchup on the board. UNDER because Duke wins methodically, won't run up score with a home crowd.",
-    flags:["🏠 Duke plays 28mi from campus — home crowd","🛡️ Duke #1 defense nation AdjD 88.2","🌟 Cooper Flagg — projected #1 pick","💰 NIL gap $18.5M vs ~$2M"] },
+    edge:"Duke plays in Greenville, SC — heavy home-region crowd in ACC country. Siena is a MAAC auto-bid. Duke's #1 defense (AdjD 88.2) and Cameron Boozer (22.8 ppg/10.2 rpg, projected top-3 pick) make this the most lopsided matchup on the board. UNDER because Duke wins methodically, won't run up score with a home crowd.",
+    flags:["🏠 Duke plays near home — Greenville, SC","🛡️ Duke #1 defense nation AdjD 88.2","🌟 Cameron Boozer — projected top-3 NBA pick","💰 NIL gap $18.5M vs ~$2M"] },
 
   { region:"East", rc:"#e63946",
     fav:"Ohio State", favSeed:8, dog:"TCU", dogSeed:9,
@@ -2970,10 +2970,10 @@ var GAME_PREDICTIONS = [
   { region:"Midwest", rc:"#f59e0b",
     fav:"Texas Tech", favSeed:5, dog:"Akron", dogSeed:12,
     spread:-7.5, ml:-310, ou:131, ouLean:"UNDER",
-    betRating:"COVER LEAN", betColor:"#4ade80",
-    spreadLean:"TEXAS TECH -7.5", mlLean:"PASS",
-    edge:"Texas Tech's defensive identity (Adams system) should contain Akron's offense. UNDER because Texas Tech slows it down to 67.9 possessions — one of the most disciplined systems in the field.",
-    flags:["🛡️ Texas Tech defensive system — elite","🐢 Texas Tech 67.9 poss — grind style","📊 Texas Tech KenPom #24, AdjEM +21.0","💰 NIL: $8.5M vs ~$3.5M"] },
+    betRating:"UPSET ALERT", betColor:"#ff6b35",
+    spreadLean:"AKRON +7.5", mlLean:"AKRON ML (+280)",
+    edge:"JT Toppin — preseason All-American, 21.8 ppg — tore his ACL in mid-February and is done for the season. This is the consensus #1 12-over-5 upset setup in the entire field. Akron is 29-5, MAC's first-ever back-to-back-to-back champion, ranks #10 nationally in scoring at 88.4 ppg. UNDER because Tech grinds it down — but the winner lean is Akron. Our upset alert: 68/100.",
+    flags:["🚨 JT Toppin OUT — ACL, season-ending","📊 12v5 upset rate: 35% historically","🏆 Akron 29-5, shoots 50.3% from field","🧠 Our upset alert score: 68/100"] },
 
   { region:"Midwest", rc:"#f59e0b",
     fav:"Alabama", favSeed:4, dog:"Hofstra", dogSeed:13,

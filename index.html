@@ -3578,29 +3578,30 @@ function buildStaticTickerItems() {
   // ── FIRST FOUR RESULTS (show until R64 starts) ──────────────────────────────
   if (showFirstFourScores) {
     FIRST_FOUR_RESULTS.forEach(function(r) {
-      if (r.done && r.winner && r.score) {
+      if (r.done && r.winner) {
         var loser = r.winner === r.team1 ? r.team2 : r.team1;
-        items.push({ cls:'tick-final', badge:'✓ FINAL', text:r.winner + ' def. ' + loser + ' · First Four · ' + r.key.replace('-',' #') });
+        items.push({ cls:'tick-alert', badge:'🏀 FIRST FOUR', text:r.winner + ' advances · def. ' + loser + ' · ' + r.key.replace('-',' Region #') + ' · Dayton' });
       }
     });
     // Pending First Four games (not yet played)
     FIRST_FOUR_RESULTS.forEach(function(r) {
       if (!r.done) {
-        items.push({ cls:'tick-alert', badge:'🏀 TONIGHT', text:r.team1 + ' vs ' + r.team2 + ' · First Four · Winner plays ' + r.key.replace('-',' #') });
+        var region = r.key.split('-')[0];
+        var seed   = r.key.split('-')[1];
+        items.push({ cls:'tick-alert', badge:'📅 FIRST FOUR', text:r.team1 + ' vs ' + r.team2 + ' · ' + region + ' Region #' + seed + ' · Dayton · Mar 18' });
       }
     });
   } else {
-    // After R64 starts — only show if game was a significant upset
     FIRST_FOUR_RESULTS.forEach(function(r) {
       if (r.done && r.winner) {
         var loser = r.winner === r.team1 ? r.team2 : r.team1;
-        items.push({ cls:'tick-final', badge:'✓ FINAL', text:'First Four: ' + r.winner + ' beat ' + loser + ' · Now faces ' + r.key.replace('-',' #') + ' opponent' });
+        items.push({ cls:'tick-alert', badge:'🏀 FIRST FOUR', text:r.winner + ' advances · def. ' + loser + ' · ' + r.key.replace('-',' Region #') });
       }
     });
   }
 
   // ── TOURNAMENT STATUS ───────────────────────────────────────────────────────
-  items.push({ cls:'tick-alert', badge:'🏀 2026', text:'NCAA Tournament underway · First Four: Mar 17-18 · R64: Mar 19-20' });
+  items.push({ cls:'tick-alert', badge:'🏀 NCAA', text:'2026 NCAA Tournament · First Four: Mar 17–18 · Round of 64: Mar 19–20 · Round of 32: Mar 21–22' });
 
   // ── INJURIES ────────────────────────────────────────────────────────────────
   items.push({ cls:'tick-inj', badge:'🚑 OUT', text:'Duke Caleb Foster — OUT (foot fracture, season-ending)' });
@@ -3666,10 +3667,10 @@ function updateTickerLabel(hasLive, hasFinished) {
     label.innerHTML = '<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#fff;margin-right:5px;animation:pulse 1s infinite"></span>LIVE';
     label.style.background = 'rgba(200,16,46,0.9)';
   } else if (hasFinished) {
-    label.innerHTML = '<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#fff;margin-right:5px"></span>FINAL';
-    label.style.background = 'rgba(22,163,74,0.8)';
+    label.innerHTML = '🏀 NCAA';
+    label.style.background = 'rgba(0,0,0,0.25)';
   } else {
-    label.innerHTML = '🔴 LIVE';
+    label.innerHTML = '🏀 NCAA';
     label.style.background = 'rgba(0,0,0,0.25)';
   }
 }

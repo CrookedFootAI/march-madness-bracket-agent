@@ -600,23 +600,7 @@ nav{top:32px!important}
   <div id="ticker-label">🔴 LIVE</div>
   <div id="ticker-track-wrap">
     <div id="ticker-track">
-      <div class="tick-item"><span class="tick-alert">🏀 LIVE</span><span style="color:rgba(255,255,255,0.9)">2026 NCAA Tournament underway · First Four: Mar 17-18 · R64: Mar 19-20</span></div>
-      <div class="tick-item"><span class="tick-inj">🚑 OUT</span><span style="color:rgba(255,255,255,0.9)">Duke Caleb Foster — OUT (foot fracture, season-ending)</span></div>
-      <div class="tick-item"><span class="tick-inj">🚑 OUT</span><span style="color:rgba(255,255,255,0.9)">Michigan L.J. Cason — OUT (ACL, season-ending)</span></div>
-      <div class="tick-item"><span class="tick-inj">🚑 OUT</span><span style="color:rgba(255,255,255,0.9)">Arizona Koa Peat — OUT (foot, missed late season)</span></div>
-      <div class="tick-item"><span class="tick-inj">🚑 OUT</span><span style="color:rgba(255,255,255,0.9)">Texas Tech JT Toppin — OUT (ACL, season-ending · 21.8 ppg gone · Akron 12-seed now favored by many)</span></div>
-      <div class="tick-item"><span class="tick-inj">⚠️ GTD</span><span style="color:rgba(255,255,255,0.9)">Duke Patrick Ngongba II — GTD (foot soreness · with Foster already OUT, Duke down to 6-man unit)</span></div>
-      <div class="tick-item"><span class="tick-inj">⚠️ GTD</span><span style="color:rgba(255,255,255,0.9)">Gonzaga Braden Huff — GTD (knee · offense 15th→62nd without him)</span></div>
-      <div class="tick-item"><span class="tick-inj">⚠️ GTD</span><span style="color:rgba(255,255,255,0.9)">Tennessee Nate Ament — GTD (knee, limited)</span></div>
-      <div class="tick-item"><span class="tick-inj">⚠️ GTD</span><span style="color:rgba(255,255,255,0.9)">Iowa State M. Momcilovic — GTD (back tightness)</span></div>
-      <div class="tick-item"><span class="tick-inj">⚠️ LIMITED</span><span style="color:rgba(255,255,255,0.9)">Wisconsin John Blackwell — Q for R1 (shoulder)</span></div>
-      <div class="tick-item"><span class="tick-upset">🔥 UPSET ALERT #71</span><span style="color:rgba(255,255,255,0.9)">McNeese vs Vanderbilt — McNeese beat Clemson +420 in 2025</span></div>
-      <div class="tick-item"><span class="tick-upset">🔥 UPSET ALERT #65</span><span style="color:rgba(255,255,255,0.9)">VCU vs North Carolina — Havoc defense eats UNC ball-handlers</span></div>
-      <div class="tick-item"><span class="tick-upset">🔥 UPSET ALERT #55</span><span style="color:rgba(255,255,255,0.9)">Northern Iowa vs St. John's — 12v5 rate 35% · St. John's Luck +2.1</span></div>
-      <div class="tick-item"><span class="tick-alert">📊 SHARP</span><span style="color:rgba(255,255,255,0.9)">Houston/Idaho — Best UNDER on the board (Sampson defense, 64 poss/game)</span></div>
-      <div class="tick-item"><span class="tick-alert">📊 SHARP</span><span style="color:rgba(255,255,255,0.9)">St. John's LUCK +2.1 — Highest regression risk in entire field</span></div>
-      <div class="tick-item"><span class="tick-alert">📊 SHARP</span><span style="color:rgba(255,255,255,0.9)">Vanderbilt LUCK +3.2 — Most extreme outlier · Fade in futures</span></div>
-      <div class="tick-item"><span class="tick-alert">🏆 AI PICK</span><span style="color:#f0c040;font-weight:700">Champion: Florida · Final Four: Duke · Arizona · Florida · Michigan</span></div>
+      <!-- Items injected by buildStaticTickerItems() on DOMContentLoaded -->
     </div>
   </div>
 </div>
@@ -720,7 +704,7 @@ nav{top:32px!important}
         <div class="matchup-team-row">
           <div class="matchup-team">
             <span class="matchup-seed">#16</span>
-            <span class="matchup-name dog">UMBC/Howard</span>
+            <span class="matchup-name dog">Howard</span>
           </div>
           <span style="font-size:9px;color:#94A3B8">-25</span>
         </div>
@@ -1280,6 +1264,55 @@ nav{top:32px!important}
 </footer>
 
 <script>
+// ── FIRST FOUR RESULTS ────────────────────────────────────────────────────────
+// UPDATE winner + score when each game finishes. Leave winner:null until known.
+// The site auto-updates all data (bracket, predictions, travel, NIL, ticker) on load.
+var FIRST_FOUR_RESULTS = [
+  // DONE ✓
+  { key:"West-11",    placeholder:"Texas",            team1:"Texas",       team2:"NC State",   winner:"Texas",    score:"(First Four winner)", done:true  },
+  { key:"Midwest-16", placeholder:"Howard",           team1:"Howard",      team2:"UMBC",       winner:"Howard",   score:"(First Four winner)", done:true  },
+  // TODO: fill in winner + score when game is played tomorrow (Mar 18)
+  { key:"South-16",   placeholder:"Prairie View/Lehigh", team1:"Prairie View", team2:"Lehigh",  winner:null,       score:null,                  done:false },
+  { key:"Midwest-11", placeholder:"SMU/Miami (OH)",   team1:"SMU",         team2:"Miami (OH)", winner:null,       score:null,                  done:false }
+];
+
+// Patches all data structures when a First Four result is available.
+// Called automatically on page load — just fill in winner + score above.
+function applyFirstFourResults() {
+  FIRST_FOUR_RESULTS.forEach(function(r) {
+    if (!r.done || !r.winner || r.winner === r.placeholder) return;
+    var ph = r.placeholder, win = r.winner;
+
+    // 1. bracket seeds
+    bracket.regions.forEach(function(reg) {
+      reg.seeds.forEach(function(s) { if (s.team === ph) s.team = win; });
+    });
+
+    // 2. FOCUS_SCORES
+    FOCUS_SCORES.forEach(function(f) { if (f.team === ph) f.team = win; });
+
+    // 3. GAME_PREDICTIONS
+    GAME_PREDICTIONS.forEach(function(g) {
+      if (g.fav === ph) g.fav = win;
+      if (g.dog === ph) g.dog = win;
+    });
+
+    // 4. TRAVEL_DATA
+    TRAVEL_DATA.forEach(function(t) {
+      if (t.team === ph) {
+        t.team = win;
+        t.note = 'First Four winner (' + win + ' beat ' + (win === r.team1 ? r.team2 : r.team1) + '). ' + t.note;
+      }
+    });
+
+    // 5. NIL_DATA
+    if (NIL_DATA[ph] !== undefined) { NIL_DATA[win] = NIL_DATA[ph]; delete NIL_DATA[ph]; }
+
+    // 6. NIL_BRACKET_GRADES
+    if (NIL_BRACKET_GRADES[ph] !== undefined) { NIL_BRACKET_GRADES[win] = NIL_BRACKET_GRADES[ph]; delete NIL_BRACKET_GRADES[ph]; }
+  });
+}
+
 // ── DATA ─────────────────────────────────────────────────────────────────────
 var bracket = {
   lastUpdated: "Official 2026 NCAA Tournament Bracket — Selection Sunday March 15 2026",
@@ -1287,9 +1320,9 @@ var bracket = {
   finalFour: ["Duke","Arizona","Florida","Michigan"],
   regions: [
     {name:"East",color:"#e63946",seeds:[{seed:1,team:"Duke"},{seed:2,team:"UConn"},{seed:3,team:"Michigan State"},{seed:4,team:"Kansas"},{seed:5,team:"St. John's"},{seed:6,team:"Louisville"},{seed:7,team:"UCLA"},{seed:8,team:"Ohio State"},{seed:9,team:"TCU"},{seed:10,team:"UCF"},{seed:11,team:"South Florida"},{seed:12,team:"Northern Iowa"},{seed:13,team:"Cal Baptist"},{seed:14,team:"North Dakota St"},{seed:15,team:"Furman"},{seed:16,team:"Siena"}],picks:["Duke","Ohio State","St. John's","Kansas","Louisville","Michigan State","UCLA","UConn"],winner:"Duke"},
-    {name:"West",color:"#2196f3",seeds:[{seed:1,team:"Arizona"},{seed:2,team:"Purdue"},{seed:3,team:"Gonzaga"},{seed:4,team:"Arkansas"},{seed:5,team:"Wisconsin"},{seed:6,team:"BYU"},{seed:7,team:"Miami"},{seed:8,team:"Villanova"},{seed:9,team:"Utah State"},{seed:10,team:"Missouri"},{seed:11,team:"Texas/NC State"},{seed:12,team:"High Point"},{seed:13,team:"Hawai'i"},{seed:14,team:"Kennesaw St"},{seed:15,team:"Queens"},{seed:16,team:"LIU"}],picks:["Arizona","Villanova","Wisconsin","Arkansas","BYU","Gonzaga","Miami","Purdue"],winner:"Arizona"},
+    {name:"West",color:"#2196f3",seeds:[{seed:1,team:"Arizona"},{seed:2,team:"Purdue"},{seed:3,team:"Gonzaga"},{seed:4,team:"Arkansas"},{seed:5,team:"Wisconsin"},{seed:6,team:"BYU"},{seed:7,team:"Miami"},{seed:8,team:"Villanova"},{seed:9,team:"Utah State"},{seed:10,team:"Missouri"},{seed:11,team:"Texas"},{seed:12,team:"High Point"},{seed:13,team:"Hawai'i"},{seed:14,team:"Kennesaw St"},{seed:15,team:"Queens"},{seed:16,team:"LIU"}],picks:["Arizona","Villanova","Wisconsin","Arkansas","BYU","Gonzaga","Miami","Purdue"],winner:"Arizona"},
     {name:"South",color:"#22c55e",seeds:[{seed:1,team:"Florida"},{seed:2,team:"Houston"},{seed:3,team:"Illinois"},{seed:4,team:"Nebraska"},{seed:5,team:"Vanderbilt"},{seed:6,team:"North Carolina"},{seed:7,team:"St. Mary's"},{seed:8,team:"Clemson"},{seed:9,team:"Iowa"},{seed:10,team:"Texas A\u0026M"},{seed:11,team:"VCU"},{seed:12,team:"McNeese"},{seed:13,team:"Troy"},{seed:14,team:"Penn"},{seed:15,team:"Idaho"},{seed:16,team:"Prairie View/Lehigh"}],picks:["Florida","Clemson","McNeese","Nebraska","VCU","Illinois","Texas A&M","Houston"],winner:"Florida"},
-    {name:"Midwest",color:"#f59e0b",seeds:[{seed:1,team:"Michigan"},{seed:2,team:"Iowa State"},{seed:3,team:"Virginia"},{seed:4,team:"Alabama"},{seed:5,team:"Texas Tech"},{seed:6,team:"Tennessee"},{seed:7,team:"Kentucky"},{seed:8,team:"Georgia"},{seed:9,team:"St. Louis"},{seed:10,team:"Santa Clara"},{seed:11,team:"Miami (OH)/SMU"},{seed:12,team:"Akron"},{seed:13,team:"Hofstra"},{seed:14,team:"Wright State"},{seed:15,team:"Tennessee State"},{seed:16,team:"UMBC/Howard"}],picks:["Michigan","Georgia","Texas Tech","Alabama","Tennessee","Virginia","Kentucky","Iowa State"],winner:"Michigan"}
+    {name:"Midwest",color:"#f59e0b",seeds:[{seed:1,team:"Michigan"},{seed:2,team:"Iowa State"},{seed:3,team:"Virginia"},{seed:4,team:"Alabama"},{seed:5,team:"Texas Tech"},{seed:6,team:"Tennessee"},{seed:7,team:"Kentucky"},{seed:8,team:"Georgia"},{seed:9,team:"St. Louis"},{seed:10,team:"Santa Clara"},{seed:11,team:"Miami (OH)/SMU"},{seed:12,team:"Akron"},{seed:13,team:"Hofstra"},{seed:14,team:"Wright State"},{seed:15,team:"Tennessee State"},{seed:16,team:"Howard"}],picks:["Michigan","Georgia","Texas Tech","Alabama","Tennessee","Virginia","Kentucky","Iowa State"],winner:"Michigan"}
   ]
 };
 
@@ -1322,7 +1355,7 @@ var NIL_DATA = {
   "Villanova":{roster:9.0,tier:"mid"},
   "Utah State":{roster:4.5,tier:"low"},
   "Missouri":{roster:10.0,tier:"mid"},
-  "Texas/NC State":{roster:8.5,tier:"mid"},
+  "Texas":{roster:8.5,tier:"mid",note:"First Four winner — beat NC State"},
   "High Point":{roster:2.0,tier:"low"},
   "Hawai'i":{roster:3.0,tier:"low"},
   "Kennesaw St":{roster:1.5,tier:"low"},
@@ -1361,7 +1394,7 @@ var NIL_DATA = {
   "Hofstra":{roster:2.0,tier:"low"},
   "Wright State":{roster:1.5,tier:"low"},
   "Tennessee State":{roster:0.8,tier:"low"},
-  "UMBC/Howard":{roster:1.5,tier:"low"}
+  "Howard":{roster:1.5,tier:"low"}
 };
 var NIL_TIER_COLOR = {elite:"#B8952A",high:"#C8102E",mid:"#1A56DB",low:"#94A3B8"};
 function getNIL(t){return NIL_DATA[t]||{roster:3.5,tier:"low"};}
@@ -1461,7 +1494,7 @@ var FOCUS_SCORES = [
   {team:"High Point",score:56,region:"West",rc:"#2196f3",seed:12,coach:"Bart Lundy",coachTourney:"1-2 career",note:"Big South champion with legitimate 12-seed credentials. Wisconsin is favored but 12v5 games flip 35% historically. High Point plays a clear system and arrives without the weight of expectations — exactly the profile that produces upsets."},
   {team:"Hawai'i",score:54,region:"West",rc:"#2196f3",seed:13,coach:"Eran Ganot",coachTourney:"0-1 career",note:"Big West champion absorbing a 2,393-mile trip from Honolulu plus the grind of winning 3 conference tournament games. Massive fatigue factor compounds the talent gap against Arkansas. Ganot's team competes hard but the energy deficit is real entering R1."},
   {team:"BYU",score:70,region:"West",rc:"#2196f3",seed:6,coach:"Kevin Young",coachTourney:"0-0 career (debut)",note:"Kevin Young's first NCAA Tournament as BYU head coach. Big 12-tested roster with tournament-caliber talent. First-year head coach creates some unknown pressure response — but BYU's institutional culture and experienced portal players mitigate the risk significantly."},
-  {team:"Texas/NC State",score:61,region:"West",rc:"#2196f3",seed:11,coach:"First Four winner",coachTourney:"Varies by winner",note:"First Four survivor carrying extra fatigue from the play-in game. Both Texas (Big 12) and NC State (ACC) are legitimate programs — whoever advances arrives in Portland with one fewer day of rest than BYU. Rest disadvantage is real."},
+  {team:"Texas",score:61,region:"West",rc:"#2196f3",seed:11,coach:"Rodney Terry",coachTourney:"Big 12 program",note:"First Four winner — Texas beat NC State to advance. Carrying extra fatigue from the play-in game, arriving with one fewer day of rest than BYU. Big 12 program with talent, but the added game in their legs is a real disadvantage entering this matchup."},
   {team:"Kennesaw State",score:55,region:"West",rc:"#2196f3",seed:14,coach:"Ahmad Caver",coachTourney:"0-0 career (debut)",note:"ASUN champion facing Gonzaga in Portland. Limited resources against one of college basketball's most consistent programs. Players are motivated by the moment — Kennesaw State competes with high energy but the gap against Few's system is too wide."},
   {team:"Miami",score:63,region:"West",rc:"#2196f3",seed:7,coach:"Jim Larrañaga",coachTourney:"18-14 career, 1 Final Four",note:"Larrañaga is one of the most respected tournament coaches in the sport. ACC battle-tested all year — won't be intimidated by Missouri's physicality. As a 7-seed, Miami is a legitimately dangerous team with elite coaching and real tournament DNA."},
   {team:"Queens",score:51,region:"West",rc:"#2196f3",seed:15,coach:"Randy Peele",coachTourney:"0-0 career (debut)",note:"Atlantic Sun champion in their first major NCAA Tournament appearance facing Purdue. Maximum effort, zero external expectations. Peele's program has built something genuine — the mission here is to compete with dignity, not to win."},
@@ -1476,7 +1509,7 @@ var FOCUS_SCORES = [
   {team:"Idaho",score:52,region:"South",rc:"#22c55e",seed:15,coach:"Zac Claus",coachTourney:"0-0 career (debut)",note:"Big Sky champion facing Houston's dominant defensive system in the South pod. Idaho competes with maximum effort and players are locked in on the experience — but the talent and NIL gap against Sampson's machine is enormous."},
 
   // ── MIDWEST — remaining seeds ──
-  {team:"UMBC/Howard",score:52,region:"Midwest",rc:"#f59e0b",seed:16,coach:"First Four winner",coachTourney:"Varies by winner",note:"First Four survivor carrying play-in fatigue into a game against Michigan — the #1 KenPom team in the country. Whoever wins UMBC vs Howard arrives in Buffalo with one fewer day of rest, already with extra miles in their legs, facing Dusty May's dominant system."},
+  {team:"Howard",score:52,region:"Midwest",rc:"#f59e0b",seed:16,coach:"Kenny Blakeney",coachTourney:"MEAC program",note:"First Four winner — Howard beat UMBC to advance, carrying the legacy of the 2018 UMBC upset. Arriving with play-in fatigue into a game against Michigan, the #1 KenPom team. Howard is an elite HBCU program but faces a historic mismatch in efficiency, depth, and resources against Dusty May's dominant system."},
   {team:"Saint Louis",score:63,region:"Midwest",rc:"#f59e0b",seed:9,coach:"Josh Schertz",coachTourney:"3-3 career",note:"Schertz has built a legitimate A-10 program with real tournament DNA. Saint Louis brings physical, disciplined basketball — dangerous 9-seed in the 8-9 coin flip against Georgia. Schertz over-prepares and this team won't be intimidated by the moment."},
   {team:"Akron",score:65,region:"Midwest",rc:"#f59e0b",seed:12,coach:"John Groce",coachTourney:"2-4 career",note:"MAC 12-seeds have one of the best upset rates in tournament history. Akron is battle-tested, physical, and makes the short 342-mile trip to Chicago with zero travel burden. Pure upset energy against Texas Tech — Groce has his team ready for exactly this moment."},
   {team:"Hofstra",score:57,region:"Midwest",rc:"#f59e0b",seed:13,coach:"Speedy Claxton",coachTourney:"0-2 career",note:"CAA champion against Alabama's up-tempo offense. Speedy Claxton brings NBA-level authenticity and credibility to his program, but this is a significant talent mismatch. Hofstra competes with tremendous heart — Oats' pace will ultimately be too much."},
@@ -1622,11 +1655,11 @@ var UPSET_HISTORY = {"McNeese":71,"VCU":65,"Northern Iowa":55,"High Point":52,"T
 var INJURY_IMPACT = {"Duke":-18,"Michigan":-14,"Arizona":-10,"Gonzaga":-22,"Tennessee":-9,"Iowa State":-7,"Wisconsin":-12};
 
 function getCompositeScore(team, seed) {
-  var score = 50; // baseline
+  var score = 10; // baseline (low — let factors drive the score)
   var layers = [];
 
-  // 1. SEED BASELINE (higher seed = stronger starting point)
-  var seedBonus = Math.max(0, (17 - seed) * 2.2);
+  // 1. SEED BASELINE (higher seed = stronger starting point, max ~29 for #1 seed)
+  var seedBonus = Math.max(0, (17 - seed) * 1.8);
   score += seedBonus;
 
   // 2. KENPOM EFFICIENCY (0-25 pts)
@@ -1814,7 +1847,7 @@ var TEAM_BLURBS = {
   "High Point": "Big South champion making the field with Tubby Smith's experienced system. Playing in San Diego against a loaded West pod — their tournament experience is their reward.",
   "LIU": "Coastal Athletic auto-bid. Their presence in the field is their championship — playing with maximum effort and no fear.",
   "Queens": "Atlantic Sun automatic qualifier making the big dance. Every possession in March Madness is an achievement to remember.",
-  "Texas/NC State": "First Four participants bringing desperation energy into a must-win game. Both programs carry chips on their shoulder — expect maximum effort and grit throughout.",
+  "Texas": "First Four winner — beat NC State to earn the 11-seed slot in the West. Texas brings Big 12 credentials but arrives in San Jose with an extra game in their legs and one fewer recovery day than BYU. The emotional high of the First Four win meets the harsh reality of play-in fatigue.",
   // ── SOUTH ──
   "Florida": "Defending champions and the gold standard of NIL efficiency — $8M to win it all at the best ROI in tournament history. Alex Condon, Rueben Chinyelu (11.2 pts/11.5 reb), and Thomas Haugh give them the nation's top rebounding margin at +15.3, a possession stranglehold that breaks opponents. Scoring 86.8 ppg while ranking 6th in defensive efficiency — and playing near-home in Tampa (130 miles from Gainesville). The data says repeat champion.",
   "Houston": "Kelvin Sampson's defensive machine is one of the hardest outs in the country — elite rim protection, disruptive ball pressure, 64 possessions per game. Their defensive identity creates the best UNDER on the board in every round they play.",
@@ -1847,10 +1880,10 @@ var TEAM_BLURBS = {
   "Hofstra": "CAA program with tournament pedigree playing with nothing to lose against a Power 4 opponent. The most dangerous mindset in March — no pressure, no fear, maximum effort every possession.",
   "Wright State": "Horizon League auto-bid with a disciplined program and a well-drawn game plan. Their tournament presence is a credit to the coaching staff and program culture.",
   "Tennessee State": "Ohio Valley automatic qualifier playing in March Madness with everything on the line. Maximum effort until the final buzzer — that's all that's asked.",
-  "UMBC/Howard": "America East/MEAC First Four — UMBC's legendary 2018 history (first-ever #16 to beat a #1) gives this matchup a special electricity. Every UMBC tip-off in March carries that legacy.",
+  "Howard": "First Four winner — Howard beat UMBC to claim the Midwest's #16 seed and earn the right to face Michigan. HBCU pride powers every step. Howard carries their full community's energy into Chicago, facing the steepest climb in the bracket against the #1 KenPom team.",
   "Miami (OH)/SMU": "MAC/AAC First Four participants — both programs are hungry for their first-round proper bid and will leave nothing on the court.",
   "UMBC": "UMBC's legendary 2018 upset of Virginia — first-ever #16 over #1 — means every March they play carries special electricity. Experienced tournament program.",
-  "Howard": "MEAC champion playing in the First Four with the full backing of their HBCU community. Every possession in March Madness is a statement.",
+  "Howard": "Howard beat UMBC in the First Four — MEAC champion now in the field proper as the #16 seed in the Midwest. Historic HBCU program playing with maximum purpose against Michigan in Chicago.",
   "SMU": "AAC tournament participant playing in the First Four — Kelvin Sampson pipeline of assistant coaches means they are well-prepared for any opponent.",
   "Miami OH": "MAC tournament representative in the First Four — Mid-American Conference battle-testing all year means they are physically and mentally ready to compete.",
   "Lehigh": "Patriot League auto-bid representing a conference that punches above its weight class consistently in March Madness.",
@@ -2232,7 +2265,7 @@ var NIL_BRACKET_GRADES = {
   "Villanova":{grade:"B+",gradeColor:"#1A56DB",note:"Big East brand, Wright system"},
   "Utah State":{grade:"B+",gradeColor:"#1A56DB",note:"MWC overachiever, great ROI"},
   "Missouri":{grade:"B-",gradeColor:"#B8952A",note:"SEC mid, Gates rebuild"},
-  "Texas/NC State":{grade:"B",gradeColor:"#1A56DB",note:"Big 12/ACC programs"},
+  "Texas":{grade:"B",gradeColor:"#1A56DB",note:"Big 12 — First Four winner (beat NC State)"},
   "High Point":{grade:"C",gradeColor:"#94A3B8",note:"Big South champ, solid for budget"},
   "Hawai'i":{grade:"C",gradeColor:"#94A3B8",note:"Big West + extreme travel burden"},
   "Kennesaw St":{grade:"D",gradeColor:"#C8102E",note:"ASUN, limited resources"},
@@ -2271,7 +2304,7 @@ var NIL_BRACKET_GRADES = {
   "Hofstra":{grade:"C",gradeColor:"#94A3B8",note:"CAA, consistent value"},
   "Wright State":{grade:"C-",gradeColor:"#94A3B8",note:"Horizon League, limited"},
   "Tennessee State":{grade:"D",gradeColor:"#C8102E",note:"Ohio Valley, first-round ceiling"},
-  "UMBC/Howard":{grade:"D",gradeColor:"#C8102E",note:"America East/MEAC, first-round ceiling"}
+  "Howard":{grade:"D",gradeColor:"#C8102E",note:"MEAC — First Four winner (beat UMBC), first-round ceiling"}
 };
 function renderNIL(){
   var all = [];
@@ -2419,13 +2452,13 @@ var TIER1_BETS = [
     color:"#f0c040"
   },
   {
-    game:"Michigan -22 vs UMBC/Howard",
+    game:"Michigan -22 vs Howard",
     bet:"MICHIGAN -22 (ATS)",
     signal:"COVER",
     confidence:88,
     estOdds:"-110",
-    edge:"Michigan top KenPom team · Dusty May's system is built for dominant R1 wins · UMBC/Howard play-in winner will be fatigued from First Four game · Ann Arbor to Buffalo = 240 miles, home crowd, no travel burden",
-    layers:["💰 NIL: Michigan $12.5M vs UMBC/Howard ~$1.5M","🗺️ Travel: Michigan 240 miles to Buffalo = home game","🧠 Focus: Michigan 68/100 — motivated to prove with Cason out","🏟️ Buffalo crowd: Michigan fans flood KeyBank Center"],
+    edge:"Michigan top KenPom team · Dusty May's system is built for dominant R1 wins · Howard beat UMBC in First Four but arrives fatigued with extra game in legs · Michigan 238 miles from Ann Arbor to Chicago — near-home crowd",
+    layers:["💰 NIL: Michigan $12.5M vs Howard ~$1.5M","🗺️ Travel: Michigan 238mi to Chicago — near home","🧠 Focus: Michigan 68/100 — motivated to prove with Cason out","✅ Howard won First Four vs UMBC but extra fatigue is real"],
     color:"#f59e0b"
   },
   {
@@ -2525,13 +2558,13 @@ var TIER3_BETS = [
     signal:"UNDER",color:"#4a9eff"
   },
   {
-    game:"Michigan vs UMBC/Howard",
+    game:"Michigan vs Howard",
     bet:"OVER",
     estLine:"141.5",
     estOdds:"-110",
     confidence:76,
-    edge:"Michigan plays 72.4 possessions/game — one of fastest in field. UMBC/Howard play-in winner will be fatigued and lack personnel to contain Michigan's pace. Michigan AdjO 120.8 — elite. Projected scoring: Michigan 78-82 range alone.",
-    layers:["⚡ Michigan tempo: 72.4 poss — top 3 fastest in field","📊 Michigan AdjO 120.8 — top offense nationally","💪 Play-in winner fatigued and outmatched","🎯 High possession game = over territory"],
+    edge:"Michigan plays 72.4 possessions/game — one of fastest in field. Howard won the First Four but arrives fatigued and lacks personnel to contain Michigan's pace. Michigan AdjO 120.8 — elite. Projected scoring: Michigan 78-82 range alone.",
+    layers:["⚡ Michigan tempo: 72.4 poss — top 3 fastest in field","📊 Michigan AdjO 120.8 — top offense nationally","✅ Howard beat UMBC but extra fatigue is real","🎯 High possession game = over territory"],
     signal:"OVER",color:"#ff6b35"
   },
   {
@@ -2609,7 +2642,7 @@ var PARLAYS = [
   },
   {
     name:"THE SHARP PLAY",
-    legs:["Michigan -22 ATS (vs UMBC/Howard)","UConn -14 ATS (vs Furman)","Gonzaga OVER (~145.5 vs Kennesaw St)"],
+    legs:["Michigan -22 ATS (vs Howard)","UConn -14 ATS (vs Furman)","Gonzaga OVER (~145.5 vs Kennesaw St)"],
     estOdds:"+480 to +560",
     units:"1-2 units",
     rationale:"Three analytically-backed edges: Michigan home crowd advantage covers big, Hurley covers vs Furman, Gonzaga's pace creates over vs outmatched Kennesaw St. Moderate odds with strong data backing each leg.",
@@ -2854,12 +2887,12 @@ var GAME_PREDICTIONS = [
     flags:["✈️ Hawai'i 2393mi travel — EXTREME burden","😤 Hawai'i played 3 tourney games in 3 days","📊 Arkansas KenPom #22, AdjEM +21.4","💰 NIL: $8.5M vs ~$2.5M"] },
 
   { region:"West", rc:"#2196f3",
-    fav:"BYU", favSeed:6, dog:"Texas/NC State", dogSeed:11,
+    fav:"BYU", favSeed:6, dog:"Texas", dogSeed:11,
     spread:-3.5, ml:-165, ou:136, ouLean:"LEAN OVER",
     betRating:"LEAN", betColor:"#f0c040",
     spreadLean:"BYU -3.5", mlLean:"BYU -165",
-    edge:"The 11-seed comes from the First Four (Texas vs NC State in Dayton). BYU is a battle-tested Big 12 team. Whoever wins the First Four will be energized but also have a game in their legs. LEAN OVER — both teams play up-tempo.",
-    flags:["🏆 BYU battle-tested in Big 12","😤 11-seed already played First Four game","⚡ Both teams push pace 70+ possessions","💡 BYU experience edge in this matchup"] },
+    edge:"Texas won the First Four over NC State in Dayton. BYU is battle-tested in Big 12. Texas arrives with an extra game in their legs and one fewer day of rest — real disadvantage. However Texas has Big 12 talent and will be emotionally high. LEAN OVER — both teams play up-tempo.",
+    flags:["✅ Texas won First Four vs NC State","😤 Texas carrying play-in fatigue into this game","⚡ Both teams push pace 70+ possessions","💡 BYU rest advantage + Big 12 experience edge"] },
 
   { region:"West", rc:"#2196f3",
     fav:"Gonzaga", favSeed:3, dog:"Kennesaw St", dogSeed:14,
@@ -2891,7 +2924,7 @@ var GAME_PREDICTIONS = [
     spread:-27, ml:-5000, ou:136, ouLean:"OVER",
     betRating:"LOCK", betColor:"#4ade80",
     spreadLean:"FLORIDA -27", mlLean:"PASS",
-    edge:"Defending champions playing near-home in Tampa (130 miles from Gainesville) with the highest focus score in the field (91/100). The 16-seed comes from the First Four exhausted. Florida has an 11-game winning streak and won many games by 20+. OVER because Florida pushes pace when comfortable.",
+    edge:"Defending champions playing near-home in Houston (350 miles from Gainesville) with the highest focus score in the field (91/100). The 16-seed comes from the First Four exhausted. Florida has an 11-game winning streak and won many games by 20+. OVER because Florida pushes pace when comfortable.",
     flags:["🏆 Defending champions","🏠 Florida plays near home in Houston","🧠 Focus score 91/100 — best in field","📊 Florida KenPom #8, AdjEM +27.2"] },
 
   { region:"South", rc:"#22c55e",
@@ -2952,12 +2985,12 @@ var GAME_PREDICTIONS = [
 
   // ── MIDWEST ──────────────────────────────────────────────────────────────────
   { region:"Midwest", rc:"#f59e0b",
-    fav:"Michigan", favSeed:1, dog:"UMBC/Howard", dogSeed:16,
+    fav:"Michigan", favSeed:1, dog:"Howard", dogSeed:16,
     spread:-26, ml:-4800, ou:135, ouLean:"OVER",
     betRating:"LOCK", betColor:"#4ade80",
     spreadLean:"MICHIGAN -26", mlLean:"PASS",
-    edge:"Michigan is the #1 overall KenPom team with elite offense AND defense. UMBC/Howard winner comes from the First Four in Dayton — already with a game in their legs. Michigan plays 240 miles from campus in Buffalo — home-adjacent crowd. OVER because Michigan pushes pace at 72.4.",
-    flags:["📊 Michigan KenPom #2 overall","🏠 Michigan 238mi from campus — near home","⚡ Michigan tempo 72.4 — top 3 fastest","😤 16-seed already played First Four game"] },
+    edge:"Michigan is the #1 overall KenPom team with elite offense AND defense. Howard beat UMBC in the First Four and arrives carrying play-in fatigue. Michigan plays 238 miles from campus in Chicago — near-home crowd energy. OVER because Michigan pushes pace at 72.4 and Howard has no answer for their depth.",
+    flags:["📊 Michigan KenPom #2 overall","🏠 Michigan 238mi from campus — near home","⚡ Michigan tempo 72.4 — top 3 fastest","✅ Howard beat UMBC in First Four — now fatigued"] },
 
   { region:"Midwest", rc:"#f59e0b",
     fav:"Georgia", favSeed:8, dog:"St. Louis", dogSeed:9,
@@ -3245,11 +3278,11 @@ var TRAVEL_DATA = [
     risk:"LOW", riskColor:"#4ade80",
     note:"780 miles, Mountain → Pacific (1hr going West = game feels slightly LATER = favorable). BYU travels to Portland-area programs regularly in Big 12 play. Kevin Young's first tournament as head coach is the unknown — not the travel.",
     ats:"Mountain/Big 12 teams in Portland: neutral to favorable" },
-  { team:"Texas/NC State",seed:11,region:"West", rc:"#2196f3",
-    from:"Austin or Raleigh",to:"Portland OR",miles:1900, tzShift:2,
+  { team:"Texas",seed:11,region:"West", rc:"#2196f3",
+    from:"Austin TX (via Dayton OH)",to:"San Jose CA",miles:1870, tzShift:2,
     risk:"MED", riskColor:"#ff9800",
-    note:"First Four survivor with an added game in their legs before Portland. Texas travels ~1,840 miles (CT→PT), NC State travels ~2,700 miles (ET→PT). Either way, the play-in fatigue on top of the cross-country trip is a real disadvantage entering the BYU matchup.",
-    ats:"First Four survivors vs 6-seeds: historically tough draw" },
+    note:"Texas beat NC State in the First Four in Dayton, then travels ~1,870 miles CT→PT to San Jose. Play-in fatigue + cross-country trip is a compounding disadvantage entering the BYU matchup. Texas arrived in Dayton first, now must travel further west. Two flights, two time zones.",
+    ats:"First Four winners vs 6-seeds in R64: historically tough draw" },
 
   // ── PHILADELPHIA, PA (Wells Fargo Center) — East bottom + Midwest mid ────────
   { team:"UCLA",        seed:7,  region:"East",  rc:"#e63946",
@@ -3273,14 +3306,14 @@ var TRAVEL_DATA = [
     note:"755 miles from Greenville SC to Philadelphia — Furman plays AWAY from their home city (Greenville) to face UConn. Same timezone keeps body clock intact, but facing a two-time champion with no travel burden is a steep hill. Richey's program competes hard.",
     ats:"Southern Conference 15-seeds: historically overmatched" },
   { team:"Tennessee",   seed:6,  region:"Midwest",rc:"#f59e0b",
-    from:"Knoxville TN",  to:"Philadelphia PA", miles:640,  tzShift:0,
+    from:"Knoxville TN",  to:"Chicago IL", miles:470,  tzShift:0,
     risk:"LOW", riskColor:"#4ade80",
-    note:"640 miles from Knoxville to Philadelphia — East Coast hop, same timezone. Tennessee travels the SEC East all year. Barnes' team is road-seasoned and this is routine mid-distance travel. Their concern is Ament's knee, not the flight.",
-    ats:"SEC teams in Philadelphia pod: neutral" },
+    note:"470 miles from Knoxville to Chicago — manageable Mid-South hop, same CT timezone. Tennessee travels the SEC all year. Barnes' team is road-seasoned and this is routine mid-distance travel. Their concern is player health, not the flight.",
+    ats:"SEC teams in Chicago pod: neutral" },
   { team:"SMU/Miami (OH)",seed:11,region:"Midwest",rc:"#f59e0b",
-    from:"Dallas or Oxford",to:"Philadelphia PA",miles:1550,tzShift:1,
+    from:"Dallas or Oxford OH",to:"Chicago IL",miles:1000,tzShift:0,
     risk:"MED", riskColor:"#ff9800",
-    note:"First Four survivor carrying play-in fatigue. SMU travels ~1,575 miles (CT→ET) to Philadelphia; Miami OH travels ~670 miles (ET→ET). Tennessee's disciplined, physical system creates a tough environment for a tired play-in winner regardless of which team advances.",
+    note:"First Four survivor carrying play-in fatigue. SMU travels ~1,000 miles (CT→CT) to Chicago; Miami OH travels ~300 miles (ET→CT). Tennessee's disciplined, physical system creates a tough environment for a tired play-in winner regardless of which team advances.",
     ats:"First Four survivors vs 6-seeds: historically tough draw" },
   { team:"Virginia",    seed:3,  region:"Midwest",rc:"#f59e0b",
     from:"Charlottesville VA",to:"Philadelphia PA",miles:340,tzShift:0,
@@ -3341,11 +3374,11 @@ var TRAVEL_DATA = [
     risk:"NONE", riskColor:"#4ade80",
     note:"240 miles from Ann Arbor to Buffalo — Michigan is playing a home game. Same Eastern timezone, short Great Lakes drive, and Wolverine fans travel everywhere. Massive crowd advantage for the #1 KenPom team. The only concern is backcourt depth with Cason OUT.",
     ats:"Big Ten 1-seeds in Northeast pod: 8-2 ATS" },
-  { team:"UMBC/Howard", seed:16, region:"Midwest",rc:"#f59e0b",
-    from:"Baltimore or DC", to:"Buffalo NY",   miles:390,  tzShift:0,
-    risk:"LOW", riskColor:"#4ade80",
-    note:"390 miles from Baltimore/DC to Buffalo — short East Coast trip, same timezone. The travel is manageable, but First Four fatigue means this team arrives with one extra game in their legs. Facing Michigan who plays practically at home makes this the steepest first-round climb in the Midwest.",
-    ats:"First Four 16-seeds vs 1-seeds: 0-8 all time" },
+  { team:"Howard", seed:16, region:"Midwest",rc:"#f59e0b",
+    from:"Washington DC (via Dayton OH)", to:"Chicago IL",   miles:710,  tzShift:1,
+    risk:"MED", riskColor:"#ff9800",
+    note:"Howard beat UMBC in the First Four in Dayton, then travels ~710 miles to Chicago. Play-in fatigue plus a timezone shift is a real compounding disadvantage. Facing Michigan who plays near-home in Chicago makes this the steepest first-round climb in the bracket. Howard arrives rightly proud but overmatched.",
+    ats:"First Four 16-seeds vs 1-seeds: 0-8 all time ATS" },
   { team:"Georgia",     seed:8,  region:"Midwest",rc:"#f59e0b",
     from:"Athens GA",      to:"Buffalo NY",    miles:900,  tzShift:0,
     risk:"MED", riskColor:"#ff9800",
@@ -3529,6 +3562,78 @@ var tickerPos = 0;
 var tickerSpeed = 0.5;
 var tickerPaused = false;
 
+// ── STATIC TICKER BUILDER ─────────────────────────────────────────────────────
+// Builds ticker items from data. First Four scores show until R64 starts (Mar 19).
+// To add/remove items just edit the arrays below.
+function buildStaticTickerItems() {
+  var track = document.getElementById('ticker-track');
+  if (!track) return;
+
+  var now = new Date();
+  var r64Start = new Date('2026-03-19T12:00:00');
+  var showFirstFourScores = now < r64Start; // hide once R64 is underway
+
+  var items = [];
+
+  // ── FIRST FOUR RESULTS (show until R64 starts) ──────────────────────────────
+  if (showFirstFourScores) {
+    FIRST_FOUR_RESULTS.forEach(function(r) {
+      if (r.done && r.winner && r.score) {
+        var loser = r.winner === r.team1 ? r.team2 : r.team1;
+        items.push({ cls:'tick-final', badge:'✓ FINAL', text:r.winner + ' def. ' + loser + ' · First Four · ' + r.key.replace('-',' #') });
+      }
+    });
+    // Pending First Four games (not yet played)
+    FIRST_FOUR_RESULTS.forEach(function(r) {
+      if (!r.done) {
+        items.push({ cls:'tick-alert', badge:'🏀 TONIGHT', text:r.team1 + ' vs ' + r.team2 + ' · First Four · Winner plays ' + r.key.replace('-',' #') });
+      }
+    });
+  } else {
+    // After R64 starts — only show if game was a significant upset
+    FIRST_FOUR_RESULTS.forEach(function(r) {
+      if (r.done && r.winner) {
+        var loser = r.winner === r.team1 ? r.team2 : r.team1;
+        items.push({ cls:'tick-final', badge:'✓ FINAL', text:'First Four: ' + r.winner + ' beat ' + loser + ' · Now faces ' + r.key.replace('-',' #') + ' opponent' });
+      }
+    });
+  }
+
+  // ── TOURNAMENT STATUS ───────────────────────────────────────────────────────
+  items.push({ cls:'tick-alert', badge:'🏀 2026', text:'NCAA Tournament underway · First Four: Mar 17-18 · R64: Mar 19-20' });
+
+  // ── INJURIES ────────────────────────────────────────────────────────────────
+  items.push({ cls:'tick-inj', badge:'🚑 OUT', text:'Duke Caleb Foster — OUT (foot fracture, season-ending)' });
+  items.push({ cls:'tick-inj', badge:'🚑 OUT', text:'Michigan L.J. Cason — OUT (ACL, season-ending)' });
+  items.push({ cls:'tick-inj', badge:'🚑 OUT', text:'Arizona Koa Peat — OUT (foot, missed late season)' });
+  items.push({ cls:'tick-inj', badge:'🚑 OUT', text:'Texas Tech JT Toppin — OUT (ACL, season-ending · Akron 12-seed now dangerous)' });
+  items.push({ cls:'tick-inj', badge:'⚠️ GTD', text:'Duke Patrick Ngongba II — GTD (foot · Duke down to 6-man unit)' });
+  items.push({ cls:'tick-inj', badge:'⚠️ GTD', text:'Gonzaga Braden Huff — GTD (knee · offense 15th→62nd without him)' });
+  items.push({ cls:'tick-inj', badge:'⚠️ GTD', text:'Tennessee Nate Ament — GTD (knee, limited)' });
+  items.push({ cls:'tick-inj', badge:'⚠️ GTD', text:'Iowa State M. Momcilovic — GTD (back tightness)' });
+  items.push({ cls:'tick-inj', badge:'⚠️ Q', text:'Wisconsin John Blackwell — Q for R1 (shoulder)' });
+
+  // ── UPSET ALERTS ────────────────────────────────────────────────────────────
+  items.push({ cls:'tick-upset', badge:'🔥 UPSET #71', text:'McNeese vs Vanderbilt · McNeese beat Clemson +420 in 2025 · same 12v5 spot' });
+  items.push({ cls:'tick-upset', badge:'🔥 UPSET #65', text:'VCU vs North Carolina · Havoc defense eats UNC ball-handlers' });
+  items.push({ cls:'tick-upset', badge:'🔥 UPSET #55', text:'Northern Iowa vs St. John\'s · 12v5 rate 35% · St. John\'s Luck +2.1' });
+
+  // ── SHARP PLAYS ─────────────────────────────────────────────────────────────
+  items.push({ cls:'tick-alert', badge:'📊 SHARP', text:'Houston/Idaho UNDER — Sampson defense, 64 poss/game · best UNDER on board' });
+  items.push({ cls:'tick-alert', badge:'📊 SHARP', text:'Gonzaga vs Kennesaw St OVER — Gonzaga 73.8 poss, fastest in field' });
+  items.push({ cls:'tick-alert', badge:'📊 SHARP', text:'St. John\'s LUCK +2.1 — highest regression risk in entire field' });
+  items.push({ cls:'tick-alert', badge:'📊 SHARP', text:'Vanderbilt LUCK +3.2 — most extreme outlier · fade in futures' });
+
+  // ── AI PICK ─────────────────────────────────────────────────────────────────
+  items.push({ cls:'tick-alert', badge:'🏆 AI PICK', text:'Champion: Florida · Final Four: Duke · Arizona · Florida · Michigan', gold:true });
+
+  // Render into DOM
+  track.innerHTML = items.map(function(it) {
+    var textStyle = it.gold ? 'color:#f0c040;font-weight:700' : 'color:rgba(255,255,255,0.9)';
+    return '<div class="tick-item"><span class="' + it.cls + '">' + it.badge + '</span><span style="' + textStyle + '">' + it.text + '</span></div>';
+  }).join('');
+}
+
 function startTicker() {
   var track = document.getElementById('ticker-track');
   var wrap  = document.getElementById('ticker-track-wrap');
@@ -3561,7 +3666,7 @@ function updateTickerLabel(hasLive, hasFinished) {
     label.innerHTML = '<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#fff;margin-right:5px;animation:pulse 1s infinite"></span>LIVE';
     label.style.background = 'rgba(200,16,46,0.9)';
   } else if (hasFinished) {
-    label.textContent = '✓ SCORES';
+    label.innerHTML = '<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#fff;margin-right:5px"></span>FINAL';
     label.style.background = 'rgba(22,163,74,0.8)';
   } else {
     label.innerHTML = '🔴 LIVE';
@@ -3768,6 +3873,12 @@ document.addEventListener('DOMContentLoaded', function() {
   var defaultBtn = document.querySelector('.tab-btn');
   if (defaultSec) defaultSec.classList.add('active');
   if (defaultBtn) defaultBtn.classList.add('active');
+
+  // Apply any completed First Four results to all data structures
+  applyFirstFourResults();
+
+  // Build ticker items (First Four scores + injuries + sharp plays)
+  buildStaticTickerItems();
 
   // Render all tabs
   safeRender(renderRegions, 'regions');

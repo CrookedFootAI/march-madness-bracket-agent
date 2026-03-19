@@ -1319,10 +1319,10 @@ var bracket = {
   champion: "Florida",
   finalFour: ["Duke","Arizona","Florida","Michigan"],
   regions: [
-    {name:"East",color:"#e63946",seeds:[{seed:1,team:"Duke"},{seed:2,team:"UConn"},{seed:3,team:"Michigan State"},{seed:4,team:"Kansas"},{seed:5,team:"St. John's"},{seed:6,team:"Louisville"},{seed:7,team:"UCLA"},{seed:8,team:"Ohio State"},{seed:9,team:"TCU"},{seed:10,team:"UCF"},{seed:11,team:"South Florida"},{seed:12,team:"Northern Iowa"},{seed:13,team:"Cal Baptist"},{seed:14,team:"North Dakota St"},{seed:15,team:"Furman"},{seed:16,team:"Siena"}],picks:["Duke","Ohio State","St. John's","Kansas","Louisville","Michigan State","UCLA","UConn"],winner:"Duke"},
-    {name:"West",color:"#2196f3",seeds:[{seed:1,team:"Arizona"},{seed:2,team:"Purdue"},{seed:3,team:"Gonzaga"},{seed:4,team:"Arkansas"},{seed:5,team:"Wisconsin"},{seed:6,team:"BYU"},{seed:7,team:"Miami"},{seed:8,team:"Villanova"},{seed:9,team:"Utah State"},{seed:10,team:"Missouri"},{seed:11,team:"Texas"},{seed:12,team:"High Point"},{seed:13,team:"Hawai'i"},{seed:14,team:"Kennesaw St"},{seed:15,team:"Queens"},{seed:16,team:"LIU"}],picks:["Arizona","Villanova","Wisconsin","Arkansas","BYU","Gonzaga","Miami","Purdue"],winner:"Arizona"},
-    {name:"South",color:"#22c55e",seeds:[{seed:1,team:"Florida"},{seed:2,team:"Houston"},{seed:3,team:"Illinois"},{seed:4,team:"Nebraska"},{seed:5,team:"Vanderbilt"},{seed:6,team:"North Carolina"},{seed:7,team:"St. Mary's"},{seed:8,team:"Clemson"},{seed:9,team:"Iowa"},{seed:10,team:"Texas A\u0026M"},{seed:11,team:"VCU"},{seed:12,team:"McNeese"},{seed:13,team:"Troy"},{seed:14,team:"Penn"},{seed:15,team:"Idaho"},{seed:16,team:"Prairie View/Lehigh"}],picks:["Florida","Clemson","McNeese","Nebraska","VCU","Illinois","Texas A&M","Houston"],winner:"Florida"},
-    {name:"Midwest",color:"#f59e0b",seeds:[{seed:1,team:"Michigan"},{seed:2,team:"Iowa State"},{seed:3,team:"Virginia"},{seed:4,team:"Alabama"},{seed:5,team:"Texas Tech"},{seed:6,team:"Tennessee"},{seed:7,team:"Kentucky"},{seed:8,team:"Georgia"},{seed:9,team:"St. Louis"},{seed:10,team:"Santa Clara"},{seed:11,team:"SMU/Miami (OH)"},{seed:12,team:"Akron"},{seed:13,team:"Hofstra"},{seed:14,team:"Wright State"},{seed:15,team:"Tennessee State"},{seed:16,team:"Howard"}],picks:["Michigan","Georgia","Texas Tech","Alabama","Tennessee","Virginia","Kentucky","Iowa State"],winner:"Michigan"}
+    {name:"East",color:"#e63946",seeds:[{seed:1,team:"Duke"},{seed:2,team:"UConn"},{seed:3,team:"Michigan State"},{seed:4,team:"Kansas"},{seed:5,team:"St. John's"},{seed:6,team:"Louisville"},{seed:7,team:"UCLA"},{seed:8,team:"Ohio State"},{seed:9,team:"TCU"},{seed:10,team:"UCF"},{seed:11,team:"South Florida"},{seed:12,team:"Northern Iowa"},{seed:13,team:"Cal Baptist"},{seed:14,team:"North Dakota St"},{seed:15,team:"Furman"},{seed:16,team:"Siena"}],picks:["Duke","Ohio State","St. John's","Kansas","Louisville","Michigan State","UCLA","UConn"],r32picks:["Duke","Kansas","Michigan State","UConn"],s16picks:["Duke","UConn"],winner:"Duke"},
+    {name:"West",color:"#2196f3",seeds:[{seed:1,team:"Arizona"},{seed:2,team:"Purdue"},{seed:3,team:"Gonzaga"},{seed:4,team:"Arkansas"},{seed:5,team:"Wisconsin"},{seed:6,team:"BYU"},{seed:7,team:"Miami"},{seed:8,team:"Villanova"},{seed:9,team:"Utah State"},{seed:10,team:"Missouri"},{seed:11,team:"Texas"},{seed:12,team:"High Point"},{seed:13,team:"Hawai'i"},{seed:14,team:"Kennesaw St"},{seed:15,team:"Queens"},{seed:16,team:"LIU"}],picks:["Arizona","Villanova","Wisconsin","Arkansas","BYU","Gonzaga","Miami","Purdue"],r32picks:["Arizona","Arkansas","Gonzaga","Purdue"],s16picks:["Arizona","Gonzaga"],winner:"Arizona"},
+    {name:"South",color:"#22c55e",seeds:[{seed:1,team:"Florida"},{seed:2,team:"Houston"},{seed:3,team:"Illinois"},{seed:4,team:"Nebraska"},{seed:5,team:"Vanderbilt"},{seed:6,team:"North Carolina"},{seed:7,team:"St. Mary's"},{seed:8,team:"Clemson"},{seed:9,team:"Iowa"},{seed:10,team:"Texas A\u0026M"},{seed:11,team:"VCU"},{seed:12,team:"McNeese"},{seed:13,team:"Troy"},{seed:14,team:"Penn"},{seed:15,team:"Idaho"},{seed:16,team:"Prairie View/Lehigh"}],picks:["Florida","Clemson","McNeese","Nebraska","VCU","Illinois","Texas A&M","Houston"],r32picks:["Florida","Nebraska","Illinois","Houston"],s16picks:["Florida","Houston"],winner:"Florida"},
+    {name:"Midwest",color:"#f59e0b",seeds:[{seed:1,team:"Michigan"},{seed:2,team:"Iowa State"},{seed:3,team:"Virginia"},{seed:4,team:"Alabama"},{seed:5,team:"Texas Tech"},{seed:6,team:"Tennessee"},{seed:7,team:"Kentucky"},{seed:8,team:"Georgia"},{seed:9,team:"St. Louis"},{seed:10,team:"Santa Clara"},{seed:11,team:"SMU/Miami (OH)"},{seed:12,team:"Akron"},{seed:13,team:"Hofstra"},{seed:14,team:"Wright State"},{seed:15,team:"Tennessee State"},{seed:16,team:"Howard"}],picks:["Michigan","Georgia","Akron","Alabama","Tennessee","Virginia","Kentucky","Iowa State"],r32picks:["Michigan","Alabama","Virginia","Iowa State"],s16picks:["Michigan","Iowa State"],winner:"Michigan"}
   ]
 };
 
@@ -1986,11 +1986,11 @@ function renderRegions(){
   }
   function r32win(region, pairIdx) {
     if (isYours) return myPicks['r32-'+region.name+'-'+pairIdx]||null;
-    return region.picks[pairIdx*2]||null;
+    return (region.r32picks && region.r32picks[pairIdx]) || null;
   }
   function s16win(region, halfIdx) {
     if (isYours) return myPicks['s16-'+region.name+'-'+halfIdx]||null;
-    return region.picks[halfIdx*2]||null;
+    return (region.s16picks && region.s16picks[halfIdx]) || null;
   }
   function e8win(region) {
     return isYours ? (myPicks['e8-'+region.name]||null) : (region.winner||null);
@@ -2030,9 +2030,10 @@ function renderRegions(){
     for (var j = 0; j < 4; j++) {
       if (j > 0) col32.push(mkGap(TH + RG + 4));
       var w0 = r64win(region, j*2), w1 = r64win(region, j*2+1);
+      var aiR32 = !isYours ? r32win(region, j) : null;
       col32.push(mkPair(
-        mkSlot(w0, getSeed(region,w0), rc, 'r32-'+rn+'-'+j, !isYours, false),
-        mkSlot(w1, getSeed(region,w1), rc, 'r32-'+rn+'-'+j, false, false)
+        mkSlot(w0, getSeed(region,w0), rc, 'r32-'+rn+'-'+j, !isYours && aiR32===w0, false),
+        mkSlot(w1, getSeed(region,w1), rc, 'r32-'+rn+'-'+j, !isYours && aiR32===w1, false)
       ));
     }
 
@@ -2041,17 +2042,19 @@ function renderRegions(){
     for (var k = 0; k < 2; k++) {
       if (k > 0) col16.push(mkGap((TH+RG)*3+4));
       var r0 = r32win(region, k*2), r1 = r32win(region, k*2+1);
+      var aiS16 = !isYours ? s16win(region, k) : null;
       col16.push(mkPair(
-        mkSlot(r0, getSeed(region,r0), rc, 's16-'+rn+'-'+k, !isYours, false),
-        mkSlot(r1, getSeed(region,r1), rc, 's16-'+rn+'-'+k, false, false)
+        mkSlot(r0, getSeed(region,r0), rc, 's16-'+rn+'-'+k, !isYours && aiS16===r0, false),
+        mkSlot(r1, getSeed(region,r1), rc, 's16-'+rn+'-'+k, !isYours && aiS16===r1, false)
       ));
     }
 
     // E8: 2 s16 winners face off
     var s0 = s16win(region,0), s1 = s16win(region,1);
+    var aiE8 = !isYours ? e8win(region) : null;
     var colE8 = [mkPair(
-      mkSlot(s0, getSeed(region,s0), rc, 'e8-'+rn, !isYours, false),
-      mkSlot(s1, getSeed(region,s1), rc, 'e8-'+rn, false, false)
+      mkSlot(s0, getSeed(region,s0), rc, 'e8-'+rn, !isYours && aiE8===s0, false),
+      mkSlot(s1, getSeed(region,s1), rc, 'e8-'+rn, !isYours && aiE8===s1, false)
     )];
 
     var c64 = mkCol(dir==='left' ? 'R64' : '', col64);

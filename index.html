@@ -1098,7 +1098,7 @@ nav{top:32px!important}
           <div style="height:8px;flex:63;background:#D9D5CC;border-radius:4px"></div>
           <span style="font-size:13px;font-weight:700;color:#B8952A;white-space:nowrap">37%</span>
         </div>
-        <div style="font-size:10px;color:#64748B">58 upsets in 157 games · 2026 picks: <strong style="color:#0B0F1E">VCU over North Carolina, South Florida over Louisville, SMU/Miami(OH) over Tennessee</strong></div>
+        <div style="font-size:10px;color:#64748B">58 upsets in 157 games · 2026 picks: <strong style="color:#0B0F1E">VCU over North Carolina, South Florida over Louisville, Miami (OH) over Tennessee</strong></div>
       </div>
       <div style="background:#FFFFFF;border:1px solid #D9D5CC;border-left:3px solid #1A56DB;border-radius:8px;padding:12px 14px;box-shadow:0 1px 3px rgba(11,15,30,0.08)">
         <div style="font-size:12px;font-weight:700;color:#1A56DB;margin-bottom:6px">10 SEED vs 7 SEED</div>
@@ -1271,9 +1271,9 @@ var FIRST_FOUR_RESULTS = [
   // DONE ✓
   { key:"West-11",    placeholder:"Texas",            team1:"Texas",       team2:"NC State",   winner:"Texas",    score:"(First Four winner)", done:true  },
   { key:"Midwest-16", placeholder:"Howard",           team1:"Howard",      team2:"UMBC",       winner:"Howard",   score:"(First Four winner)", done:true  },
-  // TODO: fill in winner + score when game is played tomorrow (Mar 18)
-  { key:"South-16",   placeholder:"Prairie View/Lehigh", team1:"Prairie View", team2:"Lehigh",  winner:null,       score:null,                  done:false },
-  { key:"Midwest-11", placeholder:"SMU/Miami (OH)",   team1:"SMU",         team2:"Miami (OH)", winner:null,       score:null,                  done:false }
+  // DONE ✓
+  { key:"South-16",   placeholder:"Prairie View/Lehigh", team1:"Prairie View", team2:"Lehigh",  winner:"Prairie View", score:"67-55",            done:true  },
+  { key:"Midwest-11", placeholder:"SMU/Miami (OH)",   team1:"SMU",         team2:"Miami (OH)", winner:"Miami (OH)",   score:"71-57",            done:true  }
 ];
 
 // Patches all data structures when a First Four result is available.
@@ -1322,7 +1322,7 @@ var bracket = {
     {name:"East",color:"#e63946",seeds:[{seed:1,team:"Duke"},{seed:2,team:"UConn"},{seed:3,team:"Michigan State"},{seed:4,team:"Kansas"},{seed:5,team:"St. John's"},{seed:6,team:"Louisville"},{seed:7,team:"UCLA"},{seed:8,team:"Ohio State"},{seed:9,team:"TCU"},{seed:10,team:"UCF"},{seed:11,team:"South Florida"},{seed:12,team:"Northern Iowa"},{seed:13,team:"Cal Baptist"},{seed:14,team:"North Dakota St"},{seed:15,team:"Furman"},{seed:16,team:"Siena"}],picks:["Duke","Ohio State","St. John's","Kansas","Louisville","Michigan State","UCLA","UConn"],winner:"Duke"},
     {name:"West",color:"#2196f3",seeds:[{seed:1,team:"Arizona"},{seed:2,team:"Purdue"},{seed:3,team:"Gonzaga"},{seed:4,team:"Arkansas"},{seed:5,team:"Wisconsin"},{seed:6,team:"BYU"},{seed:7,team:"Miami"},{seed:8,team:"Villanova"},{seed:9,team:"Utah State"},{seed:10,team:"Missouri"},{seed:11,team:"Texas"},{seed:12,team:"High Point"},{seed:13,team:"Hawai'i"},{seed:14,team:"Kennesaw St"},{seed:15,team:"Queens"},{seed:16,team:"LIU"}],picks:["Arizona","Villanova","Wisconsin","Arkansas","BYU","Gonzaga","Miami","Purdue"],winner:"Arizona"},
     {name:"South",color:"#22c55e",seeds:[{seed:1,team:"Florida"},{seed:2,team:"Houston"},{seed:3,team:"Illinois"},{seed:4,team:"Nebraska"},{seed:5,team:"Vanderbilt"},{seed:6,team:"North Carolina"},{seed:7,team:"St. Mary's"},{seed:8,team:"Clemson"},{seed:9,team:"Iowa"},{seed:10,team:"Texas A\u0026M"},{seed:11,team:"VCU"},{seed:12,team:"McNeese"},{seed:13,team:"Troy"},{seed:14,team:"Penn"},{seed:15,team:"Idaho"},{seed:16,team:"Prairie View/Lehigh"}],picks:["Florida","Clemson","McNeese","Nebraska","VCU","Illinois","Texas A&M","Houston"],winner:"Florida"},
-    {name:"Midwest",color:"#f59e0b",seeds:[{seed:1,team:"Michigan"},{seed:2,team:"Iowa State"},{seed:3,team:"Virginia"},{seed:4,team:"Alabama"},{seed:5,team:"Texas Tech"},{seed:6,team:"Tennessee"},{seed:7,team:"Kentucky"},{seed:8,team:"Georgia"},{seed:9,team:"St. Louis"},{seed:10,team:"Santa Clara"},{seed:11,team:"Miami (OH)/SMU"},{seed:12,team:"Akron"},{seed:13,team:"Hofstra"},{seed:14,team:"Wright State"},{seed:15,team:"Tennessee State"},{seed:16,team:"Howard"}],picks:["Michigan","Georgia","Texas Tech","Alabama","Tennessee","Virginia","Kentucky","Iowa State"],winner:"Michigan"}
+    {name:"Midwest",color:"#f59e0b",seeds:[{seed:1,team:"Michigan"},{seed:2,team:"Iowa State"},{seed:3,team:"Virginia"},{seed:4,team:"Alabama"},{seed:5,team:"Texas Tech"},{seed:6,team:"Tennessee"},{seed:7,team:"Kentucky"},{seed:8,team:"Georgia"},{seed:9,team:"St. Louis"},{seed:10,team:"Santa Clara"},{seed:11,team:"SMU/Miami (OH)"},{seed:12,team:"Akron"},{seed:13,team:"Hofstra"},{seed:14,team:"Wright State"},{seed:15,team:"Tennessee State"},{seed:16,team:"Howard"}],picks:["Michigan","Georgia","Texas Tech","Alabama","Tennessee","Virginia","Kentucky","Iowa State"],winner:"Michigan"}
   ]
 };
 
@@ -1389,7 +1389,7 @@ var NIL_DATA = {
   "Georgia":{roster:8.5,tier:"mid"},
   "St. Louis":{roster:4.0,tier:"low"},
   "Santa Clara":{roster:3.0,tier:"low"},
-  "Miami (OH)/SMU":{roster:5.0,tier:"low"},
+  "SMU/Miami (OH)":{roster:5.0,tier:"low"},
   "Akron":{roster:2.5,tier:"low"},
   "Hofstra":{roster:2.0,tier:"low"},
   "Wright State":{roster:1.5,tier:"low"},
@@ -1500,7 +1500,7 @@ var FOCUS_SCORES = [
   {team:"Queens",score:51,region:"West",rc:"#2196f3",seed:15,coach:"Randy Peele",coachTourney:"0-0 career (debut)",note:"Atlantic Sun champion in their first major NCAA Tournament appearance facing Purdue. Maximum effort, zero external expectations. Peele's program has built something genuine — the mission here is to compete with dignity, not to win."},
 
   // ── SOUTH — remaining seeds ──
-  {team:"Prairie View/Lehigh",score:51,region:"South",rc:"#22c55e",seed:16,coach:"First Four winner",coachTourney:"Varies by winner",note:"First Four survivor with play-in fatigue facing Florida — the defending champions with the highest focus score in the field (91/100). Maximum mismatch. The play-in grind adds one final layer of disadvantage against Todd Golden's locked-in machine."},
+  {team:"Prairie View/Lehigh",score:51,region:"South",rc:"#22c55e",seed:16,coach:"Johnnie Harris",coachTourney:"0-0 career (debut)",note:"Prairie View A&M beat Lehigh 67-55 in the First Four behind Dontae Horne's 25 pts/7 reb/4 stl. The Panthers face defending champion Florida in Houston — essentially a home game for Prairie View. Maximum mismatch, but every possession is historic."},
   {team:"Clemson",score:64,region:"South",rc:"#22c55e",seed:8,coach:"Brad Brownell",coachTourney:"5-6 career",note:"Brownell is a steady tournament hand with legitimate ACC experience. Clemson brings physicality and defensive identity — real 8-seed caliber. Against Iowa in a first-round coin flip, this is a game Clemson is built to win."},
   {team:"Iowa",score:61,region:"South",rc:"#22c55e",seed:9,coach:"Ben McCollum",coachTourney:"0-0 career (debut)",note:"Ben McCollum arrived from Drake and brought offensive efficiency to Iowa. His first NCAA Tournament as Hawkeye head coach creates unknowns — talented roster in transition. The program is capable of beating Clemson but McCollum's March debut adds real volatility."},
   {team:"Troy",score:54,region:"South",rc:"#22c55e",seed:13,coach:"Scott Cross",coachTourney:"2-4 career",note:"Sun Belt champion against Nebraska as a 4-seed. Troy plays with tremendous energy and Cross has built a program with real upset DNA. Limited resources but maximum effort — a scrappy 13-seed who will make Nebraska earn every possession."},
@@ -1513,7 +1513,7 @@ var FOCUS_SCORES = [
   {team:"Saint Louis",score:63,region:"Midwest",rc:"#f59e0b",seed:9,coach:"Josh Schertz",coachTourney:"3-3 career",note:"Schertz has built a legitimate A-10 program with real tournament DNA. Saint Louis brings physical, disciplined basketball — dangerous 9-seed in the 8-9 coin flip against Georgia. Schertz over-prepares and this team won't be intimidated by the moment."},
   {team:"Akron",score:65,region:"Midwest",rc:"#f59e0b",seed:12,coach:"John Groce",coachTourney:"2-4 career",note:"MAC 12-seeds have one of the best upset rates in tournament history. Akron is battle-tested, physical, and makes the short 342-mile trip to Chicago with zero travel burden. Pure upset energy against Texas Tech — Groce has his team ready for exactly this moment."},
   {team:"Hofstra",score:57,region:"Midwest",rc:"#f59e0b",seed:13,coach:"Speedy Claxton",coachTourney:"0-2 career",note:"CAA champion against Alabama's up-tempo offense. Speedy Claxton brings NBA-level authenticity and credibility to his program, but this is a significant talent mismatch. Hofstra competes with tremendous heart — Oats' pace will ultimately be too much."},
-  {team:"SMU/Miami (OH)",score:60,region:"Midwest",rc:"#f59e0b",seed:11,coach:"First Four winner",coachTourney:"Varies by winner",note:"First Four survivor entering with extra fatigue against Tennessee — Rick Barnes' disciplined, physical squad. Both SMU (Big 12) and Miami OH (MAC) are legitimate programs, but the play-in grind creates a real rest disadvantage heading into Barnes' pressure system."},
+  {team:"SMU/Miami (OH)",score:60,region:"Midwest",rc:"#f59e0b",seed:11,coach:"Travis Steele",coachTourney:"0-1 career",note:"Miami (OH) beat SMU 71-57 in the First Four — 14 threes, 14 of 21 baskets assisted. Travis Steele's RedHawks now travel 300 miles from Oxford OH to Chicago to face Tennessee's physical SEC defense. Short trip but Barnes is waiting with a grind-it-out system built to neutralize exactly this type of team."},
   {team:"Wright State",score:58,region:"Midwest",rc:"#f59e0b",seed:14,coach:"Scott Nagy",coachTourney:"3-5 career",note:"Horizon League champion facing Virginia's defensive system. Wright State will run their offense hard but the Pack-Line is specifically designed to neutralize efficient, smaller offenses. Nagy has real tourney experience but the mismatch is too wide."},
   {team:"Santa Clara",score:61,region:"Midwest",rc:"#f59e0b",seed:10,coach:"Herb Sendek",coachTourney:"9-10 career",note:"Sendek is a proven tournament coach with legitimate March experience. WCC travel to Chicago adds a minor cross-country element. As a 10-seed, Santa Clara has genuine upset potential against Kentucky — whose 48/100 focus score is the lowest in the entire field."},
   {team:"Tennessee State",score:54,region:"Midwest",rc:"#f59e0b",seed:15,coach:"Darrion Cockrell",coachTourney:"0-0 career (debut)",note:"OVC auto-bid facing Iowa State — one of the most locked-in teams in the tournament. Tennessee State represents their conference with pride and full effort, but the talent and system gap against Otzelberger's focused squad is enormous."},
@@ -1864,7 +1864,7 @@ var TEAM_BLURBS = {
   "Troy": "Sun Belt auto-bid playing on the biggest stage of the year. Their tournament experience is the prize — compete hard for 40 minutes.",
   "Penn": "Ivy League — no athletic scholarships, just brilliant basketball minds and disciplined execution. Steve Donahue's system is the most unique in the entire field. The ultimate David vs. Goliath story.",
   "Idaho": "Big Sky automatic qualifier. 1,620-mile haul to Oklahoma City to face Houston's elite defensive machine. The ultimate test — play with pride and execute every possession.",
-  "Prairie View/Lehigh": "SWAC/Patriot First Four participants. Playing in March Madness is the achievement — every possession is bracket-worthy.",
+  "Prairie View/Lehigh": "Prairie View A&M claimed the South's #16 seed with a 67-55 First Four win over Lehigh in Dayton — powered by Dontae Horne's 25 points, 7 rebounds and 4 steals. The Panthers now face defending champion Florida in Houston, essentially a home game for the Prairie View TX program. Every possession is bracket history.",
   // ── MIDWEST ──
   "Michigan": "Dusty May's best efficiency-per-dollar in the Midwest pod — $7M NIL with top-10 adjusted efficiency metrics. Playing 240 miles from Ann Arbor in Buffalo with a massive Wolverine fan base making the road trip. L.J. Cason OUT (ACL) but depth has kept this machine rolling all season.",
   "Iowa State": "The Cyclones went 27-7 including a Big 12 Tournament run that featured a 49-point demolition of Arizona State and a narrow 82-80 semifinal loss to Arizona — tournament firepower is confirmed. T.J. Otzelberger's system is widely rated as one of the most undervalued in the field at the 2-seed. Momcilovic GTD (back) is the one concern heading into St. Louis, a near-home-game advantage for a Big 12 program.",
@@ -1881,7 +1881,7 @@ var TEAM_BLURBS = {
   "Wright State": "Horizon League auto-bid with a disciplined program and a well-drawn game plan. Their tournament presence is a credit to the coaching staff and program culture.",
   "Tennessee State": "Ohio Valley automatic qualifier playing in March Madness with everything on the line. Maximum effort until the final buzzer — that's all that's asked.",
   "Howard": "First Four winner — Howard beat UMBC to claim the Midwest's #16 seed and earn the right to face Michigan. HBCU pride powers every step. Howard carries their full community's energy into Chicago, facing the steepest climb in the bracket against the #1 KenPom team.",
-  "Miami (OH)/SMU": "MAC/AAC First Four participants — both programs are hungry for their first-round proper bid and will leave nothing on the court.",
+  "SMU/Miami (OH)": "Miami (OH) claimed the Midwest's #11 seed with a dominant 71-57 First Four win over SMU in Dayton — 14 three-pointers, 14 of 21 baskets assisted, the RedHawks were locked in from tip-off. Now they travel just 300 miles to Chicago to face #6 seed Tennessee. Short trip, but Rick Barnes' physical SEC defense awaits a MAC team still carrying play-in legs.",
   "UMBC": "UMBC's legendary 2018 upset of Virginia — first-ever #16 over #1 — means every March they play carries special electricity. Experienced tournament program.",
   "Howard": "Howard beat UMBC in the First Four — MEAC champion now in the field proper as the #16 seed in the Midwest. Historic HBCU program playing with maximum purpose against Michigan in Chicago.",
   "SMU": "AAC tournament participant playing in the First Four — Kelvin Sampson pipeline of assistant coaches means they are well-prepared for any opponent.",
@@ -2299,7 +2299,7 @@ var NIL_BRACKET_GRADES = {
   "Georgia":{grade:"B-",gradeColor:"#B8952A",note:"SEC mid, Mike White rebuild"},
   "St. Louis":{grade:"B+",gradeColor:"#1A56DB",note:"A-10 power, excellent ROI"},
   "Santa Clara":{grade:"B",gradeColor:"#1A56DB",note:"WCC solid program value"},
-  "Miami (OH)/SMU":{grade:"C+",gradeColor:"#B8952A",note:"MAC/AAC programs"},
+  "SMU/Miami (OH)":{grade:"C+",gradeColor:"#B8952A",note:"MAC/AAC programs"},
   "Akron":{grade:"C",gradeColor:"#94A3B8",note:"MAC budget, solid for conference"},
   "Hofstra":{grade:"C",gradeColor:"#94A3B8",note:"CAA, consistent value"},
   "Wright State":{grade:"C-",gradeColor:"#94A3B8",note:"Horizon League, limited"},
@@ -2482,12 +2482,12 @@ var TIER1_BETS = [
     color:"#4a9eff"
   },
   {
-    game:"Tennessee -8.5 vs Miami (OH)/SMU",
+    game:"Tennessee -8.5 vs Miami (OH)",
     bet:"TENNESSEE -8.5 (ATS)",
     signal:"COVER",
     confidence:84,
     estOdds:"-110",
-    edge:"Tennessee hot streak entering tournament · Chaz Lanier 19.4 PPG · Rick Barnes culture: disciplined, no trap game mentality · Miami (OH)/SMU play-in winner will be fatigued from First Four · Tennessee knows how to put away inferior opponents",
+    edge:"Tennessee hot streak entering tournament · Chaz Lanier 19.4 PPG · Rick Barnes culture: disciplined, no trap game mentality · Miami (OH) beat SMU 71-57 in First Four but carries play-in fatigue into Barnes' physical system · Tennessee knows how to put away inferior opponents",
     layers:["🔥 Tennessee 9-2 last 11 games","📊 KenPom #14 vs play-in winner","💰 NIL: Tennessee $14M vs play-in team ~$3M","🧠 Focus score: Tennessee 74/100 — locked in"],
     color:"#22c55e"
   },
@@ -2568,7 +2568,7 @@ var TIER3_BETS = [
     signal:"OVER",color:"#ff6b35"
   },
   {
-    game:"Tennessee vs Miami (OH)/SMU",
+    game:"Tennessee vs Miami (OH)",
     bet:"UNDER",
     estLine:"133.5",
     estOdds:"-110",
@@ -2924,7 +2924,7 @@ var GAME_PREDICTIONS = [
     spread:-27, ml:-5000, ou:136, ouLean:"OVER",
     betRating:"LOCK", betColor:"#4ade80",
     spreadLean:"FLORIDA -27", mlLean:"PASS",
-    edge:"Defending champions playing near-home in Houston (350 miles from Gainesville) with the highest focus score in the field (91/100). The 16-seed comes from the First Four exhausted. Florida has an 11-game winning streak and won many games by 20+. OVER because Florida pushes pace when comfortable.",
+    edge:"Defending champions playing near-home in Houston (350 miles from Gainesville) with the highest focus score in the field (91/100). Prairie View A&M beat Lehigh 67-55 in the First Four but arrives exhausted. Florida has an 11-game winning streak and won many games by 20+. OVER because Florida pushes pace when comfortable.",
     flags:["🏆 Defending champions","🏠 Florida plays near home in Houston","🧠 Focus score 91/100 — best in field","📊 Florida KenPom #8, AdjEM +27.2"] },
 
   { region:"South", rc:"#22c55e",
@@ -3017,12 +3017,12 @@ var GAME_PREDICTIONS = [
     flags:["⚡ Alabama tempo 71.8 — up-tempo attack","📊 Alabama KenPom #20, AdjEM +22.4","💰 NIL: $11.5M vs ~$2M","🎯 OVER almost certain — Alabama scores in bursts"] },
 
   { region:"Midwest", rc:"#f59e0b",
-    fav:"Tennessee", favSeed:6, dog:"Miami (OH)/SMU", dogSeed:11,
+    fav:"Tennessee", favSeed:6, dog:"SMU/Miami (OH)", dogSeed:11,
     spread:-7.5, ml:-310, ou:126, ouLean:"UNDER",
     betRating:"UNDER LOCK", betColor:"#60a5fa",
     spreadLean:"TENNESSEE -7.5", mlLean:"PASS",
-    edge:"BEST UNDER PLAY IN MIDWEST. Tennessee plays 65.2 possessions/game — 2nd slowest in the field. The 11-seed comes from the First Four (Miami OH vs SMU). Barnes grind-it-out defense suffocates mid-majors. Under 126 is near automatic.",
-    flags:["🐢 Tennessee 65.2 poss — 2nd slowest in field","😤 11-seed already played First Four game","🛡️ Barnes defense-first system always","📉 Tennessee UNDER rate: 71% this season"] },
+    edge:"BEST UNDER PLAY IN MIDWEST. Tennessee plays 65.2 possessions/game — 2nd slowest in the field. Miami (OH) beat SMU 71-57 in the First Four but arrives with extra game in their legs. Barnes grind-it-out defense suffocates mid-majors. Under 126 is near automatic.",
+    flags:["🐢 Tennessee 65.2 poss — 2nd slowest in field","😤 Miami (OH) already played First Four game","🛡️ Barnes defense-first system always","📉 Tennessee UNDER rate: 71% this season"] },
 
   { region:"Midwest", rc:"#f59e0b",
     fav:"Virginia", favSeed:3, dog:"Wright State", dogSeed:14,
@@ -3311,9 +3311,9 @@ var TRAVEL_DATA = [
     note:"470 miles from Knoxville to Chicago — manageable Mid-South hop, same CT timezone. Tennessee travels the SEC all year. Barnes' team is road-seasoned and this is routine mid-distance travel. Their concern is player health, not the flight.",
     ats:"SEC teams in Chicago pod: neutral" },
   { team:"SMU/Miami (OH)",seed:11,region:"Midwest",rc:"#f59e0b",
-    from:"Dallas or Oxford OH",to:"Chicago IL",miles:1000,tzShift:0,
-    risk:"MED", riskColor:"#ff9800",
-    note:"First Four survivor carrying play-in fatigue. SMU travels ~1,000 miles (CT→CT) to Chicago; Miami OH travels ~300 miles (ET→CT). Tennessee's disciplined, physical system creates a tough environment for a tired play-in winner regardless of which team advances.",
+    from:"Oxford OH",to:"Chicago IL",miles:300,tzShift:-1,
+    risk:"LOW", riskColor:"#22c55e",
+    note:"Miami (OH) beat SMU 71-57 in the First Four (Dayton). Short hop from Oxford OH → Chicago IL (~300 miles, ET→CT: -1hr). Favorable travel, but still carry play-in fatigue heading into Tennessee's disciplined, physical system.",
     ats:"First Four survivors vs 6-seeds: historically tough draw" },
   { team:"Virginia",    seed:3,  region:"Midwest",rc:"#f59e0b",
     from:"Charlottesville VA",to:"Philadelphia PA",miles:340,tzShift:0,
@@ -3417,9 +3417,9 @@ var TRAVEL_DATA = [
     note:"130 miles from Gainesville to Tampa — Florida is playing a home game. Both cities are in the same media market and Gator fans will dominate Amalie Arena. Defending champions with 91/100 focus score playing essentially at home. Best first-round setup in the entire field.",
     ats:"Florida in Tampa: home-equivalent, historically dominant" },
   { team:"Prairie View/Lehigh",seed:16,region:"South",rc:"#22c55e",
-    from:"Prairie View TX or Bethlehem PA",to:"Tampa FL",miles:1100,tzShift:1,
-    risk:"HIGH", riskColor:"#ff4444",
-    note:"First Four survivor with play-in fatigue. Prairie View (TX→FL: ~1,080 miles, CT→ET: +1hr) or Lehigh (PA→FL: ~1,155 miles, ET→ET: 0hr). Either team arrives with extra travel, an extra game in their legs, and faces defending champion Florida in their backyard.",
+    from:"Prairie View TX",to:"Houston TX",miles:60,tzShift:0,
+    risk:"LOW", riskColor:"#22c55e",
+    note:"Prairie View A&M beat Lehigh 67-55 in the First Four (Dayton). Now travel from Dayton OH → Houston TX (~1,200 miles, CT→CT: 0hr shift). Prairie View TX is just 45 miles from Houston — essentially a home game for the Panthers. Still face defending champion Florida with play-in fatigue.",
     ats:"First Four 16-seeds vs 1-seeds: 0-8 all time" },
   { team:"Clemson",     seed:8,  region:"South", rc:"#22c55e",
     from:"Clemson SC",     to:"Tampa FL",      miles:690,  tzShift:0,
